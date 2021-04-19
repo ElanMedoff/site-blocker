@@ -1,35 +1,75 @@
-const path = require("path");
 const webpack = require("webpack");
+const path = require("path");
+const CopyPlugin = require("copy-webpack-plugin");
 
-module.exports = {
-  entry: "./src/index.tsx",
-  mode: "development",
+const config = {
+  entry: {
+    popup: path.join(__dirname, "src/popup.tsx"),
+    background: path.join(__dirname, "src/background.ts"),
+  },
+  output: { path: path.join(__dirname, "dist"), filename: "[name].js" },
   module: {
     rules: [
       {
-        test: /\.[jt]sx?$/, // matches .js, .ts, and .tsx files
-        loader: "babel-loader", // uses babel-loader for the specified file types (no ts-loader needed)
+        test: /\.(js|jsx)$/,
+        use: "babel-loader",
         exclude: /node_modules/,
       },
       {
-        test: /\.css$/, // matches .css files only (i.e. not .scss, etc)
+        test: /\.css$/,
         use: ["style-loader", "css-loader"],
+        exclude: /\.module\.css$/,
+      },
+      {
+        test: /\.ts(x)?$/,
+        loader: "ts-loader",
+        exclude: /node_modules/,
+      },
+      {
+        test: /\.css$/,
+        use: [
+          "style-loader",
+          {
+            loader: "css-loader",
+            options: {
+              importLoaders: 1,
+              modules: true,
+            },
+          },
+        ],
+        include: /\.module\.css$/,
+      },
+      {
+        test: /\.svg$/,
+        use: "file-loader",
+      },
+      {
+        test: /\.png$/,
+        use: [
+          {
+            loader: "url-loader",
+            options: {
+              mimetype: "image/png",
+            },
+          },
+        ],
       },
     ],
   },
   resolve: {
-    extensions: [".tsx", ".ts", ".js"],
-  },
-  output: {
-    filename: "bundle.js", // our output bundle
+    extensions: [".js", ".jsx", ".tsx", ".ts"],
+    alias: {
+      "react-dom": "@hot-loader/react-dom",
+    },
   },
   devServer: {
-    contentBase: path.join(__dirname, "public/"),
-    port: 3000,
-    publicPath: "http://localhost:3000/dist/",
-    hotOnly: true,
-    stats: "errors-only",
+    contentBase: "./dist",
   },
-  plugins: [new webpack.HotModuleReplacementPlugin()], // used for hot reloading when developing
-  devtool: "eval-source-map", // builds high quality source maps
+  plugins: [
+    new CopyPlugin({
+      patterns: [{ from: "public", to: "." }],
+    }),
+  ],
 };
+
+module.exports = config;
