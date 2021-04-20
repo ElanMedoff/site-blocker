@@ -3,6 +3,14 @@ import { Message } from "./utils/types";
 
 let isBlocking = true;
 
+chrome.storage.local.get("isBlocking", (res) => {
+  if (res["isBlocking"]) {
+    isBlocking = true;
+  } else {
+    isBlocking = false;
+  }
+});
+
 function sendIsBlockingStatus(isBlocking: boolean) {
   const message: Message = { type: "IS_BLOCKING_STATUS", isBlocking };
   chrome.runtime.sendMessage(message);
@@ -16,7 +24,6 @@ function sendIsBlockingStatus(isBlocking: boolean) {
 
 //   for (const regex of blockedSites) {
 //     if (regex.test(tab.pendingUrl)) {
-//       // TODO REGEX IS BROKEN!!!
 //       chrome.tabs.remove(tab.id);
 //       break;
 //     }
@@ -46,7 +53,6 @@ chrome.runtime.onMessage.addListener((message: Message) => {
       break;
     case "TOGGLE_IS_BLOCKING":
       isBlocking = message.isBlocking;
-      console.log("message received", message);
       chrome.storage.local.set({ isBlocking: isBlocking });
       sendIsBlockingStatus(isBlocking);
       break;

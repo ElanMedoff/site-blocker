@@ -7,6 +7,7 @@ const config = {
     popup: path.join(__dirname, "src/popup.tsx"),
     background: path.join(__dirname, "src/background.ts"),
   },
+  mode: "production",
   output: { path: path.join(__dirname, "dist"), filename: "[name].js" },
   module: {
     rules: [
