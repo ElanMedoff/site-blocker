@@ -8,6 +8,21 @@ function sendIsBlockingStatus(isBlocking: boolean) {
   chrome.runtime.sendMessage(message);
 }
 
+// TODO doesn't really seem to have helped the delay?
+// chrome.tabs.onCreated.addListener((tab) => {
+//   if (!tab.pendingUrl) return;
+//   if (!tab.id) return;
+//   if (!isBlocking) return;
+
+//   for (const regex of blockedSites) {
+//     if (regex.test(tab.pendingUrl)) {
+//       // TODO REGEX IS BROKEN!!!
+//       chrome.tabs.remove(tab.id);
+//       break;
+//     }
+//   }
+// });
+
 chrome.tabs.onUpdated.addListener((tabId, _, tab) => {
   if (!tab.url) return;
   if (!isBlocking) return;
