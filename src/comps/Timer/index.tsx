@@ -1,13 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import useInterval from "../../hooks/useInterval";
 
-export default function Timer({ onComplete }: { onComplete: () => void }) {
-  const [minute, setMinute] = React.useState(1);
-  const [second, setSecond] = React.useState(10);
+interface TimerProps {
+  onComplete: () => void;
+  startSecond: number;
+  startMinute: number;
+}
+export default function Timer({
+  onComplete,
+  startSecond,
+  startMinute,
+}: TimerProps) {
+  const [minute, setMinute] = useState(startMinute);
+  const [second, setSecond] = useState(startSecond);
 
-  useInterval(() => {
+  useInterval((clear: () => void) => {
     if (second === 0 && minute === 0) {
       onComplete();
+      clear();
     } else if (second === 0) {
       setSecond(59);
       setMinute((prev) => prev - 1);

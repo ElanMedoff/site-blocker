@@ -40,17 +40,20 @@ export default function App() {
     console.log("clicked");
     console.log({ isBlocking, isButtonDisabled, showConfirmTimer });
 
-    // TODO test this logic
-    if (isButtonReady) {
+    // if it's not blocking, allow immediate blocking
+    if (!isBlocking) {
       toggleIsBlocking();
       return;
     }
 
-    // if (!isBlocking) {
-    //   toggleIsBlocking();
-    //   return;
-    // }
+    // otherwise if it's blocking, and button is ready, toggle
+    if (isButtonReady) {
+      toggleIsBlocking();
+      setIsButtonReady(false);
+      return;
+    }
 
+    // otherwise start timer sequence
     setIsButtonDisabled(true);
     setShowConfirmTimer(true);
   };
@@ -64,22 +67,19 @@ export default function App() {
   return (
     <>
       <div>Status: {isBlocking ? "blocking" : "not blocking"}</div>
-      <button
-        onClick={() => {
-          handleOnClick();
-        }}
-        disabled={isButtonDisabled}
-      >
+      <button onClick={handleOnClick} disabled={isButtonDisabled}>
         toggle
       </button>
-      {showConfirmTimer && <Timer onComplete={onTimerComplete} />}
-      <button
+      {showConfirmTimer && (
+        <Timer startSecond={30} startMinute={0} onComplete={onTimerComplete} />
+      )}
+      {/* <button
         onClick={() => {
           console.log({ showConfirmTimer, isBlocking, isButtonDisabled });
         }}
       >
         Hello
-      </button>
+      </button> */}
     </>
   );
 }
