@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import { Message } from "../../utils/types";
 // import ConfirmTimer from "../ConfirmTimer";
 // import CountdownTimer from "../CountdownTimer";
-import Countdown from "react-countdown";
+import Timer from "../Timer";
 
 export default function App() {
   const [isBlocking, setIsBlocking] = useState(true);
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [showConfirmTimer, setShowConfirmTimer] = useState(false);
+  const [isButtonReady, setIsButtonReady] = useState(false);
   console.log(isBlocking, isButtonDisabled, showConfirmTimer);
 
   useEffect(() => {
@@ -38,29 +39,31 @@ export default function App() {
   const handleOnClick = () => {
     console.log("clicked");
     console.log({ isBlocking, isButtonDisabled, showConfirmTimer });
-    if (!isBlocking) {
+
+    // TODO test this logic
+    if (isButtonReady) {
       toggleIsBlocking();
       return;
     }
+
+    // if (!isBlocking) {
+    //   toggleIsBlocking();
+    //   return;
+    // }
 
     setIsButtonDisabled(true);
     setShowConfirmTimer(true);
   };
 
-  const confirmTimerRenderer = ({ completed }: { completed: boolean }) => {
-    if (completed) {
-      setIsButtonDisabled(false);
-      setShowConfirmTimer(false);
-    }
-
-    // expects a return value of a react node
-    return <></>;
+  const onTimerComplete = () => {
+    setIsButtonDisabled(false);
+    setShowConfirmTimer(false);
+    setIsButtonReady(true);
   };
 
   return (
     <>
       <div>Status: {isBlocking ? "blocking" : "not blocking"}</div>
-      {/* <CountdownTimer isBlocking={isBlocking} /> */}
       <button
         onClick={() => {
           handleOnClick();
@@ -69,9 +72,7 @@ export default function App() {
       >
         toggle
       </button>
-      {showConfirmTimer && (
-        <Countdown date={Date.now() + 5000} renderer={confirmTimerRenderer} />
-      )}
+      {showConfirmTimer && <Timer onComplete={onTimerComplete} />}
       <button
         onClick={() => {
           console.log({ showConfirmTimer, isBlocking, isButtonDisabled });
