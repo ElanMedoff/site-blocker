@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Message } from "../../utils/types";
-// import ConfirmTimer from "../ConfirmTimer";
-// import CountdownTimer from "../CountdownTimer";
 import Timer from "../Timer";
 
 export default function App() {
@@ -73,13 +71,6 @@ export default function App() {
       {showConfirmTimer && (
         <Timer startSecond={30} startMinute={0} onComplete={onTimerComplete} />
       )}
-      {/* <button
-        onClick={() => {
-          console.log({ showConfirmTimer, isBlocking, isButtonDisabled });
-        }}
-      >
-        Hello
-      </button> */}
     </>
   );
 }
