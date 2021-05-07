@@ -5,16 +5,21 @@ interface TimerProps {
   onComplete: () => void;
   startSecond: number;
   startMinute: number;
+  startCountdown: boolean;
 }
 export default function Timer({
   onComplete,
   startSecond,
   startMinute,
+  startCountdown,
 }: TimerProps) {
-  const [minute, setMinute] = useState(startMinute);
-  const [second, setSecond] = useState(startSecond);
+  const [minute, setMinute] = useState(startCountdown ? startMinute : 0);
+  const [second, setSecond] = useState(startCountdown ? startSecond : 0);
 
   useInterval((clear: () => void) => {
+    // TODO test if this works
+    if (!startCountdown) return;
+
     if (second === 0 && minute === 0) {
       onComplete();
       clear();

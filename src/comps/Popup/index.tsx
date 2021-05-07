@@ -6,9 +6,9 @@ import styles from "./index.module.css";
 export default function App() {
   const [isBlocking, setIsBlocking] = useState(true);
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
-  const [showConfirmTimer, setShowConfirmTimer] = useState(false);
+  const [startCountdown, setStartCountdown] = useState(false);
   const [isButtonReady, setIsButtonReady] = useState(false);
-  console.log(isBlocking, isButtonDisabled, showConfirmTimer);
+  console.log(isBlocking, isButtonDisabled, startCountdown);
 
   useEffect(() => {
     const message: Message = {
@@ -37,7 +37,7 @@ export default function App() {
 
   const handleOnClick = () => {
     console.log("clicked");
-    console.log({ isBlocking, isButtonDisabled, showConfirmTimer });
+    console.log({ isBlocking, isButtonDisabled, startCountdown });
 
     // if it's not blocking, allow immediate blocking
     if (!isBlocking) {
@@ -54,24 +54,27 @@ export default function App() {
 
     // otherwise start timer sequence
     setIsButtonDisabled(true);
-    setShowConfirmTimer(true);
+    setStartCountdown(true);
   };
 
   const onTimerComplete = () => {
     setIsButtonDisabled(false);
-    setShowConfirmTimer(false);
+    setStartCountdown(false);
     setIsButtonReady(true);
   };
 
   return (
     <div className={styles.wrapper}>
       <div>Status: {isBlocking ? "blocking" : "not blocking"}</div>
+      <Timer
+        startCountdown={startCountdown}
+        startSecond={30}
+        startMinute={0}
+        onComplete={onTimerComplete}
+      />
       <button onClick={handleOnClick} disabled={isButtonDisabled}>
         toggle
       </button>
-      {showConfirmTimer && (
-        <Timer startSecond={30} startMinute={0} onComplete={onTimerComplete} />
-      )}
     </div>
   );
 }
