@@ -29,7 +29,8 @@ const config = {
       {
         test: /\.css$/,
         use: [
-          "style-loader",
+          { loader: "style-loader" },
+          { loader: "css-modules-typescript-loader" },
           {
             loader: "css-loader",
             options: {
@@ -58,7 +59,7 @@ const config = {
     ],
   },
   resolve: {
-    extensions: [".js", ".jsx", ".tsx", ".ts"],
+    extensions: [".js", ".jsx", ".tsx", ".ts", ".css"],
     alias: {
       "react-dom": "@hot-loader/react-dom",
     },

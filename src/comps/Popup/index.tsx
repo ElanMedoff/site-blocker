@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Message } from "../../utils/types";
 import Timer from "../Timer";
+import styles from "./index.module.css";
 
 export default function App() {
   const [isBlocking, setIsBlocking] = useState(true);
@@ -63,7 +64,7 @@ export default function App() {
   };
 
   return (
-    <>
+    <div className={styles.wrapper}>
       <div>Status: {isBlocking ? "blocking" : "not blocking"}</div>
       <button onClick={handleOnClick} disabled={isButtonDisabled}>
         toggle
@@ -71,6 +72,6 @@ export default function App() {
       {showConfirmTimer && (
         <Timer startSecond={30} startMinute={0} onComplete={onTimerComplete} />
       )}
-    </>
+    </div>
   );
 }
