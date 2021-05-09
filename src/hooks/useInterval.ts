@@ -20,9 +20,7 @@ export default function useInterval(
       savedCallback.current(() => clearInterval(id as NodeJS.Timeout));
     };
 
-    if (delay !== null) {
-      id = setInterval(tick, delay);
-      return () => clearInterval(id as NodeJS.Timeout);
-    }
+    id = setInterval(tick, delay);
+    return () => clearInterval(id as NodeJS.Timeout);
   }, [delay]);
 }

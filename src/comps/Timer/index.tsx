@@ -1,25 +1,24 @@
 import React, { useState } from "react";
 import useInterval from "../../hooks/useInterval";
 
+const formatTime = (number: number): string => {
+  return number.toLocaleString("en-US", {
+    minimumIntegerDigits: 2,
+    useGrouping: false,
+  });
+};
+
 interface TimerProps {
-  onComplete: () => void;
   startSecond: number;
   startMinute: number;
-  startCountdown: boolean;
+  onComplete: () => void;
 }
-export default function Timer({
-  onComplete,
-  startSecond,
-  startMinute,
-  startCountdown,
-}: TimerProps) {
-  const [minute, setMinute] = useState(startCountdown ? startMinute : 0);
-  const [second, setSecond] = useState(startCountdown ? startSecond : 0);
+
+function Timer({ onComplete, startSecond, startMinute }: TimerProps) {
+  const [minute, setMinute] = useState(startMinute ? startMinute : 0);
+  const [second, setSecond] = useState(startSecond ? startSecond : 0);
 
   useInterval((clear: () => void) => {
-    // TODO test if this works
-    if (!startCountdown) return;
-
     if (second === 0 && minute === 0) {
       onComplete();
       clear();
@@ -31,18 +30,37 @@ export default function Timer({
     }
   }, 1000);
 
-  const formattedSecond = second.toLocaleString("en-US", {
-    minimumIntegerDigits: 2,
-    useGrouping: false,
-  });
-  const formattedMinute = minute.toLocaleString("en-US", {
-    minimumIntegerDigits: 2,
-    useGrouping: false,
-  });
-
   return (
     <div>
-      {formattedMinute}:{formattedSecond}
+      {formatTime(minute)}:{formatTime(second)}
+    </div>
+  );
+}
+
+interface TimerWrapperProps {
+  onComplete: () => void;
+  startSecond: number;
+  startMinute: number;
+  startCountdown: boolean;
+}
+
+export default function TimerWrapper({
+  onComplete,
+  startSecond,
+  startMinute,
+  startCountdown,
+}: TimerWrapperProps) {
+  return (
+    <div>
+      {startCountdown ? (
+        <Timer
+          onComplete={onComplete}
+          startMinute={startMinute}
+          startSecond={startSecond}
+        />
+      ) : (
+        `${formatTime(0)}:${formatTime(0)}`
+      )}
     </div>
   );
 }
