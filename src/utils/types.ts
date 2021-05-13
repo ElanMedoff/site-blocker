@@ -14,4 +14,24 @@ interface IsBlockingToggle {
   isBlocking: boolean;
 }
 
-export type Message = IsBlockingRequest | IsBlockingResponse | IsBlockingToggle;
+interface StartBlockingTimestampRequest {
+  type: "REQ_START_BLOCKING_TIMESTAMP";
+}
+
+interface StartBlockingTimestampResponse {
+  type: "START_BLOCKING_TIMESTAMP";
+  timestamp: Date | null;
+}
+
+interface SetStartBlockingTimeStamp {
+  type: "SET_START_BLOCKING_TIMESTAMP";
+  timestamp: Date;
+}
+
+export type Message =
+  | IsBlockingRequest
+  | IsBlockingResponse
+  | IsBlockingToggle
+  | StartBlockingTimestampRequest
+  | StartBlockingTimestampResponse
+  | SetStartBlockingTimeStamp;
