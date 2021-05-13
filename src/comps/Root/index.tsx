@@ -9,12 +9,9 @@ export default function Root() {
   // "global" state, lotta piping around, might want to actually make global later
   const [isBlocking, setIsBlocking] = useState(true);
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
-  const [startCountdown, setStartCountdown] = useState(false);
+  const [startConfirmCountdown, setStartConfirmCountdown] = useState(false);
   const [isButtonReady, setIsButtonReady] = useState(false);
-  const [startBlockingTimestamp, setStartBlockingTimestamp] =
-    useState<Date | null>(null);
-
-  console.log(startBlockingTimestamp);
+  const [blockingTimestamp, setBlockingTimestamp] = useState<Date | null>(null);
 
   // onload set "global" state
   useEffect(() => {
@@ -23,18 +20,18 @@ export default function Root() {
     };
     chrome.runtime.sendMessage(isBlockingRequest);
 
-    const startBlockingTimestampRequest: Message = {
-      type: "REQ_START_BLOCKING_TIMESTAMP",
+    const blockingTimestampRequest: Message = {
+      type: "REQ_BLOCKING_TIMESTAMP",
     };
-    chrome.runtime.sendMessage(startBlockingTimestampRequest);
+    chrome.runtime.sendMessage(blockingTimestampRequest);
 
     chrome.runtime.onMessage.addListener((message: Message) => {
       switch (message.type) {
         case "IS_BLOCKING_STATUS":
           setIsBlocking(message.isBlocking);
           break;
-        case "START_BLOCKING_TIMESTAMP":
-          setStartBlockingTimestamp(message.timestamp);
+        case "BLOCKING_TIMESTAMP":
+          setBlockingTimestamp(message.timestamp);
           break;
         default:
           break;
@@ -46,21 +43,29 @@ export default function Root() {
     <div className={styles.wrapper}>
       <Status isBlocking={isBlocking} />
       <Timers
-        startCountdown={startCountdown}
-        setStartCountdown={setStartCountdown}
+        startConfirmCountdown={startConfirmCountdown}
+        setStartConfirmCountdown={setStartConfirmCountdown}
         setIsButtonDisabled={setIsButtonDisabled}
         setIsButtonReady={setIsButtonReady}
+        blockingTimestamp={blockingTimestamp}
       />
       <Toggle
         isBlocking={isBlocking}
-        setStartCountdown={setStartCountdown}
+        setStartConfirmCountdown={setStartConfirmCountdown}
         isButtonReady={isButtonReady}
         setIsButtonReady={setIsButtonReady}
         isButtonDisabled={isButtonDisabled}
         setIsButtonDisabled={setIsButtonDisabled}
-        startBlockingTimestamp={startBlockingTimestamp}
-        setStartBlockingTimestamp={setStartBlockingTimestamp}
+        setBlockingTimestamp={setBlockingTimestamp}
       />
     </div>
   );
 }
+
+/* 
+TODO:
+
+Fix styling
+see if I can fix the latency issues
+Lotta piping props, maybe a global state would just be better
+*/

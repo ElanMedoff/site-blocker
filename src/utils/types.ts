@@ -14,17 +14,17 @@ interface IsBlockingToggle {
   isBlocking: boolean;
 }
 
-interface StartBlockingTimestampRequest {
-  type: "REQ_START_BLOCKING_TIMESTAMP";
+interface BlockingTimestampRequest {
+  type: "REQ_BLOCKING_TIMESTAMP";
 }
 
-interface StartBlockingTimestampResponse {
-  type: "START_BLOCKING_TIMESTAMP";
+interface BlockingTimestampResponse {
+  type: "BLOCKING_TIMESTAMP";
   timestamp: Date | null;
 }
 
-interface SetStartBlockingTimeStamp {
-  type: "SET_START_BLOCKING_TIMESTAMP";
+interface SetBlockingTimeStamp {
+  type: "SET_BLOCKING_TIMESTAMP";
   timestamp: Date;
 }
 
@@ -32,6 +32,6 @@ export type Message =
   | IsBlockingRequest
   | IsBlockingResponse
   | IsBlockingToggle
-  | StartBlockingTimestampRequest
-  | StartBlockingTimestampResponse
-  | SetStartBlockingTimeStamp;
+  | BlockingTimestampRequest
+  | BlockingTimestampResponse
+  | SetBlockingTimeStamp;

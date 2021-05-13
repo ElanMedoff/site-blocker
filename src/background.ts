@@ -2,7 +2,7 @@ import blockedSites from "./utils/blockedSites";
 import { Message } from "./utils/types";
 
 let isBlocking = true;
-let startBlockingTimestamp: Date | null = null;
+let blockingTimestamp: Date | null = null;
 
 function getIsBlocking(callback: Function) {
   chrome.storage.local.get("isBlocking", (res) => {
@@ -16,22 +16,22 @@ function getIsBlocking(callback: Function) {
   });
 }
 
-function getStartBlockingTimestamp(callback: Function) {
-  chrome.storage.local.get("startBlockingTimestamp", (res) => {
-    if (res["startBlockingTimestamp"]) {
-      startBlockingTimestamp = res["startBlockingTimestamp"];
+function getBlockingTimestamp(callback: Function) {
+  chrome.storage.local.get("blockingTimestamp", (res) => {
+    if (res["blockingTimestamp"]) {
+      blockingTimestamp = res["blockingTimestamp"];
     } else {
-      startBlockingTimestamp = null;
+      blockingTimestamp = null;
     }
 
-    callback(startBlockingTimestamp);
+    callback(blockingTimestamp);
   });
 }
 
-function sendStartBlockingTimestamp(startBlockingTimestamp: Date | null) {
+function sendBlockingTimestamp(blockingTimestamp: Date | null) {
   const message: Message = {
-    type: "START_BLOCKING_TIMESTAMP",
-    timestamp: startBlockingTimestamp,
+    type: "BLOCKING_TIMESTAMP",
+    timestamp: blockingTimestamp,
   };
   chrome.runtime.sendMessage(message);
 }
@@ -81,25 +81,23 @@ chrome.runtime.onMessage.addListener((message: Message) => {
       chrome.storage.local.set({ isBlocking: isBlocking });
       sendIsBlockingStatus(isBlocking);
       break;
-    case "REQ_START_BLOCKING_TIMESTAMP":
-      getStartBlockingTimestamp(sendStartBlockingTimestamp);
-      // sendStartBlockingTimestamp(startBlockingTimestamp);
+    case "REQ_BLOCKING_TIMESTAMP":
+      getBlockingTimestamp(sendBlockingTimestamp);
+      // sendBlockingTimestamp(blockingTimestamp);
       break;
-    case "SET_START_BLOCKING_TIMESTAMP":
-      console.log("inside switch");
-      chrome.storage.local.set({ startBlockingTimestamp: message.timestamp });
-      console.log({
-        time: Math.abs(new Date(message.timestamp).getTime() - Date.now()),
-      });
+    case "SET_BLOCKING_TIMESTAMP":
+      blockingTimestamp = message.timestamp;
+      chrome.storage.local.set({ blockingTimestamp: message.timestamp });
 
       setTimeout(() => {
-        console.log("inside set timeout callback");
+        blockingTimestamp = null;
+        sendBlockingTimestamp(blockingTimestamp);
+        chrome.storage.local.set({ blockingTimestamp });
 
-        sendStartBlockingTimestamp(null);
-        chrome.storage.local.set({ startBlockingTimestamp: null });
-        sendIsBlockingStatus(true);
-        chrome.storage.local.set({ isBlocking: true });
-      }, Math.abs(new Date(message.timestamp).getTime() - Date.now()));
+        isBlocking = true;
+        sendIsBlockingStatus(isBlocking);
+        chrome.storage.local.set({ isBlocking });
+      }, new Date(message.timestamp).getTime() - Date.now());
       break;
     default:
       break;

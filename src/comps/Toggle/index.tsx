@@ -7,9 +7,8 @@ interface ToggleProps {
   setIsButtonReady: Dispatch<SetStateAction<boolean>>;
   isButtonDisabled: boolean;
   setIsButtonDisabled: Dispatch<SetStateAction<boolean>>;
-  setStartCountdown: Dispatch<SetStateAction<boolean>>;
-  startBlockingTimestamp: Date | null;
-  setStartBlockingTimestamp: Dispatch<SetStateAction<Date | null>>;
+  setStartConfirmCountdown: Dispatch<SetStateAction<boolean>>;
+  setBlockingTimestamp: Dispatch<SetStateAction<Date | null>>;
 }
 
 export default function Toggle({
@@ -18,11 +17,10 @@ export default function Toggle({
   setIsButtonReady,
   setIsButtonDisabled,
   isButtonDisabled,
-  setStartCountdown,
-  setStartBlockingTimestamp,
-  startBlockingTimestamp,
+  setStartConfirmCountdown,
+  setBlockingTimestamp,
 }: ToggleProps) {
-  const toggleIsBlocking = () => {
+  const sendToggleIsBlocking = () => {
     const message: Message = {
       type: "TOGGLE_IS_BLOCKING",
       isBlocking: !isBlocking,
@@ -30,11 +28,9 @@ export default function Toggle({
     chrome.runtime.sendMessage(message);
   };
 
-  console.log({ startBlockingTimestamp });
-
   const sendStartBlockingTimestamp = (timestamp: Date) => {
     const message: Message = {
-      type: "SET_START_BLOCKING_TIMESTAMP",
+      type: "SET_BLOCKING_TIMESTAMP",
       timestamp,
     };
     chrome.runtime.sendMessage(message);
@@ -43,33 +39,30 @@ export default function Toggle({
   const handleOnClick = () => {
     // if it's not blocking, allow immediate blocking
     if (!isBlocking) {
-      toggleIsBlocking();
+      sendToggleIsBlocking();
       return;
     }
 
     // otherwise if it's blocking, and button is ready, toggle
     if (isButtonReady) {
-      // TODO in progress
-      console.log("inside client if ready to toggle");
-      const timestamp = new Date(Date.now() + 10000);
-      console.log({ clientTimestamp: timestamp });
+      // TODO set this number
+      const timestamp = new Date(Date.now() + 30000);
       sendStartBlockingTimestamp(timestamp);
-      setStartBlockingTimestamp(timestamp);
-      toggleIsBlocking();
+      setBlockingTimestamp(timestamp);
+      sendToggleIsBlocking();
       setIsButtonReady(false);
       return;
     }
 
     // otherwise start timer sequence
     setIsButtonDisabled(true);
-    setStartCountdown(true);
+    setStartConfirmCountdown(true);
   };
 
   return (
     <>
       <button onClick={handleOnClick} disabled={isButtonDisabled}>
         toggle
-        {startBlockingTimestamp?.getTime()}
       </button>
     </>
   );

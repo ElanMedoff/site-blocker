@@ -30350,27 +30350,26 @@ function Root() {
     // "global" state, lotta piping around, might want to actually make global later
     var _a = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true), isBlocking = _a[0], setIsBlocking = _a[1];
     var _b = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false), isButtonDisabled = _b[0], setIsButtonDisabled = _b[1];
-    var _c = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false), startCountdown = _c[0], setStartCountdown = _c[1];
+    var _c = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false), startConfirmCountdown = _c[0], setStartConfirmCountdown = _c[1];
     var _d = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false), isButtonReady = _d[0], setIsButtonReady = _d[1];
-    var _e = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null), startBlockingTimestamp = _e[0], setStartBlockingTimestamp = _e[1];
-    console.log(startBlockingTimestamp);
+    var _e = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null), blockingTimestamp = _e[0], setBlockingTimestamp = _e[1];
     // onload set "global" state
     (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
         var isBlockingRequest = {
             type: "REQ_IS_BLOCKING_STATUS",
         };
         chrome.runtime.sendMessage(isBlockingRequest);
-        var startBlockingTimestampRequest = {
-            type: "REQ_START_BLOCKING_TIMESTAMP",
+        var blockingTimestampRequest = {
+            type: "REQ_BLOCKING_TIMESTAMP",
         };
-        chrome.runtime.sendMessage(startBlockingTimestampRequest);
+        chrome.runtime.sendMessage(blockingTimestampRequest);
         chrome.runtime.onMessage.addListener(function (message) {
             switch (message.type) {
                 case "IS_BLOCKING_STATUS":
                     setIsBlocking(message.isBlocking);
                     break;
-                case "START_BLOCKING_TIMESTAMP":
-                    setStartBlockingTimestamp(message.timestamp);
+                case "BLOCKING_TIMESTAMP":
+                    setBlockingTimestamp(message.timestamp);
                     break;
                 default:
                     break;
@@ -30379,9 +30378,16 @@ function Root() {
     }, []);
     return (react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { className: _index_module_css__WEBPACK_IMPORTED_MODULE_4__.default.wrapper },
         react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Status__WEBPACK_IMPORTED_MODULE_1__.default, { isBlocking: isBlocking }),
-        react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Timers__WEBPACK_IMPORTED_MODULE_2__.default, { startCountdown: startCountdown, setStartCountdown: setStartCountdown, setIsButtonDisabled: setIsButtonDisabled, setIsButtonReady: setIsButtonReady }),
-        react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Toggle__WEBPACK_IMPORTED_MODULE_3__.default, { isBlocking: isBlocking, setStartCountdown: setStartCountdown, isButtonReady: isButtonReady, setIsButtonReady: setIsButtonReady, isButtonDisabled: isButtonDisabled, setIsButtonDisabled: setIsButtonDisabled, startBlockingTimestamp: startBlockingTimestamp, setStartBlockingTimestamp: setStartBlockingTimestamp })));
+        react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Timers__WEBPACK_IMPORTED_MODULE_2__.default, { startConfirmCountdown: startConfirmCountdown, setStartConfirmCountdown: setStartConfirmCountdown, setIsButtonDisabled: setIsButtonDisabled, setIsButtonReady: setIsButtonReady, blockingTimestamp: blockingTimestamp }),
+        react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Toggle__WEBPACK_IMPORTED_MODULE_3__.default, { isBlocking: isBlocking, setStartConfirmCountdown: setStartConfirmCountdown, isButtonReady: isButtonReady, setIsButtonReady: setIsButtonReady, isButtonDisabled: isButtonDisabled, setIsButtonDisabled: setIsButtonDisabled, setBlockingTimestamp: setBlockingTimestamp })));
 }
+/*
+TODO:
+
+Fix styling
+see if I can fix the latency issues
+Lotta piping props, maybe a global state would just be better
+*/
 
 
 /***/ }),
@@ -30416,25 +30422,22 @@ function Status(_a) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ TimerWrapper)
+/* harmony export */   "default": () => (/* binding */ Timer)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var _hooks_useInterval__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../hooks/useInterval */ "./src/hooks/useInterval.ts");
+/* harmony import */ var _utils_formatters__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utils/formatters */ "./src/utils/formatters.ts");
 
 
-var formatTime = function (number) {
-    return number.toLocaleString("en-US", {
-        minimumIntegerDigits: 2,
-        useGrouping: false,
-    });
-};
+
 function Timer(_a) {
     var onComplete = _a.onComplete, startSecond = _a.startSecond, startMinute = _a.startMinute;
     var _b = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(startMinute ? startMinute : 0), minute = _b[0], setMinute = _b[1];
     var _c = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(startSecond ? startSecond : 0), second = _c[0], setSecond = _c[1];
     (0,_hooks_useInterval__WEBPACK_IMPORTED_MODULE_1__.default)(function (clear) {
         if (second === 0 && minute === 0) {
-            onComplete();
+            if (onComplete)
+                onComplete();
             clear();
         }
         else if (second === 0) {
@@ -30446,13 +30449,9 @@ function Timer(_a) {
         }
     }, 1000);
     return (react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null,
-        formatTime(minute),
+        (0,_utils_formatters__WEBPACK_IMPORTED_MODULE_2__.formatTime)(minute),
         ":",
-        formatTime(second)));
-}
-function TimerWrapper(_a) {
-    var onComplete = _a.onComplete, startSecond = _a.startSecond, startMinute = _a.startMinute, startCountdown = _a.startCountdown;
-    return (react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, startCountdown ? (react__WEBPACK_IMPORTED_MODULE_0__.createElement(Timer, { onComplete: onComplete, startMinute: startMinute, startSecond: startSecond })) : (formatTime(0) + ":" + formatTime(0))));
+        (0,_utils_formatters__WEBPACK_IMPORTED_MODULE_2__.formatTime)(second)));
 }
 
 
@@ -30470,19 +30469,34 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var _Timer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Timer */ "./src/comps/Timer/index.tsx");
+/* harmony import */ var _utils_formatters__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utils/formatters */ "./src/utils/formatters.ts");
+
 
 
 function Timers(_a) {
-    var setIsButtonDisabled = _a.setIsButtonDisabled, setStartCountdown = _a.setStartCountdown, startCountdown = _a.startCountdown, setIsButtonReady = _a.setIsButtonReady;
-    var onTimerComplete = function () {
+    var setIsButtonDisabled = _a.setIsButtonDisabled, setStartConfirmCountdown = _a.setStartConfirmCountdown, startConfirmCountdown = _a.startConfirmCountdown, setIsButtonReady = _a.setIsButtonReady, blockingTimestamp = _a.blockingTimestamp;
+    var onConfirmTimerComplete = function () {
         setIsButtonDisabled(false);
-        setStartCountdown(false);
+        setStartConfirmCountdown(false);
         setIsButtonReady(true);
     };
-    return (react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null,
-        react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Timer__WEBPACK_IMPORTED_MODULE_1__.default, { startCountdown: startCountdown, 
-            // TODO change this back to 30 for production
-            startSecond: 2, startMinute: 0, onComplete: onTimerComplete })));
+    var renderTimers = function () {
+        if (blockingTimestamp) {
+            var remainingSeconds = (new Date(blockingTimestamp).getTime() - Date.now()) / 1000;
+            // TODO what to do if negative!!!
+            console.log((new Date(blockingTimestamp).getTime() - Date.now()) / 1000);
+            var startMinute = Math.floor(remainingSeconds / 60);
+            var startSecond = Math.floor(remainingSeconds - startMinute * 60);
+            return react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Timer__WEBPACK_IMPORTED_MODULE_1__.default, { startMinute: startMinute, startSecond: startSecond });
+        }
+        else if (startConfirmCountdown) {
+            return (react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Timer__WEBPACK_IMPORTED_MODULE_1__.default, { onComplete: onConfirmTimerComplete, startMinute: 0, startSecond: 4 }));
+        }
+        else {
+            return react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_utils_formatters__WEBPACK_IMPORTED_MODULE_2__.formatTime)(0) + ":" + (0,_utils_formatters__WEBPACK_IMPORTED_MODULE_2__.formatTime)(0));
+        }
+    };
+    return react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, renderTimers());
 }
 
 
@@ -30501,18 +30515,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 function Toggle(_a) {
-    var isBlocking = _a.isBlocking, isButtonReady = _a.isButtonReady, setIsButtonReady = _a.setIsButtonReady, setIsButtonDisabled = _a.setIsButtonDisabled, isButtonDisabled = _a.isButtonDisabled, setStartCountdown = _a.setStartCountdown, setStartBlockingTimestamp = _a.setStartBlockingTimestamp, startBlockingTimestamp = _a.startBlockingTimestamp;
-    var toggleIsBlocking = function () {
+    var isBlocking = _a.isBlocking, isButtonReady = _a.isButtonReady, setIsButtonReady = _a.setIsButtonReady, setIsButtonDisabled = _a.setIsButtonDisabled, isButtonDisabled = _a.isButtonDisabled, setStartConfirmCountdown = _a.setStartConfirmCountdown, setBlockingTimestamp = _a.setBlockingTimestamp;
+    var sendToggleIsBlocking = function () {
         var message = {
             type: "TOGGLE_IS_BLOCKING",
             isBlocking: !isBlocking,
         };
         chrome.runtime.sendMessage(message);
     };
-    console.log({ startBlockingTimestamp: startBlockingTimestamp });
     var sendStartBlockingTimestamp = function (timestamp) {
         var message = {
-            type: "SET_START_BLOCKING_TIMESTAMP",
+            type: "SET_BLOCKING_TIMESTAMP",
             timestamp: timestamp,
         };
         chrome.runtime.sendMessage(message);
@@ -30520,29 +30533,25 @@ function Toggle(_a) {
     var handleOnClick = function () {
         // if it's not blocking, allow immediate blocking
         if (!isBlocking) {
-            toggleIsBlocking();
+            sendToggleIsBlocking();
             return;
         }
         // otherwise if it's blocking, and button is ready, toggle
         if (isButtonReady) {
-            // TODO in progress
-            console.log("inside client if ready to toggle");
-            var timestamp = new Date(Date.now() + 10000);
-            console.log({ clientTimestamp: timestamp });
+            // TODO set this number
+            var timestamp = new Date(Date.now() + 30000);
             sendStartBlockingTimestamp(timestamp);
-            setStartBlockingTimestamp(timestamp);
-            toggleIsBlocking();
+            setBlockingTimestamp(timestamp);
+            sendToggleIsBlocking();
             setIsButtonReady(false);
             return;
         }
         // otherwise start timer sequence
         setIsButtonDisabled(true);
-        setStartCountdown(true);
+        setStartConfirmCountdown(true);
     };
     return (react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null,
-        react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", { onClick: handleOnClick, disabled: isButtonDisabled },
-            "toggle", startBlockingTimestamp === null || startBlockingTimestamp === void 0 ? void 0 :
-            startBlockingTimestamp.getTime())));
+        react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", { onClick: handleOnClick, disabled: isButtonDisabled }, "toggle")));
 }
 
 
@@ -30578,6 +30587,27 @@ function useInterval(callback, delay) {
         return function () { return clearInterval(id); };
     }, [delay]);
 }
+
+
+/***/ }),
+
+/***/ "./src/utils/formatters.ts":
+/*!*********************************!*\
+  !*** ./src/utils/formatters.ts ***!
+  \*********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "formatTime": () => (/* binding */ formatTime)
+/* harmony export */ });
+var formatTime = function (number) {
+    return number.toLocaleString("en-US", {
+        minimumIntegerDigits: 2,
+        useGrouping: false,
+    });
+};
+
 
 
 /***/ })
