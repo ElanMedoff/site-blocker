@@ -86,15 +86,20 @@ chrome.runtime.onMessage.addListener((message: Message) => {
       // sendStartBlockingTimestamp(startBlockingTimestamp);
       break;
     case "SET_START_BLOCKING_TIMESTAMP":
+      console.log("inside switch");
       chrome.storage.local.set({ startBlockingTimestamp: message.timestamp });
+      console.log({
+        time: Math.abs(new Date(message.timestamp).getTime() - Date.now()),
+      });
 
-      // does this make sense?
       setTimeout(() => {
+        console.log("inside set timeout callback");
+
         sendStartBlockingTimestamp(null);
-        sendIsBlockingStatus(false);
         chrome.storage.local.set({ startBlockingTimestamp: null });
-        chrome.storage.local.set({ isBlocking: false });
-      }, Math.abs(message.timestamp.getTime() - Date.now()));
+        sendIsBlockingStatus(true);
+        chrome.storage.local.set({ isBlocking: true });
+      }, Math.abs(new Date(message.timestamp).getTime() - Date.now()));
       break;
     default:
       break;

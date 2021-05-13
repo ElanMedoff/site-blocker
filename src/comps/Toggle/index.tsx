@@ -8,6 +8,8 @@ interface ToggleProps {
   isButtonDisabled: boolean;
   setIsButtonDisabled: Dispatch<SetStateAction<boolean>>;
   setStartCountdown: Dispatch<SetStateAction<boolean>>;
+  startBlockingTimestamp: Date | null;
+  setStartBlockingTimestamp: Dispatch<SetStateAction<Date | null>>;
 }
 
 export default function Toggle({
@@ -17,11 +19,23 @@ export default function Toggle({
   setIsButtonDisabled,
   isButtonDisabled,
   setStartCountdown,
+  setStartBlockingTimestamp,
+  startBlockingTimestamp,
 }: ToggleProps) {
   const toggleIsBlocking = () => {
     const message: Message = {
       type: "TOGGLE_IS_BLOCKING",
       isBlocking: !isBlocking,
+    };
+    chrome.runtime.sendMessage(message);
+  };
+
+  console.log({ startBlockingTimestamp });
+
+  const sendStartBlockingTimestamp = (timestamp: Date) => {
+    const message: Message = {
+      type: "SET_START_BLOCKING_TIMESTAMP",
+      timestamp,
     };
     chrome.runtime.sendMessage(message);
   };
@@ -35,6 +49,12 @@ export default function Toggle({
 
     // otherwise if it's blocking, and button is ready, toggle
     if (isButtonReady) {
+      // TODO in progress
+      console.log("inside client if ready to toggle");
+      const timestamp = new Date(Date.now() + 10000);
+      console.log({ clientTimestamp: timestamp });
+      sendStartBlockingTimestamp(timestamp);
+      setStartBlockingTimestamp(timestamp);
       toggleIsBlocking();
       setIsButtonReady(false);
       return;
@@ -49,6 +69,7 @@ export default function Toggle({
     <>
       <button onClick={handleOnClick} disabled={isButtonDisabled}>
         toggle
+        {startBlockingTimestamp?.getTime()}
       </button>
     </>
   );

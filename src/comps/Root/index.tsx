@@ -58,6 +58,8 @@ export default function Root() {
         setIsButtonReady={setIsButtonReady}
         isButtonDisabled={isButtonDisabled}
         setIsButtonDisabled={setIsButtonDisabled}
+        startBlockingTimestamp={startBlockingTimestamp}
+        setStartBlockingTimestamp={setStartBlockingTimestamp}
       />
     </div>
   );

@@ -24,7 +24,8 @@ export default function Timers({
     <>
       <Timer
         startCountdown={startCountdown}
-        startSecond={30}
+        // TODO change this back to 30 for production
+        startSecond={2}
         startMinute={0}
         onComplete={onTimerComplete}
       />
