@@ -73,7 +73,6 @@ chrome.tabs.onUpdated.addListener((tabId, _, tab) => {
 chrome.runtime.onMessage.addListener((message: Message) => {
   switch (message.type) {
     case "REQ_IS_BLOCKING_STATUS":
-      // TODO haven't tested this yet ...
       getIsBlocking(sendIsBlockingStatus);
       // sendIsBlockingStatus(isBlocking);
       break;
@@ -87,8 +86,15 @@ chrome.runtime.onMessage.addListener((message: Message) => {
       // sendStartBlockingTimestamp(startBlockingTimestamp);
       break;
     case "SET_START_BLOCKING_TIMESTAMP":
-      // start a timeout
-      // on timeout finish send message, set startBlockingTimestamp to null
+      chrome.storage.local.set({ startBlockingTimestamp: message.timestamp });
+
+      // does this make sense?
+      setTimeout(() => {
+        sendStartBlockingTimestamp(null);
+        sendIsBlockingStatus(false);
+        chrome.storage.local.set({ startBlockingTimestamp: null });
+        chrome.storage.local.set({ isBlocking: false });
+      }, Math.abs(message.timestamp.getTime() - Date.now()));
       break;
     default:
       break;
