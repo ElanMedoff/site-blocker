@@ -91,7 +91,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_blockedSites__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utils/blockedSites */ "./src/utils/blockedSites.ts");
 
 var isBlocking = true;
+chrome.storage.local.set({ isBlocking: true });
 var blockingTimestamp = null;
+chrome.storage.local.set({ blockingTimestamp: null });
 function getIsBlocking(callback) {
     chrome.storage.local.get("isBlocking", function (res) {
         if (res["isBlocking"]) {
@@ -165,10 +167,14 @@ chrome.runtime.onMessage.addListener(function (message) {
             sendIsBlockingStatus(isBlocking);
             break;
         case "REQ_BLOCKING_TIMESTAMP":
+            console.log("BACKEND: received request for blocking timestamp", {
+                blockingTimestamp: blockingTimestamp,
+            });
             getBlockingTimestamp(sendBlockingTimestamp);
             // sendBlockingTimestamp(blockingTimestamp);
             break;
         case "SET_BLOCKING_TIMESTAMP":
+            console.log("BACKEND: received request to set blocking timestamp", message.timestamp);
             blockingTimestamp = message.timestamp;
             chrome.storage.local.set({ blockingTimestamp: message.timestamp });
             setTimeout(function () {
@@ -178,7 +184,8 @@ chrome.runtime.onMessage.addListener(function (message) {
                 isBlocking = true;
                 sendIsBlockingStatus(isBlocking);
                 chrome.storage.local.set({ isBlocking: isBlocking });
-            }, Math.abs(new Date(message.timestamp).getTime() - Date.now()));
+                console.log("BACKEND: in set timeout, setting to null");
+            }, new Date(message.timestamp).getTime() - Date.now());
             break;
         default:
             break;

@@ -23,13 +23,12 @@ export default function Timers({
     setIsButtonReady(true);
   };
 
+  console.log("CLIENT: in timer top level", { blockingTimestamp });
+
   const renderTimers = () => {
     if (blockingTimestamp) {
       const remainingSeconds =
         (new Date(blockingTimestamp).getTime() - Date.now()) / 1000;
-
-      // TODO what to do if negative!!!
-      console.log((new Date(blockingTimestamp).getTime() - Date.now()) / 1000);
 
       const startMinute = Math.floor(remainingSeconds / 60);
       const startSecond = Math.floor(remainingSeconds - startMinute * 60);

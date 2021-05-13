@@ -30353,6 +30353,7 @@ function Root() {
     var _c = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false), startConfirmCountdown = _c[0], setStartConfirmCountdown = _c[1];
     var _d = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false), isButtonReady = _d[0], setIsButtonReady = _d[1];
     var _e = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null), blockingTimestamp = _e[0], setBlockingTimestamp = _e[1];
+    console.log("root", { blockingTimestamp: blockingTimestamp });
     // onload set "global" state
     (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
         var isBlockingRequest = {
@@ -30363,6 +30364,7 @@ function Root() {
             type: "REQ_BLOCKING_TIMESTAMP",
         };
         chrome.runtime.sendMessage(blockingTimestampRequest);
+        console.log("CLIENT: sending request message");
         chrome.runtime.onMessage.addListener(function (message) {
             switch (message.type) {
                 case "IS_BLOCKING_STATUS":
@@ -30370,6 +30372,7 @@ function Root() {
                     break;
                 case "BLOCKING_TIMESTAMP":
                     setBlockingTimestamp(message.timestamp);
+                    console.log("CLIENT: received messaged, setting blocking timestamp");
                     break;
                 default:
                     break;
@@ -30387,6 +30390,7 @@ TODO:
 Fix styling
 see if I can fix the latency issues
 Lotta piping props, maybe a global state would just be better
+what if you toggle while the blocking timer is still going?
 */
 
 
@@ -30480,11 +30484,10 @@ function Timers(_a) {
         setStartConfirmCountdown(false);
         setIsButtonReady(true);
     };
+    console.log("CLIENT: in timer top level", { blockingTimestamp: blockingTimestamp });
     var renderTimers = function () {
         if (blockingTimestamp) {
             var remainingSeconds = (new Date(blockingTimestamp).getTime() - Date.now()) / 1000;
-            // TODO what to do if negative!!!
-            console.log((new Date(blockingTimestamp).getTime() - Date.now()) / 1000);
             var startMinute = Math.floor(remainingSeconds / 60);
             var startSecond = Math.floor(remainingSeconds - startMinute * 60);
             return react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Timer__WEBPACK_IMPORTED_MODULE_1__.default, { startMinute: startMinute, startSecond: startSecond });

@@ -2,7 +2,10 @@ import blockedSites from "./utils/blockedSites";
 import { Message } from "./utils/types";
 
 let isBlocking = true;
+chrome.storage.local.set({ isBlocking: true });
+
 let blockingTimestamp: Date | null = null;
+chrome.storage.local.set({ blockingTimestamp: null });
 
 function getIsBlocking(callback: Function) {
   chrome.storage.local.get("isBlocking", (res) => {
@@ -82,10 +85,17 @@ chrome.runtime.onMessage.addListener((message: Message) => {
       sendIsBlockingStatus(isBlocking);
       break;
     case "REQ_BLOCKING_TIMESTAMP":
+      console.log("BACKEND: received request for blocking timestamp", {
+        blockingTimestamp,
+      });
       getBlockingTimestamp(sendBlockingTimestamp);
       // sendBlockingTimestamp(blockingTimestamp);
       break;
     case "SET_BLOCKING_TIMESTAMP":
+      console.log(
+        "BACKEND: received request to set blocking timestamp",
+        message.timestamp
+      );
       blockingTimestamp = message.timestamp;
       chrome.storage.local.set({ blockingTimestamp: message.timestamp });
 
@@ -97,6 +107,8 @@ chrome.runtime.onMessage.addListener((message: Message) => {
         isBlocking = true;
         sendIsBlockingStatus(isBlocking);
         chrome.storage.local.set({ isBlocking });
+
+        console.log("BACKEND: in set timeout, setting to null");
       }, new Date(message.timestamp).getTime() - Date.now());
       break;
     default:

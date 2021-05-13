@@ -13,6 +13,7 @@ export default function Root() {
   const [isButtonReady, setIsButtonReady] = useState(false);
   const [blockingTimestamp, setBlockingTimestamp] = useState<Date | null>(null);
 
+  console.log("root", { blockingTimestamp });
   // onload set "global" state
   useEffect(() => {
     const isBlockingRequest: Message = {
@@ -24,6 +25,7 @@ export default function Root() {
       type: "REQ_BLOCKING_TIMESTAMP",
     };
     chrome.runtime.sendMessage(blockingTimestampRequest);
+    console.log("CLIENT: sending request message");
 
     chrome.runtime.onMessage.addListener((message: Message) => {
       switch (message.type) {
@@ -32,6 +34,7 @@ export default function Root() {
           break;
         case "BLOCKING_TIMESTAMP":
           setBlockingTimestamp(message.timestamp);
+          console.log("CLIENT: received messaged, setting blocking timestamp");
           break;
         default:
           break;
@@ -68,4 +71,5 @@ TODO:
 Fix styling
 see if I can fix the latency issues
 Lotta piping props, maybe a global state would just be better
+what if you toggle while the blocking timer is still going?
 */
