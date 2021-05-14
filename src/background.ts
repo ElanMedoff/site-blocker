@@ -68,7 +68,7 @@ chrome.tabs.onUpdated.addListener((tabId, _, tab) => {
   for (const regex of blockedSites) {
     if (regex.test(tab.url)) {
       chrome.tabs.remove(tabId, () => {
-        console.log("removed", tabId, tab.url);
+        console.log("BACKEND: removed tab", { tabId, url: tab.url });
       });
       break;
     }
@@ -94,10 +94,9 @@ chrome.runtime.onMessage.addListener((message: Message) => {
       // sendBlockingTimestamp(blockingTimestamp);
       break;
     case "SET_BLOCKING_TIMESTAMP":
-      console.log(
-        "BACKEND: received request to set blocking timestamp",
-        message.timestamp
-      );
+      console.log("BACKEND: received request to set blocking timestamp", {
+        timestamp: message.timestamp,
+      });
 
       if (!message.timestamp) {
         // set all the variables like below
