@@ -50,7 +50,7 @@ export default function Toggle({
     // otherwise if it's blocking, and button is ready, toggle
     if (isButtonReady) {
       // TODO set this number
-      const timestamp = new Date(Date.now() + 30000);
+      const timestamp = new Date(Date.now() + 30 * 60 * 1000);
       sendBlockingTimestamp(timestamp);
       sendToggleIsBlocking();
       setIsButtonReady(false);
