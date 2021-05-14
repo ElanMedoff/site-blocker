@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import useInterval from "../../hooks/useInterval";
 import { formatTime } from "../../utils/formatters";
+import styles from "./Timer.module.css";
 
 interface TimerProps {
   startSecond: number;
   startMinute: number;
+  grey?: boolean;
   onComplete?: () => void;
 }
 
@@ -12,6 +14,7 @@ export default function Timer({
   onComplete,
   startSecond,
   startMinute,
+  grey,
 }: TimerProps) {
   const [minute, setMinute] = useState(startMinute ? startMinute : 0);
   const [second, setSecond] = useState(startSecond ? startSecond : 0);
@@ -29,7 +32,7 @@ export default function Timer({
   }, 1000);
 
   return (
-    <div>
+    <div className={grey ? styles.grey : ""}>
       {formatTime(minute)}:{formatTime(second)}
     </div>
   );

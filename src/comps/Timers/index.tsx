@@ -40,7 +40,8 @@ export default function Timers({
         <Timer
           onComplete={onConfirmTimerComplete}
           startMinute={0}
-          startSecond={4}
+          startSecond={3}
+          grey={true}
         />
       );
     } else {

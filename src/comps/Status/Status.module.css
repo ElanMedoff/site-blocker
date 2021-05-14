@@ -1,7 +1,14 @@
 .status {
-  font-size: 24px;
+  font-size: 18px;
   text-align: center;
   font-weight: bold;
+  width: 125px;
+  /* border: 1px solid black; */
+  margin-right: 6px;
+}
+.italic {
+  font-style: italic;
+  font-size: 16px;
 }
 
 .green {
@@ -10,4 +17,8 @@
 
 .red {
   color: #ff0039;
+}
+
+.orange {
+  color: #f39c12;
 }

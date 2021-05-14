@@ -4,10 +4,17 @@
 }
 
 .button {
-  padding: 12px;
-  width: 100px;
+  padding: 6px;
+  width: 75px;
   text-align: center;
-  margin-top: 12px;
   font-size: 12px;
-  border-radius: 1000px;
+  border-radius: 5px;
+  margin: 0 12px 0 16px;
+  background-color: white;
+  border: 1px solid black;
+  font-weight: bold;
 }
+
+/* .button:hover {
+  background-color: lightgrey;
+} */

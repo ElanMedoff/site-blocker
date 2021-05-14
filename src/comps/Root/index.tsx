@@ -13,6 +13,8 @@ export default function Root() {
   const [isButtonReady, setIsButtonReady] = useState(false);
   const [blockingTimestamp, setBlockingTimestamp] = useState<Date | null>(null);
 
+  console.log({ startConfirmCountdown });
+
   console.log("root", { blockingTimestamp });
   // onload set "global" state
   useEffect(() => {
@@ -48,7 +50,11 @@ export default function Root() {
 
   return (
     <div className={styles.wrapper}>
-      <Status isBlocking={isBlocking} />
+      <Status
+        isBlocking={isBlocking}
+        startConfirmCountdown={startConfirmCountdown}
+        isButtonReady={isButtonReady}
+      />
       <Timers
         blockingTimestamp={blockingTimestamp}
         startConfirmCountdown={startConfirmCountdown}
