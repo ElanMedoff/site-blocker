@@ -1,6 +1,7 @@
 import React, { Dispatch, SetStateAction } from "react";
 import Timer from "../Timer";
 import { formatTime } from "../../utils/formatters";
+import styles from "./Timers.module.css";
 
 interface TimersProps {
   setIsButtonDisabled: Dispatch<SetStateAction<boolean>>;
@@ -47,5 +48,5 @@ export default function Timers({
     }
   };
 
-  return <div>{renderTimers()}</div>;
+  return <div className={styles.timer}>{renderTimers()}</div>;
 }

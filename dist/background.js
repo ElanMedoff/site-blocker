@@ -177,7 +177,7 @@ chrome.runtime.onMessage.addListener(function (message) {
         case "SET_BLOCKING_TIMESTAMP":
             console.log("BACKEND: received request to set blocking timestamp", message.timestamp);
             if (!message.timestamp) {
-                // set all the variables like belo
+                // set all the variables like below
                 blockingTimestamp = message.timestamp;
                 chrome.storage.local.set({ blockingTimestamp: message.timestamp });
                 sendBlockingTimestamp(blockingTimestamp);

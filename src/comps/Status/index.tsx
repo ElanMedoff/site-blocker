@@ -8,7 +8,7 @@ interface StatusProps {
 export default function Status({ isBlocking }: StatusProps) {
   return (
     <div className={styles.status}>
-      Status:{" "}
+      Status:
       {isBlocking ? (
         <div className={styles.green}>blocking</div>
       ) : (

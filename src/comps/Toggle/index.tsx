@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction } from "react";
 import { Message } from "../../utils/types";
-// import styles from "./Toggle.module.css";
+import styles from "./Toggle.module.css";
 
 interface ToggleProps {
   isBlocking: boolean;
@@ -42,7 +42,6 @@ export default function Toggle({
   const handleOnClick = () => {
     // if it's not blocking, allow immediate blocking
     if (!isBlocking) {
-      // TODO mess with this
       sendBlockingTimestamp(null);
       sendToggleIsBlocking();
       return;
@@ -64,10 +63,14 @@ export default function Toggle({
   };
 
   return (
-    <>
-      <button onClick={handleOnClick} disabled={isButtonDisabled}>
+    <div className={styles.buttonWrapper}>
+      <button
+        className={styles.button}
+        onClick={handleOnClick}
+        disabled={isButtonDisabled}
+      >
         toggle
       </button>
-    </>
+    </div>
   );
 }

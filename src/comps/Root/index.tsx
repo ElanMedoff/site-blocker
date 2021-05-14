@@ -50,20 +50,20 @@ export default function Root() {
     <div className={styles.wrapper}>
       <Status isBlocking={isBlocking} />
       <Timers
+        blockingTimestamp={blockingTimestamp}
         startConfirmCountdown={startConfirmCountdown}
         setStartConfirmCountdown={setStartConfirmCountdown}
         setIsButtonDisabled={setIsButtonDisabled}
         setIsButtonReady={setIsButtonReady}
-        blockingTimestamp={blockingTimestamp}
       />
       <Toggle
         isBlocking={isBlocking}
         setStartConfirmCountdown={setStartConfirmCountdown}
+        blockingTimestamp={blockingTimestamp}
         isButtonReady={isButtonReady}
         setIsButtonReady={setIsButtonReady}
         isButtonDisabled={isButtonDisabled}
         setIsButtonDisabled={setIsButtonDisabled}
-        blockingTimestamp={blockingTimestamp}
       />
     </div>
   );
@@ -72,8 +72,9 @@ export default function Root() {
 /* 
 TODO:
 
-Fix styling
+Fix styling, try horizontal
+Add third status: are you sure?
+More button animations
 see if I can fix the latency issues
 Lotta piping props, maybe a global state would just be better
-what if you toggle while the blocking timer is still going?
 */

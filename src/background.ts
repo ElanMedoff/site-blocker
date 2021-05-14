@@ -100,7 +100,7 @@ chrome.runtime.onMessage.addListener((message: Message) => {
       );
 
       if (!message.timestamp) {
-        // set all the variables like belo
+        // set all the variables like below
         blockingTimestamp = message.timestamp;
         chrome.storage.local.set({ blockingTimestamp: message.timestamp });
         sendBlockingTimestamp(blockingTimestamp);

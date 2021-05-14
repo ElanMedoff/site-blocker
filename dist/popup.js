@@ -26508,7 +26508,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "._29aF210uEqs-rGBilSCBce {\n  width: 250px;\n  height: 250px;\n  background-color: white;\n  padding: 24px;\n}\n", "",{"version":3,"sources":["webpack://./src/comps/Root/Root.module.css"],"names":[],"mappings":"AAAA;EACE,YAAY;EACZ,aAAa;EACb,uBAAuB;EACvB,aAAa;AACf","sourcesContent":[".wrapper {\n  width: 250px;\n  height: 250px;\n  background-color: white;\n  padding: 24px;\n}\n"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, "._29aF210uEqs-rGBilSCBce {\n  width: 150px;\n  height: 150px;\n  background-color: white;\n  padding: 36px;\n  border: 2px solid black;\n}\n", "",{"version":3,"sources":["webpack://./src/comps/Root/Root.module.css"],"names":[],"mappings":"AAAA;EACE,YAAY;EACZ,aAAa;EACb,uBAAuB;EACvB,aAAa;EACb,uBAAuB;AACzB","sourcesContent":[".wrapper {\n  width: 150px;\n  height: 150px;\n  background-color: white;\n  padding: 36px;\n  border: 2px solid black;\n}\n"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"wrapper": "_29aF210uEqs-rGBilSCBce"
@@ -26537,12 +26537,71 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".qsB8MLKLwp2sLOLTJhzD- {\n  font-size: 36px;\n  text-align: center;\n  font-weight: bold;\n}\n\n._1OrbPAmj9Y0rtX_BWh_MPX {\n  color: #18bc9c;\n}\n\n.-E7R4s4md1JObEhKubPxH {\n  color: #ff0039;\n}\n", "",{"version":3,"sources":["webpack://./src/comps/Status/Status.module.css"],"names":[],"mappings":"AAAA;EACE,eAAe;EACf,kBAAkB;EAClB,iBAAiB;AACnB;;AAEA;EACE,cAAc;AAChB;;AAEA;EACE,cAAc;AAChB","sourcesContent":[".status {\n  font-size: 36px;\n  text-align: center;\n  font-weight: bold;\n}\n\n.green {\n  color: #18bc9c;\n}\n\n.red {\n  color: #ff0039;\n}\n"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, ".qsB8MLKLwp2sLOLTJhzD- {\n  font-size: 24px;\n  text-align: center;\n  font-weight: bold;\n}\n\n._1OrbPAmj9Y0rtX_BWh_MPX {\n  color: #18bc9c;\n}\n\n.-E7R4s4md1JObEhKubPxH {\n  color: #ff0039;\n}\n", "",{"version":3,"sources":["webpack://./src/comps/Status/Status.module.css"],"names":[],"mappings":"AAAA;EACE,eAAe;EACf,kBAAkB;EAClB,iBAAiB;AACnB;;AAEA;EACE,cAAc;AAChB;;AAEA;EACE,cAAc;AAChB","sourcesContent":[".status {\n  font-size: 24px;\n  text-align: center;\n  font-weight: bold;\n}\n\n.green {\n  color: #18bc9c;\n}\n\n.red {\n  color: #ff0039;\n}\n"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"status": "qsB8MLKLwp2sLOLTJhzD-",
 	"green": "_1OrbPAmj9Y0rtX_BWh_MPX",
 	"red": "-E7R4s4md1JObEhKubPxH"
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-modules-typescript-loader/index.js!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[3].use[2]!./src/comps/Timers/Timers.module.css":
+/*!********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-modules-typescript-loader/index.js!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[3].use[2]!./src/comps/Timers/Timers.module.css ***!
+  \********************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/cssWithMappingToString.js */ "./node_modules/css-loader/dist/runtime/cssWithMappingToString.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+// Imports
+
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default()));
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, "._2ewT1eINEMZ4ZR5w8loLLd {\n  font-size: 48px;\n  text-align: center;\n  margin-top: 6px;\n  font-weight: bold;\n}\n", "",{"version":3,"sources":["webpack://./src/comps/Timers/Timers.module.css"],"names":[],"mappings":"AAAA;EACE,eAAe;EACf,kBAAkB;EAClB,eAAe;EACf,iBAAiB;AACnB","sourcesContent":[".timer {\n  font-size: 48px;\n  text-align: center;\n  margin-top: 6px;\n  font-weight: bold;\n}\n"],"sourceRoot":""}]);
+// Exports
+___CSS_LOADER_EXPORT___.locals = {
+	"timer": "_2ewT1eINEMZ4ZR5w8loLLd"
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-modules-typescript-loader/index.js!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[3].use[2]!./src/comps/Toggle/Toggle.module.css":
+/*!********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-modules-typescript-loader/index.js!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[3].use[2]!./src/comps/Toggle/Toggle.module.css ***!
+  \********************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/cssWithMappingToString.js */ "./node_modules/css-loader/dist/runtime/cssWithMappingToString.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+// Imports
+
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default()));
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, "._3wdSiXQdHv7nL_OrFG28XF {\n  display: flex;\n  justify-content: center;\n}\n\n._2kF5gj7Qicz3N1Jwp_hz1q {\n  padding: 12px;\n  width: 100px;\n  text-align: center;\n  margin-top: 12px;\n  font-size: 12px;\n  border-radius: 1000px;\n}\n", "",{"version":3,"sources":["webpack://./src/comps/Toggle/Toggle.module.css"],"names":[],"mappings":"AAAA;EACE,aAAa;EACb,uBAAuB;AACzB;;AAEA;EACE,aAAa;EACb,YAAY;EACZ,kBAAkB;EAClB,gBAAgB;EAChB,eAAe;EACf,qBAAqB;AACvB","sourcesContent":[".buttonWrapper {\n  display: flex;\n  justify-content: center;\n}\n\n.button {\n  padding: 12px;\n  width: 100px;\n  text-align: center;\n  margin-top: 12px;\n  font-size: 12px;\n  border-radius: 1000px;\n}\n"],"sourceRoot":""}]);
+// Exports
+___CSS_LOADER_EXPORT___.locals = {
+	"buttonWrapper": "_3wdSiXQdHv7nL_OrFG28XF",
+	"button": "_2kF5gj7Qicz3N1Jwp_hz1q"
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -30108,6 +30167,64 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 /***/ }),
 
+/***/ "./src/comps/Timers/Timers.module.css":
+/*!********************************************!*\
+  !*** ./src/comps/Timers/Timers.module.css ***!
+  \********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_modules_typescript_loader_index_js_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_3_use_2_Timers_module_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../node_modules/css-modules-typescript-loader/index.js!../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[3].use[2]!./Timers.module.css */ "./node_modules/css-modules-typescript-loader/index.js!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[3].use[2]!./src/comps/Timers/Timers.module.css");
+
+            
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_modules_typescript_loader_index_js_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_3_use_2_Timers_module_css__WEBPACK_IMPORTED_MODULE_1__.default, options);
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_modules_typescript_loader_index_js_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_3_use_2_Timers_module_css__WEBPACK_IMPORTED_MODULE_1__.default.locals || {});
+
+/***/ }),
+
+/***/ "./src/comps/Toggle/Toggle.module.css":
+/*!********************************************!*\
+  !*** ./src/comps/Toggle/Toggle.module.css ***!
+  \********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_modules_typescript_loader_index_js_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_3_use_2_Toggle_module_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../node_modules/css-modules-typescript-loader/index.js!../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[3].use[2]!./Toggle.module.css */ "./node_modules/css-modules-typescript-loader/index.js!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[3].use[2]!./src/comps/Toggle/Toggle.module.css");
+
+            
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_modules_typescript_loader_index_js_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_3_use_2_Toggle_module_css__WEBPACK_IMPORTED_MODULE_1__.default, options);
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_modules_typescript_loader_index_js_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_3_use_2_Toggle_module_css__WEBPACK_IMPORTED_MODULE_1__.default.locals || {});
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js":
 /*!****************************************************************************!*\
   !*** ./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js ***!
@@ -30445,16 +30562,17 @@ function Root() {
     }, []);
     return (react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { className: _Root_module_css__WEBPACK_IMPORTED_MODULE_4__.default.wrapper },
         react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Status__WEBPACK_IMPORTED_MODULE_1__.default, { isBlocking: isBlocking }),
-        react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Timers__WEBPACK_IMPORTED_MODULE_2__.default, { startConfirmCountdown: startConfirmCountdown, setStartConfirmCountdown: setStartConfirmCountdown, setIsButtonDisabled: setIsButtonDisabled, setIsButtonReady: setIsButtonReady, blockingTimestamp: blockingTimestamp }),
-        react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Toggle__WEBPACK_IMPORTED_MODULE_3__.default, { isBlocking: isBlocking, setStartConfirmCountdown: setStartConfirmCountdown, isButtonReady: isButtonReady, setIsButtonReady: setIsButtonReady, isButtonDisabled: isButtonDisabled, setIsButtonDisabled: setIsButtonDisabled, blockingTimestamp: blockingTimestamp })));
+        react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Timers__WEBPACK_IMPORTED_MODULE_2__.default, { blockingTimestamp: blockingTimestamp, startConfirmCountdown: startConfirmCountdown, setStartConfirmCountdown: setStartConfirmCountdown, setIsButtonDisabled: setIsButtonDisabled, setIsButtonReady: setIsButtonReady }),
+        react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Toggle__WEBPACK_IMPORTED_MODULE_3__.default, { isBlocking: isBlocking, setStartConfirmCountdown: setStartConfirmCountdown, blockingTimestamp: blockingTimestamp, isButtonReady: isButtonReady, setIsButtonReady: setIsButtonReady, isButtonDisabled: isButtonDisabled, setIsButtonDisabled: setIsButtonDisabled })));
 }
 /*
 TODO:
 
-Fix styling
+Fix styling, try horizontal
+Add third status: are you sure?
+More button animations
 see if I can fix the latency issues
 Lotta piping props, maybe a global state would just be better
-what if you toggle while the blocking timer is still going?
 */
 
 
@@ -30478,7 +30596,6 @@ function Status(_a) {
     var isBlocking = _a.isBlocking;
     return (react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { className: _Status_module_css__WEBPACK_IMPORTED_MODULE_1__.default.status },
         "Status:",
-        " ",
         isBlocking ? (react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { className: _Status_module_css__WEBPACK_IMPORTED_MODULE_1__.default.green }, "blocking")) : (react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { className: _Status_module_css__WEBPACK_IMPORTED_MODULE_1__.default.red }, "not blocking"))));
 }
 
@@ -30541,6 +30658,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var _Timer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Timer */ "./src/comps/Timer/index.tsx");
 /* harmony import */ var _utils_formatters__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utils/formatters */ "./src/utils/formatters.ts");
+/* harmony import */ var _Timers_module_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Timers.module.css */ "./src/comps/Timers/Timers.module.css");
+
 
 
 
@@ -30566,7 +30685,7 @@ function Timers(_a) {
             return react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_utils_formatters__WEBPACK_IMPORTED_MODULE_2__.formatTime)(0) + ":" + (0,_utils_formatters__WEBPACK_IMPORTED_MODULE_2__.formatTime)(0));
         }
     };
-    return react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, renderTimers());
+    return react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { className: _Timers_module_css__WEBPACK_IMPORTED_MODULE_3__.default.timer }, renderTimers());
 }
 
 
@@ -30583,6 +30702,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (/* binding */ Toggle)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _Toggle_module_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Toggle.module.css */ "./src/comps/Toggle/Toggle.module.css");
+
 
 function Toggle(_a) {
     var isBlocking = _a.isBlocking, isButtonReady = _a.isButtonReady, setIsButtonReady = _a.setIsButtonReady, setIsButtonDisabled = _a.setIsButtonDisabled, isButtonDisabled = _a.isButtonDisabled, setStartConfirmCountdown = _a.setStartConfirmCountdown, blockingTimestamp = _a.blockingTimestamp;
@@ -30604,7 +30725,6 @@ function Toggle(_a) {
     var handleOnClick = function () {
         // if it's not blocking, allow immediate blocking
         if (!isBlocking) {
-            // TODO mess with this
             sendBlockingTimestamp(null);
             sendToggleIsBlocking();
             return;
@@ -30622,8 +30742,8 @@ function Toggle(_a) {
         setIsButtonDisabled(true);
         setStartConfirmCountdown(true);
     };
-    return (react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null,
-        react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", { onClick: handleOnClick, disabled: isButtonDisabled }, "toggle")));
+    return (react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { className: _Toggle_module_css__WEBPACK_IMPORTED_MODULE_1__.default.buttonWrapper },
+        react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", { className: _Toggle_module_css__WEBPACK_IMPORTED_MODULE_1__.default.button, onClick: handleOnClick, disabled: isButtonDisabled }, "toggle")));
 }
 
 

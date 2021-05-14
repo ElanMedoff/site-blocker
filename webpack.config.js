@@ -43,21 +43,6 @@ const config = {
         ],
         include: /\.module\.css$/,
       },
-      {
-        test: /\.svg$/,
-        use: "file-loader",
-      },
-      {
-        test: /\.png$/,
-        use: [
-          {
-            loader: "url-loader",
-            options: {
-              mimetype: "image/png",
-            },
-          },
-        ],
-      },
     ],
   },
   resolve: {
