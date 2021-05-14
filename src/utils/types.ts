@@ -25,7 +25,7 @@ interface BlockingTimestampResponse {
 
 interface SetBlockingTimeStamp {
   type: "SET_BLOCKING_TIMESTAMP";
-  timestamp: Date;
+  timestamp: Date | null;
 }
 
 export type Message =

@@ -3,7 +3,7 @@ import { Message } from "../../utils/types";
 import Status from "../Status";
 import Timers from "../Timers";
 import Toggle from "../Toggle";
-import styles from "./index.module.css";
+import styles from "./Root.module.css";
 
 export default function Root() {
   // "global" state, lotta piping around, might want to actually make global later
@@ -27,6 +27,10 @@ export default function Root() {
     chrome.runtime.sendMessage(blockingTimestampRequest);
     console.log("CLIENT: sending request message");
 
+    // Only set background variables in the listener to ensure that
+    // when they're changed in the client, the changes are only reflected
+    // if they make their way to the background, who then sends it back.
+    // Is this a good pattern? I'm not super sure.
     chrome.runtime.onMessage.addListener((message: Message) => {
       switch (message.type) {
         case "IS_BLOCKING_STATUS":
@@ -59,7 +63,7 @@ export default function Root() {
         setIsButtonReady={setIsButtonReady}
         isButtonDisabled={isButtonDisabled}
         setIsButtonDisabled={setIsButtonDisabled}
-        setBlockingTimestamp={setBlockingTimestamp}
+        blockingTimestamp={blockingTimestamp}
       />
     </div>
   );

@@ -26489,10 +26489,10 @@ module.exports = function cssWithMappingToString(item) {
 
 /***/ }),
 
-/***/ "./node_modules/css-modules-typescript-loader/index.js!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[3].use[2]!./src/comps/Root/index.module.css":
-/*!*****************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-modules-typescript-loader/index.js!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[3].use[2]!./src/comps/Root/index.module.css ***!
-  \*****************************************************************************************************************************************************************/
+/***/ "./node_modules/css-modules-typescript-loader/index.js!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[3].use[2]!./src/comps/Root/Root.module.css":
+/*!****************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-modules-typescript-loader/index.js!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[3].use[2]!./src/comps/Root/Root.module.css ***!
+  \****************************************************************************************************************************************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -26508,10 +26508,41 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".VlRZc88QFs_HhK1jpxmZC {\n  width: 300px;\n  height: 300px;\n  background-color: white;\n}\n", "",{"version":3,"sources":["webpack://./src/comps/Root/index.module.css"],"names":[],"mappings":"AAAA;EACE,YAAY;EACZ,aAAa;EACb,uBAAuB;AACzB","sourcesContent":[".wrapper {\n  width: 300px;\n  height: 300px;\n  background-color: white;\n}\n"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, "._29aF210uEqs-rGBilSCBce {\n  width: 250px;\n  height: 250px;\n  background-color: white;\n  padding: 24px;\n}\n", "",{"version":3,"sources":["webpack://./src/comps/Root/Root.module.css"],"names":[],"mappings":"AAAA;EACE,YAAY;EACZ,aAAa;EACb,uBAAuB;EACvB,aAAa;AACf","sourcesContent":[".wrapper {\n  width: 250px;\n  height: 250px;\n  background-color: white;\n  padding: 24px;\n}\n"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
-	"wrapper": "VlRZc88QFs_HhK1jpxmZC"
+	"wrapper": "_29aF210uEqs-rGBilSCBce"
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-modules-typescript-loader/index.js!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[3].use[2]!./src/comps/Status/Status.module.css":
+/*!********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-modules-typescript-loader/index.js!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[3].use[2]!./src/comps/Status/Status.module.css ***!
+  \********************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/cssWithMappingToString.js */ "./node_modules/css-loader/dist/runtime/cssWithMappingToString.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+// Imports
+
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default()));
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, ".qsB8MLKLwp2sLOLTJhzD- {\n  font-size: 36px;\n  text-align: center;\n  font-weight: bold;\n}\n\n._1OrbPAmj9Y0rtX_BWh_MPX {\n  color: #18bc9c;\n}\n\n.-E7R4s4md1JObEhKubPxH {\n  color: #ff0039;\n}\n", "",{"version":3,"sources":["webpack://./src/comps/Status/Status.module.css"],"names":[],"mappings":"AAAA;EACE,eAAe;EACf,kBAAkB;EAClB,iBAAiB;AACnB;;AAEA;EACE,cAAc;AAChB;;AAEA;EACE,cAAc;AAChB","sourcesContent":[".status {\n  font-size: 36px;\n  text-align: center;\n  font-weight: bold;\n}\n\n.green {\n  color: #18bc9c;\n}\n\n.red {\n  color: #ff0039;\n}\n"],"sourceRoot":""}]);
+// Exports
+___CSS_LOADER_EXPORT___.locals = {
+	"status": "qsB8MLKLwp2sLOLTJhzD-",
+	"green": "_1OrbPAmj9Y0rtX_BWh_MPX",
+	"red": "-E7R4s4md1JObEhKubPxH"
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -30019,10 +30050,10 @@ if (false) {} else {
 
 /***/ }),
 
-/***/ "./src/comps/Root/index.module.css":
-/*!*****************************************!*\
-  !*** ./src/comps/Root/index.module.css ***!
-  \*****************************************/
+/***/ "./src/comps/Root/Root.module.css":
+/*!****************************************!*\
+  !*** ./src/comps/Root/Root.module.css ***!
+  \****************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -30031,7 +30062,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
 /* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _node_modules_css_modules_typescript_loader_index_js_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_3_use_2_index_module_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../node_modules/css-modules-typescript-loader/index.js!../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[3].use[2]!./index.module.css */ "./node_modules/css-modules-typescript-loader/index.js!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[3].use[2]!./src/comps/Root/index.module.css");
+/* harmony import */ var _node_modules_css_modules_typescript_loader_index_js_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_3_use_2_Root_module_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../node_modules/css-modules-typescript-loader/index.js!../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[3].use[2]!./Root.module.css */ "./node_modules/css-modules-typescript-loader/index.js!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[3].use[2]!./src/comps/Root/Root.module.css");
 
             
 
@@ -30040,11 +30071,40 @@ var options = {};
 options.insert = "head";
 options.singleton = false;
 
-var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_modules_typescript_loader_index_js_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_3_use_2_index_module_css__WEBPACK_IMPORTED_MODULE_1__.default, options);
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_modules_typescript_loader_index_js_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_3_use_2_Root_module_css__WEBPACK_IMPORTED_MODULE_1__.default, options);
 
 
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_modules_typescript_loader_index_js_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_3_use_2_index_module_css__WEBPACK_IMPORTED_MODULE_1__.default.locals || {});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_modules_typescript_loader_index_js_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_3_use_2_Root_module_css__WEBPACK_IMPORTED_MODULE_1__.default.locals || {});
+
+/***/ }),
+
+/***/ "./src/comps/Status/Status.module.css":
+/*!********************************************!*\
+  !*** ./src/comps/Status/Status.module.css ***!
+  \********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_modules_typescript_loader_index_js_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_3_use_2_Status_module_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../node_modules/css-modules-typescript-loader/index.js!../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[3].use[2]!./Status.module.css */ "./node_modules/css-modules-typescript-loader/index.js!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[3].use[2]!./src/comps/Status/Status.module.css");
+
+            
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_modules_typescript_loader_index_js_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_3_use_2_Status_module_css__WEBPACK_IMPORTED_MODULE_1__.default, options);
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_modules_typescript_loader_index_js_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_3_use_2_Status_module_css__WEBPACK_IMPORTED_MODULE_1__.default.locals || {});
 
 /***/ }),
 
@@ -30340,7 +30400,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Status__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Status */ "./src/comps/Status/index.tsx");
 /* harmony import */ var _Timers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Timers */ "./src/comps/Timers/index.tsx");
 /* harmony import */ var _Toggle__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../Toggle */ "./src/comps/Toggle/index.tsx");
-/* harmony import */ var _index_module_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./index.module.css */ "./src/comps/Root/index.module.css");
+/* harmony import */ var _Root_module_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Root.module.css */ "./src/comps/Root/Root.module.css");
 
 
 
@@ -30365,6 +30425,10 @@ function Root() {
         };
         chrome.runtime.sendMessage(blockingTimestampRequest);
         console.log("CLIENT: sending request message");
+        // Only set background variables in the listener to ensure that
+        // when they're changed in the client, the changes are only reflected
+        // if they make their way to the background, who then sends it back.
+        // Is this a good pattern? I'm not super sure.
         chrome.runtime.onMessage.addListener(function (message) {
             switch (message.type) {
                 case "IS_BLOCKING_STATUS":
@@ -30379,10 +30443,10 @@ function Root() {
             }
         });
     }, []);
-    return (react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { className: _index_module_css__WEBPACK_IMPORTED_MODULE_4__.default.wrapper },
+    return (react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { className: _Root_module_css__WEBPACK_IMPORTED_MODULE_4__.default.wrapper },
         react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Status__WEBPACK_IMPORTED_MODULE_1__.default, { isBlocking: isBlocking }),
         react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Timers__WEBPACK_IMPORTED_MODULE_2__.default, { startConfirmCountdown: startConfirmCountdown, setStartConfirmCountdown: setStartConfirmCountdown, setIsButtonDisabled: setIsButtonDisabled, setIsButtonReady: setIsButtonReady, blockingTimestamp: blockingTimestamp }),
-        react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Toggle__WEBPACK_IMPORTED_MODULE_3__.default, { isBlocking: isBlocking, setStartConfirmCountdown: setStartConfirmCountdown, isButtonReady: isButtonReady, setIsButtonReady: setIsButtonReady, isButtonDisabled: isButtonDisabled, setIsButtonDisabled: setIsButtonDisabled, setBlockingTimestamp: setBlockingTimestamp })));
+        react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Toggle__WEBPACK_IMPORTED_MODULE_3__.default, { isBlocking: isBlocking, setStartConfirmCountdown: setStartConfirmCountdown, isButtonReady: isButtonReady, setIsButtonReady: setIsButtonReady, isButtonDisabled: isButtonDisabled, setIsButtonDisabled: setIsButtonDisabled, blockingTimestamp: blockingTimestamp })));
 }
 /*
 TODO:
@@ -30407,12 +30471,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (/* binding */ Status)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _Status_module_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Status.module.css */ "./src/comps/Status/Status.module.css");
+
 
 function Status(_a) {
     var isBlocking = _a.isBlocking;
-    return react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null,
-        "Status: ",
-        isBlocking ? "blocking" : "not blocking");
+    return (react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { className: _Status_module_css__WEBPACK_IMPORTED_MODULE_1__.default.status },
+        "Status:",
+        " ",
+        isBlocking ? (react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { className: _Status_module_css__WEBPACK_IMPORTED_MODULE_1__.default.green }, "blocking")) : (react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { className: _Status_module_css__WEBPACK_IMPORTED_MODULE_1__.default.red }, "not blocking"))));
 }
 
 
@@ -30518,7 +30585,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 function Toggle(_a) {
-    var isBlocking = _a.isBlocking, isButtonReady = _a.isButtonReady, setIsButtonReady = _a.setIsButtonReady, setIsButtonDisabled = _a.setIsButtonDisabled, isButtonDisabled = _a.isButtonDisabled, setStartConfirmCountdown = _a.setStartConfirmCountdown, setBlockingTimestamp = _a.setBlockingTimestamp;
+    var isBlocking = _a.isBlocking, isButtonReady = _a.isButtonReady, setIsButtonReady = _a.setIsButtonReady, setIsButtonDisabled = _a.setIsButtonDisabled, isButtonDisabled = _a.isButtonDisabled, setStartConfirmCountdown = _a.setStartConfirmCountdown, blockingTimestamp = _a.blockingTimestamp;
     var sendToggleIsBlocking = function () {
         var message = {
             type: "TOGGLE_IS_BLOCKING",
@@ -30526,16 +30593,19 @@ function Toggle(_a) {
         };
         chrome.runtime.sendMessage(message);
     };
-    var sendStartBlockingTimestamp = function (timestamp) {
+    var sendBlockingTimestamp = function (timestamp) {
         var message = {
             type: "SET_BLOCKING_TIMESTAMP",
             timestamp: timestamp,
         };
         chrome.runtime.sendMessage(message);
     };
+    console.log(blockingTimestamp);
     var handleOnClick = function () {
         // if it's not blocking, allow immediate blocking
         if (!isBlocking) {
+            // TODO mess with this
+            sendBlockingTimestamp(null);
             sendToggleIsBlocking();
             return;
         }
@@ -30543,8 +30613,7 @@ function Toggle(_a) {
         if (isButtonReady) {
             // TODO set this number
             var timestamp = new Date(Date.now() + 30000);
-            sendStartBlockingTimestamp(timestamp);
-            setBlockingTimestamp(timestamp);
+            sendBlockingTimestamp(timestamp);
             sendToggleIsBlocking();
             setIsButtonReady(false);
             return;

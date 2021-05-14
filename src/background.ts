@@ -7,6 +7,8 @@ chrome.storage.local.set({ isBlocking: true });
 let blockingTimestamp: Date | null = null;
 chrome.storage.local.set({ blockingTimestamp: null });
 
+let blockingTimerId: NodeJS.Timeout | null;
+
 function getIsBlocking(callback: Function) {
   chrome.storage.local.get("isBlocking", (res) => {
     if (res["isBlocking"]) {
@@ -96,10 +98,26 @@ chrome.runtime.onMessage.addListener((message: Message) => {
         "BACKEND: received request to set blocking timestamp",
         message.timestamp
       );
+
+      if (!message.timestamp) {
+        // set all the variables like belo
+        blockingTimestamp = message.timestamp;
+        chrome.storage.local.set({ blockingTimestamp: message.timestamp });
+        sendBlockingTimestamp(blockingTimestamp);
+
+        // cancel the timeout if it's ongoing
+        if (blockingTimerId) {
+          clearTimeout(blockingTimerId);
+        }
+
+        return;
+      }
+
       blockingTimestamp = message.timestamp;
       chrome.storage.local.set({ blockingTimestamp: message.timestamp });
+      sendBlockingTimestamp(blockingTimestamp);
 
-      setTimeout(() => {
+      blockingTimerId = setTimeout(() => {
         blockingTimestamp = null;
         sendBlockingTimestamp(blockingTimestamp);
         chrome.storage.local.set({ blockingTimestamp });

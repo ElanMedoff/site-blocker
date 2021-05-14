@@ -1,0 +1,13 @@
+.status {
+  font-size: 36px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.green {
+  color: #18bc9c;
+}
+
+.red {
+  color: #ff0039;
+}

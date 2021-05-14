@@ -94,6 +94,7 @@ var isBlocking = true;
 chrome.storage.local.set({ isBlocking: true });
 var blockingTimestamp = null;
 chrome.storage.local.set({ blockingTimestamp: null });
+var blockingTimerId;
 function getIsBlocking(callback) {
     chrome.storage.local.get("isBlocking", function (res) {
         if (res["isBlocking"]) {
@@ -175,9 +176,21 @@ chrome.runtime.onMessage.addListener(function (message) {
             break;
         case "SET_BLOCKING_TIMESTAMP":
             console.log("BACKEND: received request to set blocking timestamp", message.timestamp);
+            if (!message.timestamp) {
+                // set all the variables like belo
+                blockingTimestamp = message.timestamp;
+                chrome.storage.local.set({ blockingTimestamp: message.timestamp });
+                sendBlockingTimestamp(blockingTimestamp);
+                // cancel the timeout if it's ongoing
+                if (blockingTimerId) {
+                    clearTimeout(blockingTimerId);
+                }
+                return;
+            }
             blockingTimestamp = message.timestamp;
             chrome.storage.local.set({ blockingTimestamp: message.timestamp });
-            setTimeout(function () {
+            sendBlockingTimestamp(blockingTimestamp);
+            blockingTimerId = setTimeout(function () {
                 blockingTimestamp = null;
                 sendBlockingTimestamp(blockingTimestamp);
                 chrome.storage.local.set({ blockingTimestamp: blockingTimestamp });
