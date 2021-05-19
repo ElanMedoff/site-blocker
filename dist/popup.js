@@ -30645,19 +30645,22 @@ function Root() {
     var _c = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false), startConfirmCountdown = _c[0], setStartConfirmCountdown = _c[1];
     var _d = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false), isButtonReady = _d[0], setIsButtonReady = _d[1];
     var _e = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null), blockingTimestamp = _e[0], setBlockingTimestamp = _e[1];
-    console.log({ startConfirmCountdown: startConfirmCountdown });
-    console.log("root", { blockingTimestamp: blockingTimestamp });
     // onload set "global" state
     (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
         var isBlockingRequest = {
             type: "REQ_IS_BLOCKING_STATUS",
         };
         chrome.runtime.sendMessage(isBlockingRequest);
+        console.log("CLIENT: sending for is blocking status request message", {
+            isBlockingRequest: isBlockingRequest,
+        });
         var blockingTimestampRequest = {
             type: "REQ_BLOCKING_TIMESTAMP",
         };
         chrome.runtime.sendMessage(blockingTimestampRequest);
-        console.log("CLIENT: sending request message");
+        console.log("CLIENT: sending request for blocking timestamp message", {
+            blockingTimestampRequest: blockingTimestampRequest,
+        });
         // Only set background variables in the listener to ensure that
         // when they're changed in the client, the changes are only reflected
         // if they make their way to the background, who then sends it back.
@@ -30666,10 +30669,15 @@ function Root() {
             switch (message.type) {
                 case "IS_BLOCKING_STATUS":
                     setIsBlocking(message.isBlocking);
+                    console.log("CLIENT: received messaged, setting blocking status", {
+                        isBlocking: message.isBlocking,
+                    });
                     break;
                 case "BLOCKING_TIMESTAMP":
                     setBlockingTimestamp(message.timestamp);
-                    console.log("CLIENT: received messaged, setting blocking timestamp");
+                    console.log("CLIENT: received messaged, setting blocking timestamp", {
+                        timestamp: message.timestamp,
+                    });
                     break;
                 default:
                     break;
@@ -30684,8 +30692,7 @@ function Root() {
 /*
 TODO:
 
-Fix styling, try horizontal
-Add third status: are you sure?
+Fix up comments, make them more expressive
 More button animations
 see if I can fix the latency issues
 Lotta piping props, maybe a global state would just be better
@@ -30835,7 +30842,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function Toggle(_a) {
-    var isBlocking = _a.isBlocking, isButtonReady = _a.isButtonReady, setIsButtonReady = _a.setIsButtonReady, setIsButtonDisabled = _a.setIsButtonDisabled, isButtonDisabled = _a.isButtonDisabled, setStartConfirmCountdown = _a.setStartConfirmCountdown, blockingTimestamp = _a.blockingTimestamp;
+    var isBlocking = _a.isBlocking, isButtonReady = _a.isButtonReady, setIsButtonReady = _a.setIsButtonReady, setIsButtonDisabled = _a.setIsButtonDisabled, isButtonDisabled = _a.isButtonDisabled, setStartConfirmCountdown = _a.setStartConfirmCountdown;
     var sendToggleIsBlocking = function () {
         var message = {
             type: "TOGGLE_IS_BLOCKING",
@@ -30850,7 +30857,6 @@ function Toggle(_a) {
         };
         chrome.runtime.sendMessage(message);
     };
-    console.log(blockingTimestamp);
     var handleOnClick = function () {
         // if it's not blocking, allow immediate blocking
         if (!isBlocking) {
@@ -30860,7 +30866,6 @@ function Toggle(_a) {
         }
         // otherwise if it's blocking, and button is ready, toggle
         if (isButtonReady) {
-            // TODO set this number
             var timestamp = new Date(Date.now() + 30 * 60 * 1000);
             sendBlockingTimestamp(timestamp);
             sendToggleIsBlocking();

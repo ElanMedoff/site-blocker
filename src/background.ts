@@ -80,11 +80,17 @@ chrome.runtime.onMessage.addListener((message: Message) => {
     case "REQ_IS_BLOCKING_STATUS":
       getIsBlocking(sendIsBlockingStatus);
       // sendIsBlockingStatus(isBlocking);
+      console.log("BACKEND: received request for blocking status", {
+        isBlocking,
+      });
       break;
     case "TOGGLE_IS_BLOCKING":
       isBlocking = message.isBlocking;
       chrome.storage.local.set({ isBlocking: isBlocking });
       sendIsBlockingStatus(isBlocking);
+      console.log("BACKEND: received request to toggle isBlocking status", {
+        isBlocking: message.isBlocking,
+      });
       break;
     case "REQ_BLOCKING_TIMESTAMP":
       console.log("BACKEND: received request for blocking timestamp", {

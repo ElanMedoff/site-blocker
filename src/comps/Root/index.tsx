@@ -19,12 +19,15 @@ export default function Root() {
       type: "REQ_IS_BLOCKING_STATUS",
     };
     chrome.runtime.sendMessage(isBlockingRequest);
+    console.log("CLIENT: sending for is blocking status request message", {
+      isBlockingRequest,
+    });
 
     const blockingTimestampRequest: Message = {
       type: "REQ_BLOCKING_TIMESTAMP",
     };
     chrome.runtime.sendMessage(blockingTimestampRequest);
-    console.log("CLIENT: sending request message", {
+    console.log("CLIENT: sending request for blocking timestamp message", {
       blockingTimestampRequest,
     });
 
@@ -36,6 +39,9 @@ export default function Root() {
       switch (message.type) {
         case "IS_BLOCKING_STATUS":
           setIsBlocking(message.isBlocking);
+          console.log("CLIENT: received messaged, setting blocking status", {
+            isBlocking: message.isBlocking,
+          });
           break;
         case "BLOCKING_TIMESTAMP":
           setBlockingTimestamp(message.timestamp);

@@ -150,7 +150,7 @@ chrome.tabs.onUpdated.addListener(function (tabId, _, tab) {
         var regex = blockedSites_1[_i];
         if (regex.test(tab.url)) {
             chrome.tabs.remove(tabId, function () {
-                console.log("removed", tabId, tab.url);
+                console.log("BACKEND: removed tab", { tabId: tabId, url: tab.url });
             });
             break;
         }
@@ -161,11 +161,17 @@ chrome.runtime.onMessage.addListener(function (message) {
         case "REQ_IS_BLOCKING_STATUS":
             getIsBlocking(sendIsBlockingStatus);
             // sendIsBlockingStatus(isBlocking);
+            console.log("BACKEND: received request for blocking status", {
+                isBlocking: isBlocking,
+            });
             break;
         case "TOGGLE_IS_BLOCKING":
             isBlocking = message.isBlocking;
             chrome.storage.local.set({ isBlocking: isBlocking });
             sendIsBlockingStatus(isBlocking);
+            console.log("BACKEND: received request to toggle isBlocking status", {
+                isBlocking: message.isBlocking,
+            });
             break;
         case "REQ_BLOCKING_TIMESTAMP":
             console.log("BACKEND: received request for blocking timestamp", {
@@ -175,7 +181,9 @@ chrome.runtime.onMessage.addListener(function (message) {
             // sendBlockingTimestamp(blockingTimestamp);
             break;
         case "SET_BLOCKING_TIMESTAMP":
-            console.log("BACKEND: received request to set blocking timestamp", message.timestamp);
+            console.log("BACKEND: received request to set blocking timestamp", {
+                timestamp: message.timestamp,
+            });
             if (!message.timestamp) {
                 // set all the variables like below
                 blockingTimestamp = message.timestamp;
