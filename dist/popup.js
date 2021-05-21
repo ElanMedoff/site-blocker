@@ -30692,10 +30692,9 @@ function Root() {
 /*
 TODO:
 
-Fix up comments, make them more expressive
 More button animations
 see if I can fix the latency issues
-Lotta piping props, maybe a global state would just be better
+Use flexbox instead of how i'm doing it now
 */
 
 
@@ -30815,7 +30814,7 @@ function Timers(_a) {
             return react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Timer__WEBPACK_IMPORTED_MODULE_1__.default, { startMinute: startMinute, startSecond: startSecond });
         }
         else if (startConfirmCountdown) {
-            return (react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Timer__WEBPACK_IMPORTED_MODULE_1__.default, { onComplete: onConfirmTimerComplete, startMinute: 0, startSecond: 30, grey: true }));
+            return (react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Timer__WEBPACK_IMPORTED_MODULE_1__.default, { onComplete: onConfirmTimerComplete, startMinute: 0, startSecond: 3, grey: true }));
         }
         else {
             return react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_utils_formatters__WEBPACK_IMPORTED_MODULE_2__.formatTime)(0) + ":" + (0,_utils_formatters__WEBPACK_IMPORTED_MODULE_2__.formatTime)(0));
@@ -30866,7 +30865,7 @@ function Toggle(_a) {
         }
         // otherwise if it's blocking, and button is ready, toggle
         if (isButtonReady) {
-            var timestamp = new Date(Date.now() + 30 * 60 * 1000);
+            var timestamp = new Date(Date.now() + 60 * 1000);
             sendBlockingTimestamp(timestamp);
             sendToggleIsBlocking();
             setIsButtonReady(false);

@@ -1,35 +1,43 @@
 import blockedSites from "./utils/blockedSites";
 import { Message } from "./utils/types";
 
-let isBlocking = true;
-chrome.storage.local.set({ isBlocking: true });
+interface BackendState {
+  isBlocking: boolean;
+  blockingTimestamp: Date | null;
+}
 
-let blockingTimestamp: Date | null = null;
-chrome.storage.local.set({ blockingTimestamp: null });
+// set up proxy for better error messaging
+const targetObj: BackendState = { isBlocking: true, blockingTimestamp: null };
+const targetProxy: BackendState = new Proxy(targetObj, {
+  set: (target, key: "isBlocking" | "blockingTimestamp", value) => {
+    console.log(`BACKEND: ${String(key)} set to ${value}`);
+    target[key] = value;
+    return true;
+  },
+});
+targetProxy.isBlocking = true;
+targetProxy.blockingTimestamp = null;
+
+chrome.storage.local.set({ isBlocking: targetProxy.isBlocking });
+chrome.storage.local.set({ blockingTimestamp: targetProxy.blockingTimestamp });
+// let blockingTimestamp: Date | null = null;
 
 let blockingTimerId: NodeJS.Timeout | null;
+// TODO make this into chrome state?
 
 function getIsBlocking(callback: Function) {
   chrome.storage.local.get("isBlocking", (res) => {
-    if (res["isBlocking"]) {
-      isBlocking = true;
-    } else {
-      isBlocking = false;
-    }
-
-    callback(isBlocking);
+    targetProxy.isBlocking = Boolean(res["isBlocking"]);
+    callback(targetProxy.isBlocking);
   });
 }
 
 function getBlockingTimestamp(callback: Function) {
   chrome.storage.local.get("blockingTimestamp", (res) => {
-    if (res["blockingTimestamp"]) {
-      blockingTimestamp = res["blockingTimestamp"];
-    } else {
-      blockingTimestamp = null;
-    }
-
-    callback(blockingTimestamp);
+    targetProxy.blockingTimestamp = res["blockingTimestamp"]
+      ? res["blockingTimestamp"]
+      : null;
+    callback(targetProxy.blockingTimestamp);
   });
 }
 
@@ -62,7 +70,7 @@ function sendIsBlockingStatus(isBlocking: boolean) {
 
 chrome.tabs.onUpdated.addListener((tabId, _, tab) => {
   if (!tab.url) return;
-  if (!isBlocking) return;
+  if (!targetProxy.isBlocking) return;
 
   // want to run sync, don't want to bother with forEach
   for (const regex of blockedSites) {
@@ -81,20 +89,20 @@ chrome.runtime.onMessage.addListener((message: Message) => {
       getIsBlocking(sendIsBlockingStatus);
       // sendIsBlockingStatus(isBlocking);
       console.log("BACKEND: received request for blocking status", {
-        isBlocking,
+        isBlocking: targetProxy.isBlocking,
       });
       break;
     case "TOGGLE_IS_BLOCKING":
-      isBlocking = message.isBlocking;
-      chrome.storage.local.set({ isBlocking: isBlocking });
-      sendIsBlockingStatus(isBlocking);
+      targetProxy.isBlocking = message.isBlocking;
+      chrome.storage.local.set({ isBlocking: targetProxy.isBlocking });
+      sendIsBlockingStatus(targetProxy.isBlocking);
       console.log("BACKEND: received request to toggle isBlocking status", {
         isBlocking: message.isBlocking,
       });
       break;
     case "REQ_BLOCKING_TIMESTAMP":
       console.log("BACKEND: received request for blocking timestamp", {
-        blockingTimestamp,
+        blockingTimestamp: targetProxy.blockingTimestamp,
       });
       getBlockingTimestamp(sendBlockingTimestamp);
       // sendBlockingTimestamp(blockingTimestamp);
@@ -106,9 +114,9 @@ chrome.runtime.onMessage.addListener((message: Message) => {
 
       if (!message.timestamp) {
         // set all the variables like below
-        blockingTimestamp = message.timestamp;
+        targetProxy.blockingTimestamp = message.timestamp;
         chrome.storage.local.set({ blockingTimestamp: message.timestamp });
-        sendBlockingTimestamp(blockingTimestamp);
+        sendBlockingTimestamp(targetProxy.blockingTimestamp);
 
         // cancel the timeout if it's ongoing
         if (blockingTimerId) {
@@ -118,18 +126,20 @@ chrome.runtime.onMessage.addListener((message: Message) => {
         return;
       }
 
-      blockingTimestamp = message.timestamp;
+      targetProxy.blockingTimestamp = message.timestamp;
       chrome.storage.local.set({ blockingTimestamp: message.timestamp });
-      sendBlockingTimestamp(blockingTimestamp);
+      sendBlockingTimestamp(targetProxy.blockingTimestamp);
 
       blockingTimerId = setTimeout(() => {
-        blockingTimestamp = null;
-        sendBlockingTimestamp(blockingTimestamp);
-        chrome.storage.local.set({ blockingTimestamp });
+        targetProxy.blockingTimestamp = null;
+        sendBlockingTimestamp(targetProxy.blockingTimestamp);
+        chrome.storage.local.set({
+          blockingTimestamp: targetProxy.blockingTimestamp,
+        });
 
-        isBlocking = true;
-        sendIsBlockingStatus(isBlocking);
-        chrome.storage.local.set({ isBlocking });
+        targetProxy.isBlocking = true;
+        sendIsBlockingStatus(targetProxy.isBlocking);
+        chrome.storage.local.set({ isBlocking: targetProxy.isBlocking });
 
         console.log("BACKEND: in set timeout, setting to null");
       }, new Date(message.timestamp).getTime() - Date.now());

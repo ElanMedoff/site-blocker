@@ -47,7 +47,7 @@ ToggleProps) {
 
     // otherwise if it's blocking, and button is ready, toggle
     if (isButtonReady) {
-      const timestamp = new Date(Date.now() + 30 * 60 * 1000);
+      const timestamp = new Date(Date.now() + 60 * 1000);
       sendBlockingTimestamp(timestamp);
       sendToggleIsBlocking();
       setIsButtonReady(false);

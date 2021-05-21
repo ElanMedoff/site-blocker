@@ -85,8 +85,7 @@ export default function Root() {
 /* 
 TODO:
 
-Fix up comments, make them more expressive
 More button animations
 see if I can fix the latency issues
-Lotta piping props, maybe a global state would just be better
+Use flexbox instead of how i'm doing it now
 */
