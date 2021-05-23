@@ -30865,7 +30865,7 @@ function Toggle(_a) {
         }
         // otherwise if it's blocking, and button is ready, toggle
         if (isButtonReady) {
-            var timestamp = new Date(Date.now() + 60 * 1000);
+            var timestamp = new Date(Date.now() + 30 * 60 * 1000);
             sendBlockingTimestamp(timestamp);
             sendToggleIsBlocking();
             setIsButtonReady(false);

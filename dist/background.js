@@ -91,6 +91,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_blockedSites__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utils/blockedSites */ "./src/utils/blockedSites.ts");
 
 // set up proxy for better error messaging
+// NOTE: destructuring and changing destructured properties doesn't persist!
 var targetObj = { isBlocking: true, blockingTimestamp: null };
 var targetProxy = new Proxy(targetObj, {
     set: function (target, key, value) {
@@ -103,7 +104,6 @@ targetProxy.isBlocking = true;
 targetProxy.blockingTimestamp = null;
 chrome.storage.local.set({ isBlocking: targetProxy.isBlocking });
 chrome.storage.local.set({ blockingTimestamp: targetProxy.blockingTimestamp });
-// let blockingTimestamp: Date | null = null;
 var blockingTimerId;
 // TODO make this into chrome state?
 function getIsBlocking(callback) {
