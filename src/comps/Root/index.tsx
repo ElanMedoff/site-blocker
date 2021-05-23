@@ -88,4 +88,7 @@ TODO:
 More button animations
 see if I can fix the latency issues
 Use flexbox instead of how i'm doing it now
+Promisify all the callback shit, move to a util file
+Figure out if the chrome storage stuff makes sense -- when should I access it, and 
+when should I set variables to the chrome storage values?
 */

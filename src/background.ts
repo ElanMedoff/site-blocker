@@ -84,7 +84,7 @@ function setBlockingTimerId(blockingTimerId: NodeJS.Timeout | null): void {
 // chrome.tabs.onCreated.addListener((tab) => {
 //   if (!tab.pendingUrl) return;
 //   if (!tab.id) return;
-//   if (!isBlocking) return;
+//   if (!targetProxy.isBlocking) return;
 
 //   for (const regex of blockedSites) {
 //     if (regex.test(tab.pendingUrl)) {
@@ -138,8 +138,9 @@ chrome.runtime.onMessage.addListener((message: Message) => {
         timestamp: message.timestamp,
       });
 
+      // if the message sent has a null timestamp, i.e. cancel the current timer
       if (!message.timestamp) {
-        // set all the variables like below
+        console.log("INSIDE if statement for null timestamp");
         setBlockingTimestamp(message.timestamp);
 
         // cancel the timeout if it's ongoing
@@ -147,20 +148,27 @@ chrome.runtime.onMessage.addListener((message: Message) => {
           if (blockingTimerId) {
             clearTimeout(blockingTimerId);
           }
+          setBlockingTimerId(null);
         });
 
         return;
       }
+      console.log("INSIDE: after if statement for null timestamp");
 
+      // if the message sent a real timestamp
       setBlockingTimestamp(message.timestamp);
 
       const blockingTimerId = setTimeout(() => {
+        // once timer finishes
+        console.log("BACKEND: in set timeout, setting to null");
         setBlockingTimestamp(null);
         setIsBlocking(true);
-        console.log("BACKEND: in set timeout, setting to null");
-      }, new Date(message.timestamp).getTime() - Date.now());
+        setBlockingTimerId(null);
+      }, new Date(message.timestamp as Date).getTime() - Date.now());
 
       setBlockingTimerId(blockingTimerId);
+      // });
+
       break;
 
     default:

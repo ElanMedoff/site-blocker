@@ -30695,6 +30695,9 @@ TODO:
 More button animations
 see if I can fix the latency issues
 Use flexbox instead of how i'm doing it now
+Promisify all the callback shit, move to a util file
+Figure out if the chrome storage stuff makes sense -- when should I access it, and
+when should I set variables to the chrome storage values?
 */
 
 
@@ -30865,7 +30868,7 @@ function Toggle(_a) {
         }
         // otherwise if it's blocking, and button is ready, toggle
         if (isButtonReady) {
-            var timestamp = new Date(Date.now() + 30 * 60 * 1000);
+            var timestamp = new Date(Date.now() + 0.5 * 60 * 1 * 1000);
             sendBlockingTimestamp(timestamp);
             sendToggleIsBlocking();
             setIsButtonReady(false);
