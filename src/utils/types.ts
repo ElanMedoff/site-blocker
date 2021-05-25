@@ -29,7 +29,7 @@ interface SetBlockingTimeStamp {
 interface BackendState {
   isBlocking: boolean;
   blockingTimestamp: Date | null;
-  blockingTimerId: NodeJS.Timeout | null;
+  blockingTimerId: number | null;
 }
 
 export type Message =

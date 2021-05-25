@@ -91,4 +91,11 @@ Use flexbox instead of how i'm doing it now
 Promisify all the callback shit, move to a util file
 Figure out if the chrome storage stuff makes sense -- when should I access it, and 
 when should I set variables to the chrome storage values?
+
+Change to async await
+figure out a better way to do the ts stuff for chromeStorageGet
+
+add types for each backend state variable
+make custom typeguards and reuse them 
+
 */
