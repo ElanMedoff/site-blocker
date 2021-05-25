@@ -41,3 +41,19 @@ export type Message =
   | SetBlockingTimeStamp;
 
 export type { BackendState };
+
+export function isIsBlocking(isBlocking: any): isBlocking is boolean {
+  return typeof isBlocking === "boolean";
+}
+
+export function isBlockingTimestamp(
+  blockingTimestamp: any
+): blockingTimestamp is Date | null {
+  return blockingTimestamp instanceof Date || blockingTimestamp === null;
+}
+
+export function isBlockingTimerId(
+  blockingTimerId: any
+): blockingTimerId is number | null {
+  return typeof blockingTimerId === "number" || blockingTimerId === null;
+}
