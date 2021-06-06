@@ -35,37 +35,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "chromeStorageGet": () => (/* binding */ chromeStorageGet)
 /* harmony export */ });
-/* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./types */ "./src/utils/types.ts");
-
 function chromeStorageGet(key) {
     return new Promise(function (resolve, reject) {
         chrome.storage.local.get(key, function (uncast) {
             if (chrome.runtime.lastError)
                 return reject(chrome.runtime.lastError);
-            // const cast = uncast as Omit<BackendState, "isBlocking"> & {
-            //   isBlocking: boolean | undefined;
-            // };
+            // have to cast somewhere?
             var cast = uncast;
             var data = cast[key];
-            // set local state
-            switch (key) {
-                case "isBlocking":
-                    var isBlocking = Boolean(data);
-                    resolve(isBlocking);
-                    break;
-                case "blockingTimerId":
-                    if (!(0,_types__WEBPACK_IMPORTED_MODULE_0__.isBlockingTimerId)(data))
-                        throw new Error("Expected blockingTimerId, got something else: " + data + ", " + typeof data);
-                    resolve(data);
-                    break;
-                case "blockingTimestamp":
-                    if (!(0,_types__WEBPACK_IMPORTED_MODULE_0__.isBlockingTimestamp)(data))
-                        throw new Error("Expected blockingTimestamp, got something else: " + data + ", " + typeof data);
-                    resolve(data);
-                    break;
-                default:
-                    break;
-            }
+            resolve(data);
         });
     });
 }
@@ -234,10 +212,11 @@ function setBlockingTimerId(blockingTimerId) {
     chrome.storage.local.set({ blockingTimerId: blockingTimerId });
 }
 // TODO doesn't really seem to have helped the delay?
-// chrome.tabs.onCreated.addListener((tab) => {
+// chrome.tabs.onCreated.addListener(async (tab) => {
 //   if (!tab.pendingUrl) return;
 //   if (!tab.id) return;
-//   if (!targetProxy.isBlocking) return;
+//   const isBlocking = Boolean(await chromeStorageGet("isBlocking"));
+//   if (!isIsBlocking(isBlocking)) return;
 //   for (const regex of blockedSites) {
 //     if (regex.test(tab.pendingUrl)) {
 //       chrome.tabs.remove(tab.id);
@@ -246,15 +225,18 @@ function setBlockingTimerId(blockingTimerId) {
 //   }
 // });
 chrome.tabs.onUpdated.addListener(function (tabId, _, tab) { return __awaiter(void 0, void 0, void 0, function () {
-    var isBlocking, _i, blockedSites_1, regex;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
+    var isBlocking, _a, _i, blockedSites_1, regex;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
             case 0:
                 if (!tab.url)
                     return [2 /*return*/];
+                _a = Boolean;
                 return [4 /*yield*/, (0,_utils_promisify__WEBPACK_IMPORTED_MODULE_2__.chromeStorageGet)("isBlocking")];
             case 1:
-                isBlocking = _a.sent();
+                isBlocking = _a.apply(void 0, [_b.sent()]);
+                if (!(0,_utils_types__WEBPACK_IMPORTED_MODULE_1__.isIsBlocking)(isBlocking))
+                    return [2 /*return*/];
                 if (!isBlocking)
                     return [2 /*return*/];
                 // want to run sync, don't want to bother with forEach
@@ -272,9 +254,9 @@ chrome.tabs.onUpdated.addListener(function (tabId, _, tab) { return __awaiter(vo
     });
 }); });
 chrome.runtime.onMessage.addListener(function (message) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, isBlocking, blockingTimestamp, blockingTimerId_1, blockingTimerId;
-    return __generator(this, function (_b) {
-        switch (_b.label) {
+    var _a, isBlocking, _b, blockingTimestamp, blockingTimerId_1, blockingTimerId;
+    return __generator(this, function (_c) {
+        switch (_c.label) {
             case 0:
                 _a = message.type;
                 switch (_a) {
@@ -284,9 +266,11 @@ chrome.runtime.onMessage.addListener(function (message) { return __awaiter(void 
                     case "SET_BLOCKING_TIMESTAMP": return [3 /*break*/, 6];
                 }
                 return [3 /*break*/, 9];
-            case 1: return [4 /*yield*/, (0,_utils_promisify__WEBPACK_IMPORTED_MODULE_2__.chromeStorageGet)("isBlocking")];
+            case 1:
+                _b = Boolean;
+                return [4 /*yield*/, (0,_utils_promisify__WEBPACK_IMPORTED_MODULE_2__.chromeStorageGet)("isBlocking")];
             case 2:
-                isBlocking = _b.sent();
+                isBlocking = _b.apply(void 0, [_c.sent()]);
                 console.log("BACKEND: received request for blocking status", {
                     isBlocking: isBlocking,
                 });
@@ -302,7 +286,7 @@ chrome.runtime.onMessage.addListener(function (message) { return __awaiter(void 
                 return [3 /*break*/, 10];
             case 4: return [4 /*yield*/, (0,_utils_promisify__WEBPACK_IMPORTED_MODULE_2__.chromeStorageGet)("blockingTimestamp")];
             case 5:
-                blockingTimestamp = _b.sent();
+                blockingTimestamp = _c.sent();
                 console.log("BACKEND: received request for blocking timestamp", {
                     blockingTimestamp: blockingTimestamp,
                 });
@@ -319,7 +303,7 @@ chrome.runtime.onMessage.addListener(function (message) { return __awaiter(void 
                 setBlockingTimestamp(message.timestamp);
                 return [4 /*yield*/, (0,_utils_promisify__WEBPACK_IMPORTED_MODULE_2__.chromeStorageGet)("blockingTimerId")];
             case 7:
-                blockingTimerId_1 = _b.sent();
+                blockingTimerId_1 = _c.sent();
                 if (!(0,_utils_types__WEBPACK_IMPORTED_MODULE_1__.isBlockingTimerId)(blockingTimerId_1))
                     return [2 /*return*/];
                 // if there's a current timer, cancel it

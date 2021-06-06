@@ -41,10 +41,11 @@ function setBlockingTimerId(blockingTimerId: number | null): void {
 }
 
 // TODO doesn't really seem to have helped the delay?
-// chrome.tabs.onCreated.addListener((tab) => {
+// chrome.tabs.onCreated.addListener(async (tab) => {
 //   if (!tab.pendingUrl) return;
 //   if (!tab.id) return;
-//   if (!targetProxy.isBlocking) return;
+//   const isBlocking = Boolean(await chromeStorageGet("isBlocking"));
+//   if (!isIsBlocking(isBlocking)) return;
 
 //   for (const regex of blockedSites) {
 //     if (regex.test(tab.pendingUrl)) {
@@ -56,7 +57,9 @@ function setBlockingTimerId(blockingTimerId: number | null): void {
 
 chrome.tabs.onUpdated.addListener(async (tabId, _, tab) => {
   if (!tab.url) return;
-  const isBlocking = await chromeStorageGet("isBlocking");
+  const isBlocking = Boolean(await chromeStorageGet("isBlocking"));
+  if (!isIsBlocking(isBlocking)) return;
+
   if (!isBlocking) return;
 
   // want to run sync, don't want to bother with forEach
@@ -73,7 +76,7 @@ chrome.tabs.onUpdated.addListener(async (tabId, _, tab) => {
 chrome.runtime.onMessage.addListener(async (message: Message) => {
   switch (message.type) {
     case "REQ_IS_BLOCKING_STATUS":
-      const isBlocking = await chromeStorageGet("isBlocking");
+      const isBlocking = Boolean(await chromeStorageGet("isBlocking"));
       console.log("BACKEND: received request for blocking status", {
         isBlocking,
       });
@@ -126,14 +129,13 @@ chrome.runtime.onMessage.addListener(async (message: Message) => {
       // if the message sent a real timestamp
       setBlockingTimestamp(message.timestamp);
 
-      // TODO THIS IS TERRIBLE FIX LATER
       const blockingTimerId = setTimeout(() => {
         // once timer finishes
         console.log("BACKEND: in set timeout, setting to null");
         setBlockingTimestamp(null);
         setIsBlocking(true);
         setBlockingTimerId(null);
-      }, new Date(message.timestamp as Date).getTime() - Date.now()) as any as number;
+      }, new Date(message.timestamp as Date).getTime() - Date.now()) as unknown as number;
 
       setBlockingTimerId(blockingTimerId);
 
