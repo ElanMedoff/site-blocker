@@ -1,33 +1,15 @@
 import blockedSites from "./utils/blockedSites";
 import {
   Message,
-  BackendState,
   isIsBlocking,
   isBlockingTimerId,
   isBlockingTimestamp,
 } from "./utils/types";
-import { chromeStorageGet } from "utils/promisify";
+import { chromeStorageGet } from "./utils/promisify";
 
-// set up proxy for better error messaging
-const targetObj: BackendState = {
-  isBlocking: true,
-  blockingTimestamp: null,
-  blockingTimerId: null,
-};
-const targetProxy: BackendState = new Proxy(targetObj, {
-  set: (target, key: "isBlocking" | "blockingTimestamp", value) => {
-    console.log(`BACKEND: ${String(key)} set to ${value}`);
-    target[key] = value;
-    return true;
-  },
-});
-targetProxy.isBlocking = true;
-targetProxy.blockingTimestamp = null;
-targetProxy.blockingTimerId = null;
-
-chrome.storage.local.set({ isBlocking: targetProxy.isBlocking });
-chrome.storage.local.set({ blockingTimestamp: targetProxy.blockingTimestamp });
-chrome.storage.local.set({ blockingTimerId: targetProxy.blockingTimerId });
+chrome.storage.local.set({ isBlocking: true });
+chrome.storage.local.set({ blockingTimestamp: null });
+chrome.storage.local.set({ blockingTimerId: null });
 
 // isBlocking timers
 function sendIsBlockingStatus(isBlocking: boolean) {
@@ -35,15 +17,7 @@ function sendIsBlockingStatus(isBlocking: boolean) {
   chrome.runtime.sendMessage(message);
 }
 
-// function getIsBlocking(callback: Function) {
-//   chrome.storage.local.get("isBlocking", (res) => {
-//     targetProxy.isBlocking = Boolean(res["isBlocking"]);
-//     callback(targetProxy.isBlocking);
-//   });
-// }
-
 function setIsBlocking(isBlocking: boolean): void {
-  targetProxy.isBlocking = isBlocking;
   chrome.storage.local.set({ isBlocking });
   sendIsBlockingStatus(isBlocking);
 }
@@ -57,33 +31,12 @@ function sendBlockingTimestamp(blockingTimestamp: Date | null) {
   chrome.runtime.sendMessage(message);
 }
 
-// function getBlockingTimestamp(callback: Function) {
-//   chrome.storage.local.get("blockingTimestamp", (res) => {
-//     targetProxy.blockingTimestamp = res["blockingTimestamp"]
-//       ? res["blockingTimestamp"]
-//       : null;
-//     callback(targetProxy.blockingTimestamp);
-//   });
-// }
-
 function setBlockingTimestamp(blockingTimestamp: Date | null): void {
-  targetProxy.blockingTimestamp = blockingTimestamp;
   chrome.storage.local.set({ blockingTimestamp });
   sendBlockingTimestamp(blockingTimestamp);
 }
 
-// blockingTimerId helpers
-// function getBlockingTimerId(callback: Function) {
-//   chrome.storage.local.get("blockingTimerId", (res) => {
-//     targetProxy.blockingTimerId = res["blockingTimerId"]
-//       ? res["blockingTimerId"]
-//       : null;
-//     callback(targetProxy.blockingTimerId);
-//   });
-// }
-
 function setBlockingTimerId(blockingTimerId: number | null): void {
-  targetProxy.blockingTimerId = blockingTimerId;
   chrome.storage.local.set({ blockingTimerId });
 }
 
@@ -101,9 +54,10 @@ function setBlockingTimerId(blockingTimerId: number | null): void {
 //   }
 // });
 
-chrome.tabs.onUpdated.addListener((tabId, _, tab) => {
+chrome.tabs.onUpdated.addListener(async (tabId, _, tab) => {
   if (!tab.url) return;
-  if (!targetProxy.isBlocking) return;
+  const isBlocking = await chromeStorageGet("isBlocking");
+  if (!isBlocking) return;
 
   // want to run sync, don't want to bother with forEach
   for (const regex of blockedSites) {
@@ -119,19 +73,14 @@ chrome.tabs.onUpdated.addListener((tabId, _, tab) => {
 chrome.runtime.onMessage.addListener(async (message: Message) => {
   switch (message.type) {
     case "REQ_IS_BLOCKING_STATUS":
-      // getIsBlocking(sendIsBlockingStatus);
-      // chromeStorageGet("isBlocking", targetProxy).then((isBlocking) => {
-      //   if (!isIsBlocking(isBlocking)) return;
-      //   sendIsBlockingStatus(isBlocking);
-      // });
+      const isBlocking = await chromeStorageGet("isBlocking");
+      console.log("BACKEND: received request for blocking status", {
+        isBlocking,
+      });
 
-      const isBlocking = await chromeStorageGet("isBlocking", targetProxy);
       if (!isIsBlocking(isBlocking)) return;
       sendIsBlockingStatus(isBlocking);
 
-      console.log("BACKEND: received request for blocking status", {
-        isBlocking: targetProxy.isBlocking,
-      });
       break;
 
     case "TOGGLE_IS_BLOCKING":
@@ -142,21 +91,11 @@ chrome.runtime.onMessage.addListener(async (message: Message) => {
       break;
 
     case "REQ_BLOCKING_TIMESTAMP":
+      const blockingTimestamp = await chromeStorageGet("blockingTimestamp");
       console.log("BACKEND: received request for blocking timestamp", {
-        blockingTimestamp: targetProxy.blockingTimestamp,
+        blockingTimestamp,
       });
 
-      // getBlockingTimestamp(sendBlockingTimestamp);
-      // chromeStorageGet("blockingTimestamp", targetProxy).then(
-      //   (blockingTimestamp) => {
-      //     if (!isBlockingTimestamp(blockingTimestamp)) return;
-      //     sendBlockingTimestamp(blockingTimestamp);
-      //   }
-      // );
-      const blockingTimestamp = await chromeStorageGet(
-        "blockingTimestamp",
-        targetProxy
-      );
       if (!isBlockingTimestamp(blockingTimestamp)) return;
       sendBlockingTimestamp(blockingTimestamp);
       break;
@@ -171,22 +110,10 @@ chrome.runtime.onMessage.addListener(async (message: Message) => {
         console.log("INSIDE if statement for null timestamp");
         setBlockingTimestamp(message.timestamp);
 
-        // chromeStorageGet("blockingTimerId", targetProxy).then(
-        //   (blockingTimerId) => {
-        //     if (!isBlockingTimerId(blockingTimerId)) return;
-        //     if (blockingTimerId) {
-        //       clearTimeout(blockingTimerId);
-        //     }
-        //     setBlockingTimerId(null);
-        //   }
-        // );
-        const blockingTimerId = await chromeStorageGet(
-          "blockingTimerId",
-          targetProxy
-        );
+        const blockingTimerId = await chromeStorageGet("blockingTimerId");
         if (!isBlockingTimerId(blockingTimerId)) return;
 
-        // if there's a current timer, cancel tit
+        // if there's a current timer, cancel it
         if (blockingTimerId) {
           clearTimeout(blockingTimerId);
         }
@@ -199,16 +126,16 @@ chrome.runtime.onMessage.addListener(async (message: Message) => {
       // if the message sent a real timestamp
       setBlockingTimestamp(message.timestamp);
 
-      const blockingTimerId = window.setTimeout(() => {
+      // TODO THIS IS TERRIBLE FIX LATER
+      const blockingTimerId = setTimeout(() => {
         // once timer finishes
         console.log("BACKEND: in set timeout, setting to null");
         setBlockingTimestamp(null);
         setIsBlocking(true);
         setBlockingTimerId(null);
-      }, new Date(message.timestamp as Date).getTime() - Date.now());
+      }, new Date(message.timestamp as Date).getTime() - Date.now()) as any as number;
 
       setBlockingTimerId(blockingTimerId);
-      // });
 
       break;
 

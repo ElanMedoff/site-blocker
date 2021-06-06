@@ -46,10 +46,15 @@ export function isIsBlocking(isBlocking: any): isBlocking is boolean {
   return typeof isBlocking === "boolean";
 }
 
+// TODO figure out when to use Date, and when to use string, seems pretty weird rn
 export function isBlockingTimestamp(
   blockingTimestamp: any
-): blockingTimestamp is Date | null {
-  return blockingTimestamp instanceof Date || blockingTimestamp === null;
+): blockingTimestamp is Date | null | string {
+  return (
+    blockingTimestamp instanceof Date ||
+    blockingTimestamp === null ||
+    typeof blockingTimestamp === "string"
+  );
 }
 
 export function isBlockingTimerId(
