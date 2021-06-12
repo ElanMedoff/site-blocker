@@ -34,7 +34,7 @@ export default function Root() {
     // Only set background variables in the listener to ensure that
     // when they're changed in the client, the changes are only reflected
     // if they make their way to the background, who then sends it back.
-    // Is this a good pattern? I'm not super sure.
+    // Is this a good pattern? not super sure
     chrome.runtime.onMessage.addListener((message: Message) => {
       switch (message.type) {
         case "IS_BLOCKING_STATUS":
