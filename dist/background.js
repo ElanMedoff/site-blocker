@@ -44,6 +44,29 @@ function chromeStorageGet(key) {
             var cast = uncast;
             var data = cast[key];
             resolve(data);
+            // TODO ts isn't smart enough to figure this out, make helpers instead?
+            // switch (key) {
+            //   case "blockingTimerId":
+            //     if (!isBlockingTimerId(data)) {
+            //       throw new Error(`expected blockingTimerId, got ${typeof data}`);
+            //     }
+            //     resolve(data);
+            //     break;
+            //   case "blockingTimestamp":
+            //     if (!isBlockingTimestamp(data)) {
+            //       throw new Error(`expected blockingTimestamp, got ${typeof data}`);
+            //     }
+            //     resolve(data);
+            //     break;
+            //   case "isBlocking":
+            //     const isBlocking = !!data;
+            //     if (!isIsBlocking(isBlocking)) {
+            //       throw new Error(`expected isBlocking, got ${typeof data}`);
+            //     }
+            //     break;
+            //   default:
+            //     throw new Error("unrecognized key!");
+            // }
         });
     });
 }
@@ -184,33 +207,50 @@ var __generator = (undefined && undefined.__generator) || function (thisArg, bod
 
 
 
-chrome.storage.local.set({ isBlocking: true });
-chrome.storage.local.set({ blockingTimestamp: null });
-chrome.storage.local.set({ blockingTimerId: null });
-// isBlocking timers
-function sendIsBlockingStatus(isBlocking) {
-    var message = { type: "IS_BLOCKING_STATUS", isBlocking: isBlocking };
-    chrome.runtime.sendMessage(message);
-}
-function setIsBlocking(isBlocking) {
-    chrome.storage.local.set({ isBlocking: isBlocking });
-    sendIsBlockingStatus(isBlocking);
-}
-// blockingTimestamp helpers
-function sendBlockingTimestamp(blockingTimestamp) {
-    var message = {
-        type: "BLOCKING_TIMESTAMP",
-        timestamp: blockingTimestamp,
-    };
-    chrome.runtime.sendMessage(message);
-}
-function setBlockingTimestamp(blockingTimestamp) {
-    chrome.storage.local.set({ blockingTimestamp: blockingTimestamp });
-    sendBlockingTimestamp(blockingTimestamp);
-}
-function setBlockingTimerId(blockingTimerId) {
-    chrome.storage.local.set({ blockingTimerId: blockingTimerId });
-}
+(function init() {
+    return __awaiter(this, void 0, void 0, function () {
+        var isBlocking, blockingTimestamp, blockingTimerId;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    // should always be null, since on unmount it's set to null anyway
+                    chrome.storage.local.set({ blockingTimerId: null });
+                    return [4 /*yield*/, (0,_utils_promisify__WEBPACK_IMPORTED_MODULE_2__.chromeStorageGet)("isBlocking")];
+                case 1:
+                    isBlocking = _a.sent();
+                    if (isBlocking === undefined) {
+                        chrome.storage.local.set({ isBlocking: true });
+                    }
+                    return [4 /*yield*/, (0,_utils_promisify__WEBPACK_IMPORTED_MODULE_2__.chromeStorageGet)("blockingTimestamp")];
+                case 2:
+                    blockingTimestamp = _a.sent();
+                    if (!(0,_utils_types__WEBPACK_IMPORTED_MODULE_1__.isBlockingTimestamp)(blockingTimestamp)) {
+                        throw new TypeError("expected blockingTimestamp, got " + typeof blockingTimestamp);
+                    }
+                    if (!blockingTimestamp) {
+                        setBlockingTimestamp(null);
+                        return [2 /*return*/];
+                    }
+                    // negative timestamp, reset
+                    if (new Date(blockingTimestamp).getTime() - Date.now() < 0) {
+                        setBlockingTimestamp(null);
+                        return [2 /*return*/];
+                    }
+                    // ongoing timer
+                    if (new Date(blockingTimestamp).getTime() - Date.now() >= 0) {
+                        blockingTimerId = setTimeout(function () {
+                            console.log("BACKEND: in set timeout, setting to null");
+                            setBlockingTimestamp(null);
+                            setIsBlocking(true);
+                            setBlockingTimerId(null);
+                        }, new Date(blockingTimestamp).getTime() - Date.now());
+                        setBlockingTimerId(blockingTimerId);
+                    }
+                    return [2 /*return*/];
+            }
+        });
+    });
+})();
 // TODO doesn't really seem to have helped the delay?
 // chrome.tabs.onCreated.addListener(async (tab) => {
 //   if (!tab.pendingUrl) return;
@@ -225,18 +265,18 @@ function setBlockingTimerId(blockingTimerId) {
 //   }
 // });
 chrome.tabs.onUpdated.addListener(function (tabId, _, tab) { return __awaiter(void 0, void 0, void 0, function () {
-    var isBlocking, _a, _i, blockedSites_1, regex;
-    return __generator(this, function (_b) {
-        switch (_b.label) {
+    var isBlocking, _i, blockedSites_1, regex;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
             case 0:
                 if (!tab.url)
                     return [2 /*return*/];
-                _a = Boolean;
                 return [4 /*yield*/, (0,_utils_promisify__WEBPACK_IMPORTED_MODULE_2__.chromeStorageGet)("isBlocking")];
             case 1:
-                isBlocking = _a.apply(void 0, [_b.sent()]);
-                if (!(0,_utils_types__WEBPACK_IMPORTED_MODULE_1__.isIsBlocking)(isBlocking))
-                    return [2 /*return*/];
+                isBlocking = !!(_a.sent());
+                if (!(0,_utils_types__WEBPACK_IMPORTED_MODULE_1__.isIsBlocking)(isBlocking)) {
+                    throw new TypeError("expected isBlocking, got " + typeof isBlocking);
+                }
                 if (!isBlocking)
                     return [2 /*return*/];
                 // want to run sync, don't want to bother with forEach
@@ -253,10 +293,30 @@ chrome.tabs.onUpdated.addListener(function (tabId, _, tab) { return __awaiter(vo
         }
     });
 }); });
+// on unmount
+chrome.runtime.onSuspend.addListener(function () { return __awaiter(void 0, void 0, void 0, function () {
+    var blockingTimerId;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, (0,_utils_promisify__WEBPACK_IMPORTED_MODULE_2__.chromeStorageGet)("blockingTimerId")];
+            case 1:
+                blockingTimerId = _a.sent();
+                if (!(0,_utils_types__WEBPACK_IMPORTED_MODULE_1__.isBlockingTimerId)(blockingTimerId)) {
+                    throw new TypeError("expected blockingTimerId, got " + typeof blockingTimerId);
+                }
+                // if there's a current timer, cancel it, but keep the timestamp
+                if (blockingTimerId) {
+                    clearTimeout(blockingTimerId);
+                }
+                setBlockingTimerId(null);
+                return [2 /*return*/];
+        }
+    });
+}); });
 chrome.runtime.onMessage.addListener(function (message) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, isBlocking, _b, blockingTimestamp, blockingTimerId_1, blockingTimerId;
-    return __generator(this, function (_c) {
-        switch (_c.label) {
+    var _a, isBlocking, blockingTimestamp, blockingTimerId_1, blockingTimerId;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
             case 0:
                 _a = message.type;
                 switch (_a) {
@@ -266,16 +326,15 @@ chrome.runtime.onMessage.addListener(function (message) { return __awaiter(void 
                     case "SET_BLOCKING_TIMESTAMP": return [3 /*break*/, 6];
                 }
                 return [3 /*break*/, 9];
-            case 1:
-                _b = Boolean;
-                return [4 /*yield*/, (0,_utils_promisify__WEBPACK_IMPORTED_MODULE_2__.chromeStorageGet)("isBlocking")];
+            case 1: return [4 /*yield*/, (0,_utils_promisify__WEBPACK_IMPORTED_MODULE_2__.chromeStorageGet)("isBlocking")];
             case 2:
-                isBlocking = _b.apply(void 0, [_c.sent()]);
+                isBlocking = _b.sent();
                 console.log("BACKEND: received request for blocking status", {
                     isBlocking: isBlocking,
                 });
-                if (!(0,_utils_types__WEBPACK_IMPORTED_MODULE_1__.isIsBlocking)(isBlocking))
-                    return [2 /*return*/];
+                if (!(0,_utils_types__WEBPACK_IMPORTED_MODULE_1__.isIsBlocking)(isBlocking)) {
+                    throw new TypeError("expected isBlocking, got " + typeof isBlocking);
+                }
                 sendIsBlockingStatus(isBlocking);
                 return [3 /*break*/, 10];
             case 3:
@@ -286,12 +345,13 @@ chrome.runtime.onMessage.addListener(function (message) { return __awaiter(void 
                 return [3 /*break*/, 10];
             case 4: return [4 /*yield*/, (0,_utils_promisify__WEBPACK_IMPORTED_MODULE_2__.chromeStorageGet)("blockingTimestamp")];
             case 5:
-                blockingTimestamp = _c.sent();
+                blockingTimestamp = _b.sent();
                 console.log("BACKEND: received request for blocking timestamp", {
                     blockingTimestamp: blockingTimestamp,
                 });
-                if (!(0,_utils_types__WEBPACK_IMPORTED_MODULE_1__.isBlockingTimestamp)(blockingTimestamp))
-                    return [2 /*return*/];
+                if (!(0,_utils_types__WEBPACK_IMPORTED_MODULE_1__.isBlockingTimestamp)(blockingTimestamp)) {
+                    throw new TypeError("expected isBlockingTimestamp, got " + typeof blockingTimestamp);
+                }
                 sendBlockingTimestamp(blockingTimestamp);
                 return [3 /*break*/, 10];
             case 6:
@@ -303,9 +363,10 @@ chrome.runtime.onMessage.addListener(function (message) { return __awaiter(void 
                 setBlockingTimestamp(message.timestamp);
                 return [4 /*yield*/, (0,_utils_promisify__WEBPACK_IMPORTED_MODULE_2__.chromeStorageGet)("blockingTimerId")];
             case 7:
-                blockingTimerId_1 = _c.sent();
-                if (!(0,_utils_types__WEBPACK_IMPORTED_MODULE_1__.isBlockingTimerId)(blockingTimerId_1))
-                    return [2 /*return*/];
+                blockingTimerId_1 = _b.sent();
+                if (!(0,_utils_types__WEBPACK_IMPORTED_MODULE_1__.isBlockingTimerId)(blockingTimerId_1)) {
+                    throw new TypeError("expected blockingTimerId, got " + typeof blockingTimerId_1);
+                }
                 // if there's a current timer, cancel it
                 if (blockingTimerId_1) {
                     clearTimeout(blockingTimerId_1);
@@ -330,6 +391,31 @@ chrome.runtime.onMessage.addListener(function (message) { return __awaiter(void 
         }
     });
 }); });
+// isBlocking helpers
+function sendIsBlockingStatus(isBlocking) {
+    var message = { type: "IS_BLOCKING_STATUS", isBlocking: isBlocking };
+    chrome.runtime.sendMessage(message);
+}
+function setIsBlocking(isBlocking) {
+    chrome.storage.local.set({ isBlocking: isBlocking });
+    sendIsBlockingStatus(isBlocking);
+}
+// blockingTimestamp helpers
+function sendBlockingTimestamp(blockingTimestamp) {
+    var message = {
+        type: "BLOCKING_TIMESTAMP",
+        timestamp: blockingTimestamp,
+    };
+    chrome.runtime.sendMessage(message);
+}
+function setBlockingTimestamp(blockingTimestamp) {
+    chrome.storage.local.set({ blockingTimestamp: blockingTimestamp });
+    sendBlockingTimestamp(blockingTimestamp);
+}
+// blockingTimerId helpers
+function setBlockingTimerId(blockingTimerId) {
+    chrome.storage.local.set({ blockingTimerId: blockingTimerId });
+}
 
 })();
 

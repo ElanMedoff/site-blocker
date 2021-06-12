@@ -88,8 +88,4 @@ TODO:
 More button animations
 see if I can fix the latency issues
 Use flexbox instead of how i'm doing it now
-
-Get rid of local variables
-Set up the queue 
-
 */
