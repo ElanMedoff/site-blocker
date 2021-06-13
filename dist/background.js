@@ -44,29 +44,6 @@ function chromeStorageGet(key) {
             var cast = uncast;
             var data = cast[key];
             resolve(data);
-            // TODO ts isn't smart enough to figure this out, make helpers instead?
-            // switch (key) {
-            //   case "blockingTimerId":
-            //     if (!isBlockingTimerId(data)) {
-            //       throw new Error(`expected blockingTimerId, got ${typeof data}`);
-            //     }
-            //     resolve(data);
-            //     break;
-            //   case "blockingTimestamp":
-            //     if (!isBlockingTimestamp(data)) {
-            //       throw new Error(`expected blockingTimestamp, got ${typeof data}`);
-            //     }
-            //     resolve(data);
-            //     break;
-            //   case "isBlocking":
-            //     const isBlocking = !!data;
-            //     if (!isIsBlocking(isBlocking)) {
-            //       throw new Error(`expected isBlocking, got ${typeof data}`);
-            //     }
-            //     break;
-            //   default:
-            //     throw new Error("unrecognized key!");
-            // }
         });
     });
 }

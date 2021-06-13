@@ -48,6 +48,10 @@ export default function Root() {
           console.log("CLIENT: received messaged, setting blocking timestamp", {
             timestamp: message.timestamp,
           });
+          console.log(
+            `AHHHHHH ${typeof message.timestamp}, ${message.timestamp}`
+          );
+          // TODO date is received as a string!
           break;
         default:
           break;
@@ -88,4 +92,5 @@ TODO:
 More button animations
 see if I can fix the latency issues
 Use flexbox instead of how i'm doing it now
+fix the Date vs string issues
 */

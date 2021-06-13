@@ -30678,6 +30678,8 @@ function Root() {
                     console.log("CLIENT: received messaged, setting blocking timestamp", {
                         timestamp: message.timestamp,
                     });
+                    console.log("AHHHHHH " + typeof message.timestamp + ", " + message.timestamp);
+                    // TODO date is received as a string!
                     break;
                 default:
                     break;
@@ -30695,10 +30697,7 @@ TODO:
 More button animations
 see if I can fix the latency issues
 Use flexbox instead of how i'm doing it now
-
-Get rid of local variables
-Set up the queue
-
+fix the Date vs string issues
 */
 
 
@@ -30870,6 +30869,7 @@ function Toggle(_a) {
         // otherwise if it's blocking, and button is ready, toggle
         if (isButtonReady) {
             var timestamp = new Date(Date.now() + 0.5 * 60 * 1 * 1000);
+            // TODO convert to string?
             sendBlockingTimestamp(timestamp);
             sendToggleIsBlocking();
             setIsButtonReady(false);

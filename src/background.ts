@@ -140,6 +140,11 @@ chrome.runtime.onMessage.addListener(async (message: Message) => {
         timestamp: message.timestamp,
       });
 
+      // TODO even though the blocking timestamp is sent as a Date, it's received as a string
+      // TODO figure out how to handle that
+
+      // TODO figure out if the frontend receives it as a string or date
+
       // if the message sent has a null timestamp, i.e. cancel the current timer
       if (!message.timestamp) {
         console.log("INSIDE if statement for null timestamp");
