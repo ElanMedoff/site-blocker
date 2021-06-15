@@ -9,7 +9,7 @@ interface ToggleProps {
   isButtonDisabled: boolean;
   setIsButtonDisabled: Dispatch<SetStateAction<boolean>>;
   setStartConfirmCountdown: Dispatch<SetStateAction<boolean>>;
-  blockingTimestamp: Date | null;
+  blockingTimestamp: string | null;
 }
 
 export default function Toggle({
@@ -29,7 +29,7 @@ ToggleProps) {
     chrome.runtime.sendMessage(message);
   };
 
-  const sendBlockingTimestamp = (timestamp: Date | null) => {
+  const sendBlockingTimestamp = (timestamp: string | null) => {
     const message: Message = {
       type: "SET_BLOCKING_TIMESTAMP",
       timestamp,
@@ -47,8 +47,7 @@ ToggleProps) {
 
     // otherwise if it's blocking, and button is ready, toggle
     if (isButtonReady) {
-      const timestamp = new Date(Date.now() + 0.5 * 60 * 1 * 1000);
-      // TODO convert to string?
+      const timestamp = String(new Date(Date.now() + 0.5 * 60 * 1 * 1000));
       sendBlockingTimestamp(timestamp);
       sendToggleIsBlocking();
       setIsButtonReady(false);

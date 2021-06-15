@@ -1,11 +1,14 @@
 .status {
   font-size: 18px;
   text-align: center;
-  font-weight: bold;
   width: 125px;
-  /* border: 1px solid black; */
   margin-right: 6px;
 }
+
+.status > span {
+  font-weight: bold;
+}
+
 .italic {
   font-style: italic;
   font-size: 16px;

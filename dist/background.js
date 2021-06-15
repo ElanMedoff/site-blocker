@@ -66,11 +66,10 @@ __webpack_require__.r(__webpack_exports__);
 function isIsBlocking(isBlocking) {
     return typeof isBlocking === "boolean";
 }
-// TODO figure out when to use Date, and when to use string, seems pretty weird rn
 function isBlockingTimestamp(blockingTimestamp) {
-    return (blockingTimestamp instanceof Date ||
-        blockingTimestamp === null ||
-        typeof blockingTimestamp === "string");
+    return (
+    // blockingTimestamp instanceof Date ||
+    blockingTimestamp === null || typeof blockingTimestamp === "string");
 }
 function isBlockingTimerId(blockingTimerId) {
     return typeof blockingTimerId === "number" || blockingTimerId === null;

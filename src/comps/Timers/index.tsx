@@ -8,7 +8,7 @@ interface TimersProps {
   setStartConfirmCountdown: Dispatch<SetStateAction<boolean>>;
   startConfirmCountdown: boolean;
   setIsButtonReady: Dispatch<SetStateAction<boolean>>;
-  blockingTimestamp: Date | null;
+  blockingTimestamp: string | null;
 }
 
 export default function Timers({

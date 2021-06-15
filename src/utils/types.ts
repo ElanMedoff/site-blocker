@@ -18,17 +18,17 @@ interface BlockingTimestampRequest {
 
 interface BlockingTimestampResponse {
   type: "BLOCKING_TIMESTAMP";
-  timestamp: Date | null;
+  timestamp: string | null;
 }
 
 interface SetBlockingTimeStamp {
   type: "SET_BLOCKING_TIMESTAMP";
-  timestamp: Date | null;
+  timestamp: string | null;
 }
 
 interface BackendState {
   isBlocking: boolean;
-  blockingTimestamp: Date | null;
+  blockingTimestamp: string | null;
   blockingTimerId: number | null;
 }
 
@@ -46,14 +46,12 @@ export function isIsBlocking(isBlocking: any): isBlocking is boolean {
   return typeof isBlocking === "boolean";
 }
 
-// TODO figure out when to use Date, and when to use string, seems pretty weird rn
 export function isBlockingTimestamp(
   blockingTimestamp: any
-): blockingTimestamp is Date | null | string {
+): blockingTimestamp is string | null {
   return (
-    blockingTimestamp instanceof Date ||
-    blockingTimestamp === null ||
-    typeof blockingTimestamp === "string"
+    // blockingTimestamp instanceof Date ||
+    blockingTimestamp === null || typeof blockingTimestamp === "string"
   );
 }
 

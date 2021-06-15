@@ -24,7 +24,7 @@ export default function Status({
 
   return (
     <div className={styles.status}>
-      Status:
+      status:
       <span className={styles.italic}>{renderStatus()}</span>
     </div>
   );

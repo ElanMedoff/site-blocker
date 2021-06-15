@@ -140,11 +140,6 @@ chrome.runtime.onMessage.addListener(async (message: Message) => {
         timestamp: message.timestamp,
       });
 
-      // TODO even though the blocking timestamp is sent as a Date, it's received as a string
-      // TODO figure out how to handle that
-
-      // TODO figure out if the frontend receives it as a string or date
-
       // if the message sent has a null timestamp, i.e. cancel the current timer
       if (!message.timestamp) {
         console.log("INSIDE if statement for null timestamp");
@@ -176,7 +171,7 @@ chrome.runtime.onMessage.addListener(async (message: Message) => {
         setBlockingTimestamp(null);
         setIsBlocking(true);
         setBlockingTimerId(null);
-      }, new Date(message.timestamp as Date).getTime() - Date.now()) as unknown as number;
+      }, new Date(message.timestamp).getTime() - Date.now()) as unknown as number;
 
       setBlockingTimerId(blockingTimerId);
       break;
@@ -198,7 +193,7 @@ function setIsBlocking(isBlocking: boolean): void {
 }
 
 // blockingTimestamp helpers
-function sendBlockingTimestamp(blockingTimestamp: Date | null) {
+function sendBlockingTimestamp(blockingTimestamp: string | null) {
   const message: Message = {
     type: "BLOCKING_TIMESTAMP",
     timestamp: blockingTimestamp,
@@ -206,7 +201,7 @@ function sendBlockingTimestamp(blockingTimestamp: Date | null) {
   chrome.runtime.sendMessage(message);
 }
 
-function setBlockingTimestamp(blockingTimestamp: Date | null): void {
+function setBlockingTimestamp(blockingTimestamp: string | null): void {
   chrome.storage.local.set({ blockingTimestamp });
   sendBlockingTimestamp(blockingTimestamp);
 }

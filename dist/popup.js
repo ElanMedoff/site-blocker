@@ -26563,7 +26563,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".qsB8MLKLwp2sLOLTJhzD- {\n  font-size: 18px;\n  text-align: center;\n  font-weight: bold;\n  width: 125px;\n  /* border: 1px solid black; */\n  margin-right: 6px;\n}\n._300lIc0tQij4SOyOARepT3 {\n  font-style: italic;\n  font-size: 16px;\n}\n\n._1OrbPAmj9Y0rtX_BWh_MPX {\n  color: #18bc9c;\n}\n\n.-E7R4s4md1JObEhKubPxH {\n  color: #ff0039;\n}\n\n._1hJPlqI699OlBwJolEkohx {\n  color: #f39c12;\n}\n", "",{"version":3,"sources":["webpack://./src/comps/Status/Status.module.css"],"names":[],"mappings":"AAAA;EACE,eAAe;EACf,kBAAkB;EAClB,iBAAiB;EACjB,YAAY;EACZ,6BAA6B;EAC7B,iBAAiB;AACnB;AACA;EACE,kBAAkB;EAClB,eAAe;AACjB;;AAEA;EACE,cAAc;AAChB;;AAEA;EACE,cAAc;AAChB;;AAEA;EACE,cAAc;AAChB","sourcesContent":[".status {\n  font-size: 18px;\n  text-align: center;\n  font-weight: bold;\n  width: 125px;\n  /* border: 1px solid black; */\n  margin-right: 6px;\n}\n.italic {\n  font-style: italic;\n  font-size: 16px;\n}\n\n.green {\n  color: #18bc9c;\n}\n\n.red {\n  color: #ff0039;\n}\n\n.orange {\n  color: #f39c12;\n}\n"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, ".qsB8MLKLwp2sLOLTJhzD- {\n  font-size: 18px;\n  text-align: center;\n  width: 125px;\n  margin-right: 6px;\n}\n\n.qsB8MLKLwp2sLOLTJhzD- > span {\n  font-weight: bold;\n}\n\n._300lIc0tQij4SOyOARepT3 {\n  font-style: italic;\n  font-size: 16px;\n}\n\n._1OrbPAmj9Y0rtX_BWh_MPX {\n  color: #18bc9c;\n}\n\n.-E7R4s4md1JObEhKubPxH {\n  color: #ff0039;\n}\n\n._1hJPlqI699OlBwJolEkohx {\n  color: #f39c12;\n}\n", "",{"version":3,"sources":["webpack://./src/comps/Status/Status.module.css"],"names":[],"mappings":"AAAA;EACE,eAAe;EACf,kBAAkB;EAClB,YAAY;EACZ,iBAAiB;AACnB;;AAEA;EACE,iBAAiB;AACnB;;AAEA;EACE,kBAAkB;EAClB,eAAe;AACjB;;AAEA;EACE,cAAc;AAChB;;AAEA;EACE,cAAc;AAChB;;AAEA;EACE,cAAc;AAChB","sourcesContent":[".status {\n  font-size: 18px;\n  text-align: center;\n  width: 125px;\n  margin-right: 6px;\n}\n\n.status > span {\n  font-weight: bold;\n}\n\n.italic {\n  font-style: italic;\n  font-size: 16px;\n}\n\n.green {\n  color: #18bc9c;\n}\n\n.red {\n  color: #ff0039;\n}\n\n.orange {\n  color: #f39c12;\n}\n"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"status": "qsB8MLKLwp2sLOLTJhzD-",
@@ -26625,7 +26625,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "._2ewT1eINEMZ4ZR5w8loLLd {\n  font-size: 24px;\n  text-align: center;\n  font-weight: bold;\n  padding: 6px 12px;\n  width: 75px;\n  /* border: 1px solid black; */\n  border-right: 3px solid black;\n  border-left: 3px solid black;\n}\n", "",{"version":3,"sources":["webpack://./src/comps/Timers/Timers.module.css"],"names":[],"mappings":"AAAA;EACE,eAAe;EACf,kBAAkB;EAClB,iBAAiB;EACjB,iBAAiB;EACjB,WAAW;EACX,6BAA6B;EAC7B,6BAA6B;EAC7B,4BAA4B;AAC9B","sourcesContent":[".timer {\n  font-size: 24px;\n  text-align: center;\n  font-weight: bold;\n  padding: 6px 12px;\n  width: 75px;\n  /* border: 1px solid black; */\n  border-right: 3px solid black;\n  border-left: 3px solid black;\n}\n"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, "._2ewT1eINEMZ4ZR5w8loLLd {\n  font-size: 24px;\n  text-align: center;\n  font-weight: bold;\n  padding: 6px 12px;\n  width: 75px;\n  /* border: 1px solid black; */\n  border-right: 2px solid black;\n  border-left: 2px solid black;\n}\n", "",{"version":3,"sources":["webpack://./src/comps/Timers/Timers.module.css"],"names":[],"mappings":"AAAA;EACE,eAAe;EACf,kBAAkB;EAClB,iBAAiB;EACjB,iBAAiB;EACjB,WAAW;EACX,6BAA6B;EAC7B,6BAA6B;EAC7B,4BAA4B;AAC9B","sourcesContent":[".timer {\n  font-size: 24px;\n  text-align: center;\n  font-weight: bold;\n  padding: 6px 12px;\n  width: 75px;\n  /* border: 1px solid black; */\n  border-right: 2px solid black;\n  border-left: 2px solid black;\n}\n"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"timer": "_2ewT1eINEMZ4ZR5w8loLLd"
@@ -30678,8 +30678,6 @@ function Root() {
                     console.log("CLIENT: received messaged, setting blocking timestamp", {
                         timestamp: message.timestamp,
                     });
-                    console.log("AHHHHHH " + typeof message.timestamp + ", " + message.timestamp);
-                    // TODO date is received as a string!
                     break;
                 default:
                     break;
@@ -30697,7 +30695,6 @@ TODO:
 More button animations
 see if I can fix the latency issues
 Use flexbox instead of how i'm doing it now
-fix the Date vs string issues
 */
 
 
@@ -30731,7 +30728,7 @@ function Status(_a) {
         }
     };
     return (react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { className: _Status_module_css__WEBPACK_IMPORTED_MODULE_1__.default.status },
-        "Status:",
+        "status:",
         react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", { className: _Status_module_css__WEBPACK_IMPORTED_MODULE_1__.default.italic }, renderStatus())));
 }
 
@@ -30868,8 +30865,7 @@ function Toggle(_a) {
         }
         // otherwise if it's blocking, and button is ready, toggle
         if (isButtonReady) {
-            var timestamp = new Date(Date.now() + 0.5 * 60 * 1 * 1000);
-            // TODO convert to string?
+            var timestamp = String(new Date(Date.now() + 0.5 * 60 * 1 * 1000));
             sendBlockingTimestamp(timestamp);
             sendToggleIsBlocking();
             setIsButtonReady(false);
