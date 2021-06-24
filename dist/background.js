@@ -12,14 +12,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-var blockedSites = [
-    /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{0,256}imgur.[-a-zA-Z0-9@:%._\+~#=]{1,256}(\/)?/,
-    /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{0,256}youtube.[-a-zA-Z0-9@:%._\+~#=]{1,256}(\/)?/,
-    /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{0,256}reddit.[-a-zA-Z0-9@:%._\+~#=]{1,256}(\/)?/,
-    /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{0,256}messenger.[-a-zA-Z0-9@:%._\+~#=]{1,256}(\/)?/,
-    /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{0,256}linkedin.[-a-zA-Z0-9@:%._\+~#=]{1,256}(\/)?/,
-    /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{0,256}news.google.[-a-zA-Z0-9@:%._\+~#=]{1,256}(\/)?/,
+// const blockedSites = [
+//   /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{0,256}imgur.[-a-zA-Z0-9@:%._\+~#=]{1,256}(\/)?/,
+//   /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{0,256}youtube.[-a-zA-Z0-9@:%._\+~#=]{1,256}(\/)?/,
+//   /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{0,256}reddit.[-a-zA-Z0-9@:%._\+~#=]{1,256}(\/)?/,
+//   /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{0,256}messenger.[-a-zA-Z0-9@:%._\+~#=]{1,256}(\/)?/,
+//   /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{0,256}linkedin.[-a-zA-Z0-9@:%._\+~#=]{1,256}(\/)?/,
+//   /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{0,256}news.google.[-a-zA-Z0-9@:%._\+~#=]{1,256}(\/)?/,
+// ];
+var sites = [
+    "imgur",
+    "youtube",
+    "reddit",
+    "messenger",
+    "linkedin",
+    "news.google",
 ];
+var blockedSites = sites.map(function (site) {
+    return new RegExp("https?://(www.)?[-a-zA-Z0-9@:%._+~#=]{0,256}" + site + ".[-a-zA-Z0-9@:%._+~#=]{1,256}(/)?");
+});
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (blockedSites);
 
 

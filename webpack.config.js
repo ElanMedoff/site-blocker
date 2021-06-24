@@ -1,6 +1,7 @@
 const webpack = require("webpack");
 const path = require("path");
 const CopyPlugin = require("copy-webpack-plugin");
+const { TsConfigPathsPlugin } = require("awesome-typescript-loader");
 
 const config = {
   entry: {
@@ -25,7 +26,7 @@ const config = {
       },
       {
         test: /\.ts(x)?$/,
-        loader: "ts-loader",
+        loader: "awesome-typescript-loader",
         exclude: /node_modules/,
       },
       {
@@ -50,6 +51,7 @@ const config = {
     alias: {
       "react-dom": "@hot-loader/react-dom",
     },
+    plugins: [new TsConfigPathsPlugin()],
   },
   devServer: {
     contentBase: "./dist",

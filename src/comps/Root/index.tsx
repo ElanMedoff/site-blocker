@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Message } from "../../utils/types";
-import Status from "../Status";
-import Timers from "../Timers";
-import Toggle from "../Toggle";
+import { Message } from "@utils/types";
+import Status from "@comps/Status";
+import Timers from "@comps/Timers";
+import Toggle from "@comps/Toggle";
 import styles from "./Root.module.css";
 
 export default function Root() {

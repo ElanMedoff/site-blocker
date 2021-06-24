@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction } from "react";
-import Timer from "../Timer";
-import { formatTime } from "../../utils/formatters";
+import Timer from "@comps/Timer/index";
+import { formatTime } from "@utils/formatters";
 import styles from "./Timers.module.css";
 
 interface TimersProps {

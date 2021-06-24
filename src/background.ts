@@ -1,11 +1,11 @@
-import blockedSites from "./utils/blockedSites";
+import blockedSites from "@utils/blockedSites";
 import {
   Message,
   isIsBlocking,
   isBlockingTimerId,
   isBlockingTimestamp,
-} from "./utils/types";
-import { chromeStorageGet } from "./utils/promisify";
+} from "@utils/types";
+import { chromeStorageGet } from "@utils/promisify";
 
 (async function init() {
   // should always be null, since on unmount it's set to null anyway

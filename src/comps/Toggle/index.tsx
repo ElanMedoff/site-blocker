@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction } from "react";
-import { Message } from "../../utils/types";
+import { Message } from "@utils/types";
 import styles from "./Toggle.module.css";
 
 interface ToggleProps {

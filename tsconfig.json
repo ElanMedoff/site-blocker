@@ -1,8 +1,15 @@
 {
   "compilerOptions": {
+    // "baseUrl": ".",
+    // "paths": {
+    //   "src/*": ["./src/*"]
+    // },
     "baseUrl": "./src",
     "paths": {
-      "types/*": ["./types/*"]
+      // "src/*": ["./src/*"],
+      "@comps/*": ["./comps/*"],
+      "@hooks/*": ["./hooks/*"],
+      "@utils/*": ["./utils/*"]
     },
     "outDir": "./dist/",
     "sourceMap": true,
@@ -25,5 +32,6 @@
     "esModuleInterop": true
   },
   "include": ["./src/**/*"],
-  "exclude": ["node_modules/**/*"]
+  // "exclude": ["node_modules/**/*"]
+  "exclude": ["./node_modules/**/*", "./dist/**/*"]
 }

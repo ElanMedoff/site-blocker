@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import useInterval from "../../hooks/useInterval";
-import { formatTime } from "../../utils/formatters";
+import useInterval from "@hooks/useInterval";
+import { formatTime } from "@utils/formatters";
 import styles from "./Timer.module.css";
 
 interface TimerProps {

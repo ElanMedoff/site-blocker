@@ -1,9 +1,4 @@
-import {
-  BackendState,
-  // isBlockingTimerId,
-  // isBlockingTimestamp,
-  // isIsBlocking,
-} from "./types";
+import { BackendState } from "@utils/types";
 
 type Properties<T> = keyof T;
 

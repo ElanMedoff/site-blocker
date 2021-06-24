@@ -26373,6 +26373,328 @@ if (false) {} else {
 
 /***/ }),
 
+/***/ "./src/comps/Root/index.tsx":
+/*!**********************************!*\
+  !*** ./src/comps/Root/index.tsx ***!
+  \**********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Root)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _comps_Status__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @comps/Status */ "./src/comps/Status/index.tsx");
+/* harmony import */ var _comps_Timers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @comps/Timers */ "./src/comps/Timers/index.tsx");
+/* harmony import */ var _comps_Toggle__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @comps/Toggle */ "./src/comps/Toggle/index.tsx");
+/* harmony import */ var _Root_module_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Root.module.css */ "./src/comps/Root/Root.module.css");
+
+
+
+
+
+function Root() {
+    // "global" state, lotta piping around, might want to actually make global later
+    var _a = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true), isBlocking = _a[0], setIsBlocking = _a[1];
+    var _b = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false), isButtonDisabled = _b[0], setIsButtonDisabled = _b[1];
+    var _c = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false), startConfirmCountdown = _c[0], setStartConfirmCountdown = _c[1];
+    var _d = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false), isButtonReady = _d[0], setIsButtonReady = _d[1];
+    var _e = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null), blockingTimestamp = _e[0], setBlockingTimestamp = _e[1];
+    // onload set "global" state
+    (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+        var isBlockingRequest = {
+            type: "REQ_IS_BLOCKING_STATUS",
+        };
+        chrome.runtime.sendMessage(isBlockingRequest);
+        console.log("CLIENT: sending for is blocking status request message", {
+            isBlockingRequest: isBlockingRequest,
+        });
+        var blockingTimestampRequest = {
+            type: "REQ_BLOCKING_TIMESTAMP",
+        };
+        chrome.runtime.sendMessage(blockingTimestampRequest);
+        console.log("CLIENT: sending request for blocking timestamp message", {
+            blockingTimestampRequest: blockingTimestampRequest,
+        });
+        // Only set background variables in the listener to ensure that
+        // when they're changed in the client, the changes are only reflected
+        // if they make their way to the background, who then sends it back.
+        // Is this a good pattern? not super sure
+        chrome.runtime.onMessage.addListener(function (message) {
+            switch (message.type) {
+                case "IS_BLOCKING_STATUS":
+                    setIsBlocking(message.isBlocking);
+                    console.log("CLIENT: received messaged, setting blocking status", {
+                        isBlocking: message.isBlocking,
+                    });
+                    break;
+                case "BLOCKING_TIMESTAMP":
+                    setBlockingTimestamp(message.timestamp);
+                    console.log("CLIENT: received messaged, setting blocking timestamp", {
+                        timestamp: message.timestamp,
+                    });
+                    break;
+                default:
+                    break;
+            }
+        });
+    }, []);
+    return (react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { className: _Root_module_css__WEBPACK_IMPORTED_MODULE_4__.default.wrapper },
+        react__WEBPACK_IMPORTED_MODULE_0__.createElement(_comps_Status__WEBPACK_IMPORTED_MODULE_1__.default, { isBlocking: isBlocking, startConfirmCountdown: startConfirmCountdown, isButtonReady: isButtonReady }),
+        react__WEBPACK_IMPORTED_MODULE_0__.createElement(_comps_Timers__WEBPACK_IMPORTED_MODULE_2__.default, { blockingTimestamp: blockingTimestamp, startConfirmCountdown: startConfirmCountdown, setStartConfirmCountdown: setStartConfirmCountdown, setIsButtonDisabled: setIsButtonDisabled, setIsButtonReady: setIsButtonReady }),
+        react__WEBPACK_IMPORTED_MODULE_0__.createElement(_comps_Toggle__WEBPACK_IMPORTED_MODULE_3__.default, { isBlocking: isBlocking, setStartConfirmCountdown: setStartConfirmCountdown, blockingTimestamp: blockingTimestamp, isButtonReady: isButtonReady, setIsButtonReady: setIsButtonReady, isButtonDisabled: isButtonDisabled, setIsButtonDisabled: setIsButtonDisabled })));
+}
+/*
+TODO:
+
+see if I can fix the latency issues
+Use flexbox instead of how i'm doing it now
+
+typescript absolute imports
+factor out sites, add ability to add sites
+add ability to change times
+*/
+
+
+/***/ }),
+
+/***/ "./src/comps/Status/index.tsx":
+/*!************************************!*\
+  !*** ./src/comps/Status/index.tsx ***!
+  \************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Status)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _Status_module_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Status.module.css */ "./src/comps/Status/Status.module.css");
+
+
+function Status(_a) {
+    var isBlocking = _a.isBlocking, startConfirmCountdown = _a.startConfirmCountdown, isButtonReady = _a.isButtonReady;
+    var renderStatus = function () {
+        if (startConfirmCountdown || isButtonReady) {
+            return react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { className: _Status_module_css__WEBPACK_IMPORTED_MODULE_1__.default.orange }, "are you sure?");
+        }
+        else if (isBlocking) {
+            return react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { className: _Status_module_css__WEBPACK_IMPORTED_MODULE_1__.default.green }, "blocking");
+        }
+        else {
+            return react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { className: _Status_module_css__WEBPACK_IMPORTED_MODULE_1__.default.red }, "not blocking");
+        }
+    };
+    return (react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { className: _Status_module_css__WEBPACK_IMPORTED_MODULE_1__.default.status },
+        "status:",
+        react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", { className: _Status_module_css__WEBPACK_IMPORTED_MODULE_1__.default.italic }, renderStatus())));
+}
+
+
+/***/ }),
+
+/***/ "./src/comps/Timer/index.tsx":
+/*!***********************************!*\
+  !*** ./src/comps/Timer/index.tsx ***!
+  \***********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Timer)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _hooks_useInterval__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @hooks/useInterval */ "./src/hooks/useInterval.ts");
+/* harmony import */ var _utils_formatters__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @utils/formatters */ "./src/utils/formatters.ts");
+/* harmony import */ var _Timer_module_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Timer.module.css */ "./src/comps/Timer/Timer.module.css");
+
+
+
+
+function Timer(_a) {
+    var onComplete = _a.onComplete, startSecond = _a.startSecond, startMinute = _a.startMinute, grey = _a.grey;
+    var _b = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(startMinute ? startMinute : 0), minute = _b[0], setMinute = _b[1];
+    var _c = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(startSecond ? startSecond : 0), second = _c[0], setSecond = _c[1];
+    (0,_hooks_useInterval__WEBPACK_IMPORTED_MODULE_1__.default)(function (clear) {
+        if (second === 0 && minute === 0) {
+            if (onComplete)
+                onComplete();
+            clear();
+        }
+        else if (second === 0) {
+            setSecond(59);
+            setMinute(function (prev) { return prev - 1; });
+        }
+        else {
+            setSecond(function (prev) { return prev - 1; });
+        }
+    }, 1000);
+    return (react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { className: grey ? _Timer_module_css__WEBPACK_IMPORTED_MODULE_3__.default.grey : "" },
+        (0,_utils_formatters__WEBPACK_IMPORTED_MODULE_2__.formatTime)(minute),
+        ":",
+        (0,_utils_formatters__WEBPACK_IMPORTED_MODULE_2__.formatTime)(second)));
+}
+
+
+/***/ }),
+
+/***/ "./src/comps/Timers/index.tsx":
+/*!************************************!*\
+  !*** ./src/comps/Timers/index.tsx ***!
+  \************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Timers)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _comps_Timer_index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @comps/Timer/index */ "./src/comps/Timer/index.tsx");
+/* harmony import */ var _utils_formatters__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @utils/formatters */ "./src/utils/formatters.ts");
+/* harmony import */ var _Timers_module_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Timers.module.css */ "./src/comps/Timers/Timers.module.css");
+
+
+
+
+function Timers(_a) {
+    var setIsButtonDisabled = _a.setIsButtonDisabled, setStartConfirmCountdown = _a.setStartConfirmCountdown, startConfirmCountdown = _a.startConfirmCountdown, setIsButtonReady = _a.setIsButtonReady, blockingTimestamp = _a.blockingTimestamp;
+    var onConfirmTimerComplete = function () {
+        setIsButtonDisabled(false);
+        setStartConfirmCountdown(false);
+        setIsButtonReady(true);
+    };
+    console.log("CLIENT: in timer top level", { blockingTimestamp: blockingTimestamp });
+    var renderTimers = function () {
+        if (blockingTimestamp) {
+            var remainingSeconds = (new Date(blockingTimestamp).getTime() - Date.now()) / 1000;
+            var startMinute = Math.floor(remainingSeconds / 60);
+            var startSecond = Math.floor(remainingSeconds - startMinute * 60);
+            return react__WEBPACK_IMPORTED_MODULE_0__.createElement(_comps_Timer_index__WEBPACK_IMPORTED_MODULE_1__.default, { startMinute: startMinute, startSecond: startSecond });
+        }
+        else if (startConfirmCountdown) {
+            return (react__WEBPACK_IMPORTED_MODULE_0__.createElement(_comps_Timer_index__WEBPACK_IMPORTED_MODULE_1__.default, { onComplete: onConfirmTimerComplete, startMinute: 0, startSecond: 30, grey: true }));
+        }
+        else {
+            return react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_utils_formatters__WEBPACK_IMPORTED_MODULE_2__.formatTime)(0) + ":" + (0,_utils_formatters__WEBPACK_IMPORTED_MODULE_2__.formatTime)(0));
+        }
+    };
+    return react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { className: _Timers_module_css__WEBPACK_IMPORTED_MODULE_3__.default.timer }, renderTimers());
+}
+
+
+/***/ }),
+
+/***/ "./src/comps/Toggle/index.tsx":
+/*!************************************!*\
+  !*** ./src/comps/Toggle/index.tsx ***!
+  \************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Toggle)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _Toggle_module_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Toggle.module.css */ "./src/comps/Toggle/Toggle.module.css");
+
+
+function Toggle(_a) {
+    var isBlocking = _a.isBlocking, isButtonReady = _a.isButtonReady, setIsButtonReady = _a.setIsButtonReady, setIsButtonDisabled = _a.setIsButtonDisabled, isButtonDisabled = _a.isButtonDisabled, setStartConfirmCountdown = _a.setStartConfirmCountdown;
+    var sendToggleIsBlocking = function () {
+        var message = {
+            type: "TOGGLE_IS_BLOCKING",
+            isBlocking: !isBlocking,
+        };
+        chrome.runtime.sendMessage(message);
+    };
+    var sendBlockingTimestamp = function (timestamp) {
+        var message = {
+            type: "SET_BLOCKING_TIMESTAMP",
+            timestamp: timestamp,
+        };
+        chrome.runtime.sendMessage(message);
+    };
+    var handleOnClick = function () {
+        // if it's not blocking, allow immediate blocking
+        if (!isBlocking) {
+            sendBlockingTimestamp(null);
+            sendToggleIsBlocking();
+            return;
+        }
+        // otherwise if it's blocking, and button is ready, toggle
+        if (isButtonReady) {
+            var timestamp = String(new Date(Date.now() + 30 * 60 * 1 * 1000));
+            sendBlockingTimestamp(timestamp);
+            sendToggleIsBlocking();
+            setIsButtonReady(false);
+            return;
+        }
+        // otherwise start timer sequence
+        setIsButtonDisabled(true);
+        setStartConfirmCountdown(true);
+    };
+    return (react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { className: _Toggle_module_css__WEBPACK_IMPORTED_MODULE_1__.default.buttonWrapper },
+        react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", { className: _Toggle_module_css__WEBPACK_IMPORTED_MODULE_1__.default.button, onClick: handleOnClick, disabled: isButtonDisabled }, "toggle")));
+}
+
+
+/***/ }),
+
+/***/ "./src/hooks/useInterval.ts":
+/*!**********************************!*\
+  !*** ./src/hooks/useInterval.ts ***!
+  \**********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ useInterval)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+function useInterval(callback, delay) {
+    var savedCallback = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
+    // Remember the latest callback.
+    (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+        savedCallback.current = callback;
+    }, [callback]);
+    var id = null;
+    // Set up the interval.
+    (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+        var tick = function () {
+            if (typeof savedCallback.current !== "function")
+                return;
+            savedCallback.current(function () { return clearInterval(id); });
+        };
+        id = setInterval(tick, delay);
+        return function () { return clearInterval(id); };
+    }, [delay]);
+}
+
+
+/***/ }),
+
+/***/ "./src/utils/formatters.ts":
+/*!*********************************!*\
+  !*** ./src/utils/formatters.ts ***!
+  \*********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "formatTime": () => (/* binding */ formatTime)
+/* harmony export */ });
+var formatTime = function (number) {
+    return number.toLocaleString("en-US", {
+        minimumIntegerDigits: 2,
+        useGrouping: false,
+    });
+};
+
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/dist/cjs.js!./src/popup.css":
 /*!*************************************************************!*\
   !*** ./node_modules/css-loader/dist/cjs.js!./src/popup.css ***!
@@ -30616,328 +30938,6 @@ module.exports = function (list, options) {
   };
 };
 
-/***/ }),
-
-/***/ "./src/comps/Root/index.tsx":
-/*!**********************************!*\
-  !*** ./src/comps/Root/index.tsx ***!
-  \**********************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ Root)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _Status__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Status */ "./src/comps/Status/index.tsx");
-/* harmony import */ var _Timers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Timers */ "./src/comps/Timers/index.tsx");
-/* harmony import */ var _Toggle__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../Toggle */ "./src/comps/Toggle/index.tsx");
-/* harmony import */ var _Root_module_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Root.module.css */ "./src/comps/Root/Root.module.css");
-
-
-
-
-
-function Root() {
-    // "global" state, lotta piping around, might want to actually make global later
-    var _a = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true), isBlocking = _a[0], setIsBlocking = _a[1];
-    var _b = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false), isButtonDisabled = _b[0], setIsButtonDisabled = _b[1];
-    var _c = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false), startConfirmCountdown = _c[0], setStartConfirmCountdown = _c[1];
-    var _d = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false), isButtonReady = _d[0], setIsButtonReady = _d[1];
-    var _e = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null), blockingTimestamp = _e[0], setBlockingTimestamp = _e[1];
-    // onload set "global" state
-    (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-        var isBlockingRequest = {
-            type: "REQ_IS_BLOCKING_STATUS",
-        };
-        chrome.runtime.sendMessage(isBlockingRequest);
-        console.log("CLIENT: sending for is blocking status request message", {
-            isBlockingRequest: isBlockingRequest,
-        });
-        var blockingTimestampRequest = {
-            type: "REQ_BLOCKING_TIMESTAMP",
-        };
-        chrome.runtime.sendMessage(blockingTimestampRequest);
-        console.log("CLIENT: sending request for blocking timestamp message", {
-            blockingTimestampRequest: blockingTimestampRequest,
-        });
-        // Only set background variables in the listener to ensure that
-        // when they're changed in the client, the changes are only reflected
-        // if they make their way to the background, who then sends it back.
-        // Is this a good pattern? not super sure
-        chrome.runtime.onMessage.addListener(function (message) {
-            switch (message.type) {
-                case "IS_BLOCKING_STATUS":
-                    setIsBlocking(message.isBlocking);
-                    console.log("CLIENT: received messaged, setting blocking status", {
-                        isBlocking: message.isBlocking,
-                    });
-                    break;
-                case "BLOCKING_TIMESTAMP":
-                    setBlockingTimestamp(message.timestamp);
-                    console.log("CLIENT: received messaged, setting blocking timestamp", {
-                        timestamp: message.timestamp,
-                    });
-                    break;
-                default:
-                    break;
-            }
-        });
-    }, []);
-    return (react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { className: _Root_module_css__WEBPACK_IMPORTED_MODULE_4__.default.wrapper },
-        react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Status__WEBPACK_IMPORTED_MODULE_1__.default, { isBlocking: isBlocking, startConfirmCountdown: startConfirmCountdown, isButtonReady: isButtonReady }),
-        react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Timers__WEBPACK_IMPORTED_MODULE_2__.default, { blockingTimestamp: blockingTimestamp, startConfirmCountdown: startConfirmCountdown, setStartConfirmCountdown: setStartConfirmCountdown, setIsButtonDisabled: setIsButtonDisabled, setIsButtonReady: setIsButtonReady }),
-        react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Toggle__WEBPACK_IMPORTED_MODULE_3__.default, { isBlocking: isBlocking, setStartConfirmCountdown: setStartConfirmCountdown, blockingTimestamp: blockingTimestamp, isButtonReady: isButtonReady, setIsButtonReady: setIsButtonReady, isButtonDisabled: isButtonDisabled, setIsButtonDisabled: setIsButtonDisabled })));
-}
-/*
-TODO:
-
-see if I can fix the latency issues
-Use flexbox instead of how i'm doing it now
-
-typescript absolute imports
-factor out sites, add ability to add sites
-add ability to change times
-*/
-
-
-/***/ }),
-
-/***/ "./src/comps/Status/index.tsx":
-/*!************************************!*\
-  !*** ./src/comps/Status/index.tsx ***!
-  \************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ Status)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _Status_module_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Status.module.css */ "./src/comps/Status/Status.module.css");
-
-
-function Status(_a) {
-    var isBlocking = _a.isBlocking, startConfirmCountdown = _a.startConfirmCountdown, isButtonReady = _a.isButtonReady;
-    var renderStatus = function () {
-        if (startConfirmCountdown || isButtonReady) {
-            return react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { className: _Status_module_css__WEBPACK_IMPORTED_MODULE_1__.default.orange }, "are you sure?");
-        }
-        else if (isBlocking) {
-            return react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { className: _Status_module_css__WEBPACK_IMPORTED_MODULE_1__.default.green }, "blocking");
-        }
-        else {
-            return react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { className: _Status_module_css__WEBPACK_IMPORTED_MODULE_1__.default.red }, "not blocking");
-        }
-    };
-    return (react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { className: _Status_module_css__WEBPACK_IMPORTED_MODULE_1__.default.status },
-        "status:",
-        react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", { className: _Status_module_css__WEBPACK_IMPORTED_MODULE_1__.default.italic }, renderStatus())));
-}
-
-
-/***/ }),
-
-/***/ "./src/comps/Timer/index.tsx":
-/*!***********************************!*\
-  !*** ./src/comps/Timer/index.tsx ***!
-  \***********************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ Timer)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _hooks_useInterval__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../hooks/useInterval */ "./src/hooks/useInterval.ts");
-/* harmony import */ var _utils_formatters__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utils/formatters */ "./src/utils/formatters.ts");
-/* harmony import */ var _Timer_module_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Timer.module.css */ "./src/comps/Timer/Timer.module.css");
-
-
-
-
-function Timer(_a) {
-    var onComplete = _a.onComplete, startSecond = _a.startSecond, startMinute = _a.startMinute, grey = _a.grey;
-    var _b = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(startMinute ? startMinute : 0), minute = _b[0], setMinute = _b[1];
-    var _c = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(startSecond ? startSecond : 0), second = _c[0], setSecond = _c[1];
-    (0,_hooks_useInterval__WEBPACK_IMPORTED_MODULE_1__.default)(function (clear) {
-        if (second === 0 && minute === 0) {
-            if (onComplete)
-                onComplete();
-            clear();
-        }
-        else if (second === 0) {
-            setSecond(59);
-            setMinute(function (prev) { return prev - 1; });
-        }
-        else {
-            setSecond(function (prev) { return prev - 1; });
-        }
-    }, 1000);
-    return (react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { className: grey ? _Timer_module_css__WEBPACK_IMPORTED_MODULE_3__.default.grey : "" },
-        (0,_utils_formatters__WEBPACK_IMPORTED_MODULE_2__.formatTime)(minute),
-        ":",
-        (0,_utils_formatters__WEBPACK_IMPORTED_MODULE_2__.formatTime)(second)));
-}
-
-
-/***/ }),
-
-/***/ "./src/comps/Timers/index.tsx":
-/*!************************************!*\
-  !*** ./src/comps/Timers/index.tsx ***!
-  \************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ Timers)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _Timer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Timer */ "./src/comps/Timer/index.tsx");
-/* harmony import */ var _utils_formatters__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utils/formatters */ "./src/utils/formatters.ts");
-/* harmony import */ var _Timers_module_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Timers.module.css */ "./src/comps/Timers/Timers.module.css");
-
-
-
-
-function Timers(_a) {
-    var setIsButtonDisabled = _a.setIsButtonDisabled, setStartConfirmCountdown = _a.setStartConfirmCountdown, startConfirmCountdown = _a.startConfirmCountdown, setIsButtonReady = _a.setIsButtonReady, blockingTimestamp = _a.blockingTimestamp;
-    var onConfirmTimerComplete = function () {
-        setIsButtonDisabled(false);
-        setStartConfirmCountdown(false);
-        setIsButtonReady(true);
-    };
-    console.log("CLIENT: in timer top level", { blockingTimestamp: blockingTimestamp });
-    var renderTimers = function () {
-        if (blockingTimestamp) {
-            var remainingSeconds = (new Date(blockingTimestamp).getTime() - Date.now()) / 1000;
-            var startMinute = Math.floor(remainingSeconds / 60);
-            var startSecond = Math.floor(remainingSeconds - startMinute * 60);
-            return react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Timer__WEBPACK_IMPORTED_MODULE_1__.default, { startMinute: startMinute, startSecond: startSecond });
-        }
-        else if (startConfirmCountdown) {
-            return (react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Timer__WEBPACK_IMPORTED_MODULE_1__.default, { onComplete: onConfirmTimerComplete, startMinute: 0, startSecond: 30, grey: true }));
-        }
-        else {
-            return react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_utils_formatters__WEBPACK_IMPORTED_MODULE_2__.formatTime)(0) + ":" + (0,_utils_formatters__WEBPACK_IMPORTED_MODULE_2__.formatTime)(0));
-        }
-    };
-    return react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { className: _Timers_module_css__WEBPACK_IMPORTED_MODULE_3__.default.timer }, renderTimers());
-}
-
-
-/***/ }),
-
-/***/ "./src/comps/Toggle/index.tsx":
-/*!************************************!*\
-  !*** ./src/comps/Toggle/index.tsx ***!
-  \************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ Toggle)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _Toggle_module_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Toggle.module.css */ "./src/comps/Toggle/Toggle.module.css");
-
-
-function Toggle(_a) {
-    var isBlocking = _a.isBlocking, isButtonReady = _a.isButtonReady, setIsButtonReady = _a.setIsButtonReady, setIsButtonDisabled = _a.setIsButtonDisabled, isButtonDisabled = _a.isButtonDisabled, setStartConfirmCountdown = _a.setStartConfirmCountdown;
-    var sendToggleIsBlocking = function () {
-        var message = {
-            type: "TOGGLE_IS_BLOCKING",
-            isBlocking: !isBlocking,
-        };
-        chrome.runtime.sendMessage(message);
-    };
-    var sendBlockingTimestamp = function (timestamp) {
-        var message = {
-            type: "SET_BLOCKING_TIMESTAMP",
-            timestamp: timestamp,
-        };
-        chrome.runtime.sendMessage(message);
-    };
-    var handleOnClick = function () {
-        // if it's not blocking, allow immediate blocking
-        if (!isBlocking) {
-            sendBlockingTimestamp(null);
-            sendToggleIsBlocking();
-            return;
-        }
-        // otherwise if it's blocking, and button is ready, toggle
-        if (isButtonReady) {
-            var timestamp = String(new Date(Date.now() + 30 * 60 * 1 * 1000));
-            sendBlockingTimestamp(timestamp);
-            sendToggleIsBlocking();
-            setIsButtonReady(false);
-            return;
-        }
-        // otherwise start timer sequence
-        setIsButtonDisabled(true);
-        setStartConfirmCountdown(true);
-    };
-    return (react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { className: _Toggle_module_css__WEBPACK_IMPORTED_MODULE_1__.default.buttonWrapper },
-        react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", { className: _Toggle_module_css__WEBPACK_IMPORTED_MODULE_1__.default.button, onClick: handleOnClick, disabled: isButtonDisabled }, "toggle")));
-}
-
-
-/***/ }),
-
-/***/ "./src/hooks/useInterval.ts":
-/*!**********************************!*\
-  !*** ./src/hooks/useInterval.ts ***!
-  \**********************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ useInterval)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-function useInterval(callback, delay) {
-    var savedCallback = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
-    // Remember the latest callback.
-    (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-        savedCallback.current = callback;
-    }, [callback]);
-    var id = null;
-    // Set up the interval.
-    (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-        var tick = function () {
-            if (typeof savedCallback.current !== "function")
-                return;
-            savedCallback.current(function () { return clearInterval(id); });
-        };
-        id = setInterval(tick, delay);
-        return function () { return clearInterval(id); };
-    }, [delay]);
-}
-
-
-/***/ }),
-
-/***/ "./src/utils/formatters.ts":
-/*!*********************************!*\
-  !*** ./src/utils/formatters.ts ***!
-  \*********************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "formatTime": () => (/* binding */ formatTime)
-/* harmony export */ });
-var formatTime = function (number) {
-    return number.toLocaleString("en-US", {
-        minimumIntegerDigits: 2,
-        useGrouping: false,
-    });
-};
-
-
-
 /***/ })
 
 /******/ 	});
@@ -31017,7 +31017,7 @@ var __webpack_exports__ = {};
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/@hot-loader/react-dom/index.js");
-/* harmony import */ var _comps_Root__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./comps/Root */ "./src/comps/Root/index.tsx");
+/* harmony import */ var _comps_Root__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @comps/Root */ "./src/comps/Root/index.tsx");
 /* harmony import */ var _popup_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./popup.css */ "./src/popup.css");
 
 
