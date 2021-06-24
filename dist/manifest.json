@@ -1,12 +1,13 @@
 {
-  "manifest_version": 3,
+  "manifest_version": 2,
   "name": "Homegrown Site Blocker",
   "version": "1.0.0",
-  "action": {
+  "browser_action": {
     "default_popup": "popup.html"
   },
   "background": {
-    "service_worker": "background.js"
+    "scripts": ["background.js"],
+    "persistent": true
   },
-  "permissions": ["tabs", "storage"]
+  "permissions": ["tabs", "storage", "*://*/*"]
 }

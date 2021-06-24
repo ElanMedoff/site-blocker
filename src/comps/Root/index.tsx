@@ -11,8 +11,9 @@ export default function Root() {
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [startConfirmCountdown, setStartConfirmCountdown] = useState(false);
   const [isButtonReady, setIsButtonReady] = useState(false);
-  const [blockingTimestamp, setBlockingTimestamp] =
-    useState<string | null>(null);
+  const [blockingTimestamp, setBlockingTimestamp] = useState<string | null>(
+    null
+  );
 
   // onload set "global" state
   useEffect(() => {
@@ -87,7 +88,10 @@ export default function Root() {
 /* 
 TODO:
 
-More button animations
 see if I can fix the latency issues
 Use flexbox instead of how i'm doing it now
+
+typescript absolute imports
+factor out sites, add ability to add sites
+add ability to change times
 */
