@@ -5,7 +5,11 @@ import {
   isBlockingTimerId,
   isBlockingTimestamp,
 } from "@utils/types";
-import { chromeStorageGet } from "@utils/promisify";
+import {
+  chromeStorageGet,
+  chromeTabsGet,
+  chromeTabsRemove,
+} from "@utils/promisify";
 
 (async function init() {
   // should always be null, since on unmount it's set to null anyway
@@ -48,22 +52,15 @@ import { chromeStorageGet } from "@utils/promisify";
   }
 })();
 
-// TODO doesn't really seem to have helped the delay?
-// chrome.tabs.onCreated.addListener(async (tab) => {
-//   if (!tab.pendingUrl) return;
-//   if (!tab.id) return;
-//   const isBlocking = Boolean(await chromeStorageGet("isBlocking"));
-//   if (!isIsBlocking(isBlocking)) return;
-
-//   for (const regex of blockedSites) {
-//     if (regex.test(tab.pendingUrl)) {
-//       chrome.tabs.remove(tab.id);
-//       break;
-//     }
-//   }
-// });
-
 chrome.tabs.onUpdated.addListener(async (tabId, _, tab) => {
+  // because this runs async and is fired many times one after the other, we don't know for sure
+  // that the tab will still be around by the time this cb runs, it could have been removed by an
+  // earlier cb ... I think
+  const maybeTabExists = await chromeTabsGet(tabId).catch((err) =>
+    console.log(err.message, "get")
+  );
+  if (!maybeTabExists) return;
+
   if (!tab.url) return;
   const isBlocking = !!(await chromeStorageGet("isBlocking"));
   if (!isIsBlocking(isBlocking)) {
@@ -75,10 +72,12 @@ chrome.tabs.onUpdated.addListener(async (tabId, _, tab) => {
   // want to run sync, don't want to bother with forEach
   for (const regex of blockedSites) {
     if (regex.test(tab.url)) {
-      chrome.tabs.remove(tabId, () => {
-        console.log("BACKEND: removed tab", { tabId, url: tab.url });
-      });
-      break;
+      // TODO
+      // still not completely sure why this catch would trigger with the check above ...
+      await chromeTabsRemove(tabId, tab.url).catch((err) =>
+        console.log(err.message, "remove")
+      );
+      return;
     }
   }
 });

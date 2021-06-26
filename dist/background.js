@@ -12,17 +12,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-// const blockedSites = [
-//   /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{0,256}imgur.[-a-zA-Z0-9@:%._\+~#=]{1,256}(\/)?/,
-//   /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{0,256}youtube.[-a-zA-Z0-9@:%._\+~#=]{1,256}(\/)?/,
-//   /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{0,256}reddit.[-a-zA-Z0-9@:%._\+~#=]{1,256}(\/)?/,
-//   /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{0,256}messenger.[-a-zA-Z0-9@:%._\+~#=]{1,256}(\/)?/,
-//   /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{0,256}linkedin.[-a-zA-Z0-9@:%._\+~#=]{1,256}(\/)?/,
-//   /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{0,256}news.google.[-a-zA-Z0-9@:%._\+~#=]{1,256}(\/)?/,
-// ];
 var sites = [
     "imgur",
-    "youtube",
+    // "youtube",
     "reddit",
     "messenger",
     "linkedin",
@@ -44,7 +36,9 @@ var blockedSites = sites.map(function (site) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "chromeStorageGet": () => (/* binding */ chromeStorageGet)
+/* harmony export */   "chromeStorageGet": () => (/* binding */ chromeStorageGet),
+/* harmony export */   "chromeTabsGet": () => (/* binding */ chromeTabsGet),
+/* harmony export */   "chromeTabsRemove": () => (/* binding */ chromeTabsRemove)
 /* harmony export */ });
 function chromeStorageGet(key) {
     return new Promise(function (resolve, reject) {
@@ -55,6 +49,25 @@ function chromeStorageGet(key) {
             var cast = uncast;
             var data = cast[key];
             resolve(data);
+        });
+    });
+}
+function chromeTabsGet(tabId) {
+    return new Promise(function (resolve, reject) {
+        chrome.tabs.get(tabId, function () {
+            if (chrome.runtime.lastError)
+                return reject(chrome.runtime.lastError);
+            resolve(true);
+        });
+    });
+}
+function chromeTabsRemove(tabId, tabUrl) {
+    return new Promise(function (resolve, reject) {
+        chrome.tabs.remove(tabId, function () {
+            if (chrome.runtime.lastError)
+                return reject(chrome.runtime.lastError);
+            console.log("BACKEND: removed tab", { tabId: tabId, tabUrl: tabUrl });
+            resolve();
         });
     });
 }
@@ -78,9 +91,7 @@ function isIsBlocking(isBlocking) {
     return typeof isBlocking === "boolean";
 }
 function isBlockingTimestamp(blockingTimestamp) {
-    return (
-    // blockingTimestamp instanceof Date ||
-    blockingTimestamp === null || typeof blockingTimestamp === "string");
+    return blockingTimestamp === null || typeof blockingTimestamp === "string";
 }
 function isBlockingTimerId(blockingTimerId) {
     return typeof blockingTimerId === "number" || blockingTimerId === null;
@@ -152,9 +163,9 @@ var __webpack_exports__ = {};
   !*** ./src/background.ts ***!
   \***************************/
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _utils_blockedSites__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utils/blockedSites */ "./src/utils/blockedSites.ts");
-/* harmony import */ var _utils_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./utils/types */ "./src/utils/types.ts");
-/* harmony import */ var _utils_promisify__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./utils/promisify */ "./src/utils/promisify.ts");
+/* harmony import */ var _utils_blockedSites__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @utils/blockedSites */ "./src/utils/blockedSites.ts");
+/* harmony import */ var _utils_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @utils/types */ "./src/utils/types.ts");
+/* harmony import */ var _utils_promisify__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @utils/promisify */ "./src/utils/promisify.ts");
 var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -238,45 +249,47 @@ var __generator = (undefined && undefined.__generator) || function (thisArg, bod
         });
     });
 })();
-// TODO doesn't really seem to have helped the delay?
-// chrome.tabs.onCreated.addListener(async (tab) => {
-//   if (!tab.pendingUrl) return;
-//   if (!tab.id) return;
-//   const isBlocking = Boolean(await chromeStorageGet("isBlocking"));
-//   if (!isIsBlocking(isBlocking)) return;
-//   for (const regex of blockedSites) {
-//     if (regex.test(tab.pendingUrl)) {
-//       chrome.tabs.remove(tab.id);
-//       break;
-//     }
-//   }
-// });
 chrome.tabs.onUpdated.addListener(function (tabId, _, tab) { return __awaiter(void 0, void 0, void 0, function () {
-    var isBlocking, _i, blockedSites_1, regex;
+    var maybeTabExists, isBlocking, _i, blockedSites_1, regex;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0:
+            case 0: return [4 /*yield*/, (0,_utils_promisify__WEBPACK_IMPORTED_MODULE_2__.chromeTabsGet)(tabId).catch(function (err) {
+                    return console.log(err.message, "get");
+                })];
+            case 1:
+                maybeTabExists = _a.sent();
+                if (!maybeTabExists)
+                    return [2 /*return*/];
                 if (!tab.url)
                     return [2 /*return*/];
                 return [4 /*yield*/, (0,_utils_promisify__WEBPACK_IMPORTED_MODULE_2__.chromeStorageGet)("isBlocking")];
-            case 1:
+            case 2:
                 isBlocking = !!(_a.sent());
                 if (!(0,_utils_types__WEBPACK_IMPORTED_MODULE_1__.isIsBlocking)(isBlocking)) {
                     throw new TypeError("expected isBlocking, got " + typeof isBlocking);
                 }
                 if (!isBlocking)
                     return [2 /*return*/];
-                // want to run sync, don't want to bother with forEach
-                for (_i = 0, blockedSites_1 = _utils_blockedSites__WEBPACK_IMPORTED_MODULE_0__.default; _i < blockedSites_1.length; _i++) {
-                    regex = blockedSites_1[_i];
-                    if (regex.test(tab.url)) {
-                        chrome.tabs.remove(tabId, function () {
-                            console.log("BACKEND: removed tab", { tabId: tabId, url: tab.url });
-                        });
-                        break;
-                    }
-                }
+                _i = 0, blockedSites_1 = _utils_blockedSites__WEBPACK_IMPORTED_MODULE_0__.default;
+                _a.label = 3;
+            case 3:
+                if (!(_i < blockedSites_1.length)) return [3 /*break*/, 6];
+                regex = blockedSites_1[_i];
+                if (!regex.test(tab.url)) return [3 /*break*/, 5];
+                // TODO
+                // still not completely sure why this catch would trigger with the check above ...
+                return [4 /*yield*/, (0,_utils_promisify__WEBPACK_IMPORTED_MODULE_2__.chromeTabsRemove)(tabId, tab.url).catch(function (err) {
+                        return console.log(err.message, "remove");
+                    })];
+            case 4:
+                // TODO
+                // still not completely sure why this catch would trigger with the check above ...
+                _a.sent();
                 return [2 /*return*/];
+            case 5:
+                _i++;
+                return [3 /*break*/, 3];
+            case 6: return [2 /*return*/];
         }
     });
 }); });

@@ -19,8 +19,7 @@ export default function Toggle({
   setIsButtonDisabled,
   isButtonDisabled,
   setStartConfirmCountdown,
-}: // blockingTimestamp,
-ToggleProps) {
+}: ToggleProps) {
   const sendToggleIsBlocking = () => {
     const message: Message = {
       type: "TOGGLE_IS_BLOCKING",

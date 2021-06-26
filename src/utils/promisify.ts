@@ -14,3 +14,22 @@ export function chromeStorageGet(key: Properties<BackendState>) {
     });
   });
 }
+
+export function chromeTabsGet(tabId: number) {
+  return new Promise<boolean>((resolve, reject) => {
+    chrome.tabs.get(tabId, () => {
+      if (chrome.runtime.lastError) return reject(chrome.runtime.lastError);
+      resolve(true);
+    });
+  });
+}
+
+export function chromeTabsRemove(tabId: number, tabUrl: string) {
+  return new Promise<void>((resolve, reject) => {
+    chrome.tabs.remove(tabId, () => {
+      if (chrome.runtime.lastError) return reject(chrome.runtime.lastError);
+      console.log("BACKEND: removed tab", { tabId, tabUrl });
+      resolve();
+    });
+  });
+}

@@ -49,10 +49,7 @@ export function isIsBlocking(isBlocking: any): isBlocking is boolean {
 export function isBlockingTimestamp(
   blockingTimestamp: any
 ): blockingTimestamp is string | null {
-  return (
-    // blockingTimestamp instanceof Date ||
-    blockingTimestamp === null || typeof blockingTimestamp === "string"
-  );
+  return blockingTimestamp === null || typeof blockingTimestamp === "string";
 }
 
 export function isBlockingTimerId(

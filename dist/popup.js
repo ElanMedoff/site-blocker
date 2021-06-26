@@ -26447,11 +26447,8 @@ function Root() {
 /*
 TODO:
 
-see if I can fix the latency issues
-Use flexbox instead of how i'm doing it now
-
-typescript absolute imports
-factor out sites, add ability to add sites
+use flexbox instead?
+add ability to add sites
 add ability to change times
 */
 
