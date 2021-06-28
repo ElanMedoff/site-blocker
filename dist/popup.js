@@ -26597,6 +26597,12 @@ __webpack_require__.r(__webpack_exports__);
 
 function Toggle(_a) {
     var isBlocking = _a.isBlocking, isButtonReady = _a.isButtonReady, setIsButtonReady = _a.setIsButtonReady, setIsButtonDisabled = _a.setIsButtonDisabled, isButtonDisabled = _a.isButtonDisabled, setStartConfirmCountdown = _a.setStartConfirmCountdown;
+    var buttonRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
+    (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+        if (!buttonRef.current)
+            return;
+        buttonRef.current.focus();
+    }, []);
     var sendToggleIsBlocking = function () {
         var message = {
             type: "TOGGLE_IS_BLOCKING",
@@ -26631,7 +26637,7 @@ function Toggle(_a) {
         setStartConfirmCountdown(true);
     };
     return (react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { className: _Toggle_module_css__WEBPACK_IMPORTED_MODULE_1__.default.buttonWrapper },
-        react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", { className: _Toggle_module_css__WEBPACK_IMPORTED_MODULE_1__.default.button, onClick: handleOnClick, disabled: isButtonDisabled }, "toggle")));
+        react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", { ref: buttonRef, className: _Toggle_module_css__WEBPACK_IMPORTED_MODULE_1__.default.button, onClick: handleOnClick, disabled: isButtonDisabled }, "toggle")));
 }
 
 

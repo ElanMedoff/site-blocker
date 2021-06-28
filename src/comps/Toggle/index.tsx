@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from "react";
+import React, { useRef, useEffect, Dispatch, SetStateAction } from "react";
 import { Message } from "@utils/types";
 import styles from "./Toggle.module.css";
 
@@ -20,6 +20,13 @@ export default function Toggle({
   isButtonDisabled,
   setStartConfirmCountdown,
 }: ToggleProps) {
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (!buttonRef.current) return;
+    buttonRef.current.focus();
+  }, []);
+
   const sendToggleIsBlocking = () => {
     const message: Message = {
       type: "TOGGLE_IS_BLOCKING",
@@ -61,6 +68,7 @@ export default function Toggle({
   return (
     <div className={styles.buttonWrapper}>
       <button
+        ref={buttonRef}
         className={styles.button}
         onClick={handleOnClick}
         disabled={isButtonDisabled}
