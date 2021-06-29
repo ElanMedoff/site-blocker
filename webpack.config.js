@@ -8,7 +8,7 @@ const config = {
     popup: path.join(__dirname, "src/popup.tsx"),
     background: path.join(__dirname, "src/background.ts"),
   },
-  mode: "development",
+  mode: process.env.NODE_ENV === "production" ? "production" : "development",
   // gets rid of eval error, weird chrome extension thing
   devtool: "cheap-module-source-map",
   output: { path: path.join(__dirname, "dist"), filename: "[name].js" },

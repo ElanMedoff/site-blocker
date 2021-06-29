@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "build": "webpack",
-    "start": "webpack --watch",
+    "build": "NODE_ENV='production' webpack",
+    "dev": "NODE_ENV='development' webpack --watch",
     "nuke": "rm -rf node_modules && npm install"
   },
   "keywords": [],

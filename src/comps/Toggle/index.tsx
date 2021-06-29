@@ -23,9 +23,10 @@ export default function Toggle({
   const buttonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    if (!buttonRef.current) return;
-    buttonRef.current.focus();
-  }, []);
+    if (!isButtonDisabled && buttonRef.current) {
+      buttonRef.current.focus();
+    }
+  }, [isButtonDisabled]);
 
   const sendToggleIsBlocking = () => {
     const message: Message = {
