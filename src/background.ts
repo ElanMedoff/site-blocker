@@ -1,4 +1,8 @@
-import blockedSites from "@utils/blockedSites";
+import {
+  blockedSites,
+  videoExceptions,
+  playlistExceptions,
+} from "@utils/blockedSites";
 import {
   Message,
   isIsBlocking,
@@ -67,7 +71,18 @@ chrome.tabs.onUpdated.addListener(async (tabId, _, tab) => {
     throw new TypeError(`expected isBlocking, got ${typeof isBlocking}`);
   }
 
+  // todo refactor?
   if (!isBlocking) return;
+
+  // exclude exceptions
+  for (const exception of videoExceptions) {
+    if (tab.url === exception) return;
+  }
+
+  for (const exception of playlistExceptions) {
+    console.log(tab.url, tab.url.includes(exception));
+    if (tab.url.includes(exception)) return;
+  }
 
   // want to run sync, don't want to bother with forEach
   for (const regex of blockedSites) {
