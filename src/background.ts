@@ -38,13 +38,13 @@ import {
   }
 
   // negative timestamp, reset
-  if (new Date(blockingTimestamp).getTime() - Date.now() < 0) {
+  if (new Date(blockingTimestamp).getTime() - Date.now() < 1000) {
     setBlockingTimestamp(null);
     return;
   }
 
   // ongoing timer
-  if (new Date(blockingTimestamp).getTime() - Date.now() >= 0) {
+  if (new Date(blockingTimestamp).getTime() - Date.now() >= 1000) {
     const blockingTimerId = setTimeout(() => {
       console.log("BACKEND: in set timeout, setting to null");
       setBlockingTimestamp(null);
@@ -71,7 +71,6 @@ chrome.tabs.onUpdated.addListener(async (tabId, _, tab) => {
     throw new TypeError(`expected isBlocking, got ${typeof isBlocking}`);
   }
 
-  // todo refactor?
   if (!isBlocking) return;
 
   // exclude exceptions

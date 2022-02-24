@@ -28,8 +28,8 @@ interface SetBlockingTimeStamp {
 
 interface BackendState {
   isBlocking: boolean;
-  blockingTimestamp: string | null;
-  blockingTimerId: number | null;
+  blockingTimestamp: string | null | undefined;
+  blockingTimerId: number | null | undefined;
 }
 
 export type Message =
