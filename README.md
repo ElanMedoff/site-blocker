@@ -1,6 +1,6 @@
-# Homegrown Site Blocker
+# Homegrown Productivity Site Blocker
 
-a barebones chrome extension to block a list of sites for a specified period of time
+a barebones chrome extension to block a list of sites for a specified period of time, helps avoid distraction when you need to be productive.
 
 - uses manifest v2 for a persistent background script
 - use some custom type guards as api response validation, not sure if that's a great pattern
