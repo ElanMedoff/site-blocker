@@ -84,11 +84,3 @@ export default function Root() {
     </div>
   );
 }
-
-/* 
-TODO:
-
-use flexbox instead?
-add ability to add sites
-add ability to change times
-*/

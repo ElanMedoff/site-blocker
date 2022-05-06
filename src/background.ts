@@ -1,7 +1,7 @@
 import {
   blockedSites,
-  videoExceptions,
-  playlistExceptions,
+  siteExceptions,
+  youtubePlaylistExceptions,
 } from "@utils/blockedSites";
 import {
   Message,
@@ -59,7 +59,7 @@ import {
 chrome.tabs.onUpdated.addListener(async (tabId, _, tab) => {
   // because this runs async and is fired many times one after the other, we don't know for sure
   // that the tab will still be around by the time this cb runs, it could have been removed by an
-  // earlier cb ... I think
+  // earlier cb
   const maybeTabExists = await chromeTabsGet(tabId).catch((err) =>
     console.log(err.message, "get")
   );
@@ -74,11 +74,11 @@ chrome.tabs.onUpdated.addListener(async (tabId, _, tab) => {
   if (!isBlocking) return;
 
   // exclude exceptions
-  for (const exception of videoExceptions) {
+  for (const exception of siteExceptions) {
     if (tab.url === exception) return;
   }
 
-  for (const exception of playlistExceptions) {
+  for (const exception of youtubePlaylistExceptions) {
     console.log(tab.url, tab.url.includes(exception));
     if (tab.url.includes(exception)) return;
   }
@@ -86,8 +86,7 @@ chrome.tabs.onUpdated.addListener(async (tabId, _, tab) => {
   // want to run sync, don't want to bother with forEach
   for (const regex of blockedSites) {
     if (regex.test(tab.url)) {
-      // TODO
-      // still not completely sure why this catch would trigger with the check above ...
+      // TODO: not sure why this catch would trigger with the check above
       await chromeTabsRemove(tabId, tab.url).catch((err) =>
         console.log(err.message, "remove")
       );
