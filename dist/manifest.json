@@ -9,5 +9,10 @@
     "scripts": ["background.js"],
     "persistent": true
   },
-  "permissions": ["tabs", "storage", "*://*/*"]
+  "permissions": ["tabs", "storage", "*://*/*"],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "addon@example.com"
+    }
+  }
 }

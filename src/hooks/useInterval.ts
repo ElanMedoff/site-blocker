@@ -7,14 +7,12 @@ export default function useInterval(
 ) {
   const savedCallback = useRef<Function | null>(null);
 
-  // Remember the latest callback.
   useEffect(() => {
     savedCallback.current = callback;
   }, [callback]);
 
   let id: NodeJS.Timeout | null = null;
 
-  // Set up the interval.
   useEffect(() => {
     const tick = () => {
       if (typeof savedCallback.current !== "function") return;
